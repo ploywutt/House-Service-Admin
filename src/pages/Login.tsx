@@ -43,7 +43,7 @@ function Login() {
 				<img src={house} alt="house" />
 				<h1 className='text-[52px] font-medium text-blue-600'>HomeServices</h1>
 			</div>
-			<div className='max-w-[620px] mx-auto pt-12 pb-24 px-[87px] border-2 bottom-2 rounded-md bg-white'>
+			<div className='max-w-[620px] mx-auto pt-12 pb-24 px-[87px] border-2 bottom-2 rounded-lg bg-white'>
 				<h1 className='text-[32px] font-medium text-blue-950 text-center mb-4'>เข้าสู่ระบบแอดมิน</h1>
 				<form className="text-base font-medium" onSubmit={handleSubmit}>
 					<div className='relative '>
