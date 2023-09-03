@@ -1,13 +1,16 @@
 import "./App.css";
-import { Button } from "@/components/ui/button";
+import Login from "./pages/Login";
+import Testing from "./pages/Testing";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 function App() {
   return (
-    <>
-      <div>
-        <Button className="bg-blue-500">Click me</Button>
-      </div>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />  
+        <Route path="/testing" element={<Testing />} />  
+      </Routes>
+    </Router>
   );
 }
 
