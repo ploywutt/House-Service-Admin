@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <div>
-        <Button className="bg-blue-500">Click me</Button>
+        <Button className="bg-yellow-500">Admin</Button>
       </div>
     </>
   );
