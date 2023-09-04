@@ -7,6 +7,12 @@ import ServiceIcon from "../../assets/icon/service.svg";
 
 export default function AdminSidebar() {
   const navigate = useNavigate();
+
+  // async function signOutUser() {
+  //   const { error } = await supabase.auth.signOut();
+  //   navigate("/");
+  // }
+
   return (
     <div id="container" className="w-[240px] h-screen bg-blue-950">
       <div
