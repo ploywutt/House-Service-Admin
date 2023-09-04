@@ -22,11 +22,14 @@ export default function AdminSidebar() {
   //   navigate("/");
   // }
 
+<<<<<<< HEAD
 =======
 >>>>>>> f7c16a3 (feat: setting font sizes)
 =======
   const navigate = useNavigate();
 >>>>>>> e9d7fca (feat: make sidebar component + style)
+=======
+>>>>>>> 3823fd3 (feat: add logout function waiting for connecting the supabase auth)
   return (
     <div id="container" className="w-[240px] h-screen bg-blue-950">
       <div
