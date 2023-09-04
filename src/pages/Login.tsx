@@ -1,4 +1,4 @@
-import house from '../../public/house.png'
+import house from '../assets/house.png'
 import { Button } from "@/components/ui/button"
 import { Label } from '@radix-ui/react-label'
 import { Input } from "@/components/ui/input"
@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { supabase } from '../supabase.ts'
 import { Loader2 } from "lucide-react"
-import error from '../../public/error_icon.png'
+import error from '../assets/error_icon.png'
 
 
 function Login() {
