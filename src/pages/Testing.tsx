@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { supabase } from "@/supabase"
+import { supabase } from "@/lib/supabase"
 import { useNavigate } from "react-router-dom"
 
 function Testing() {
