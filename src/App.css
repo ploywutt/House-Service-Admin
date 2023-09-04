@@ -1,11 +1,8 @@
-body {
-}
 #root {
   width: 100%;
   height: 100vh;
   margin: 0 auto;
   padding: 2rem;
-  font-family: 'Prompt', sans-serif;
   background-color: #f3f4f6;
 }
 
