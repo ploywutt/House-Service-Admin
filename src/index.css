@@ -1,6 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "./components/AdminSidebar/AdminSidebar.css";
 
 @layer base {
   :root {
@@ -72,5 +73,56 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl
+    font-medium
+    leading-10;
+  }
+  h2 {
+    @apply text-xl
+    font-medium
+    leading-loose;
+  }
+  h3 {
+    @apply text-xl
+    font-normal
+    leading-loose;
+  }
+  h4 {
+    @apply text-lg
+    font-medium
+    leading-relaxed;
+  }
+  h5 {
+    @apply text-base
+    font-medium
+    leading-normal;
+  }
+}
+
+@layer components {
+  .p1 {
+    @apply text-xl
+    font-normal
+    leading-loose;
+  }
+  .p2 {
+    @apply text-base
+    font-light
+    leading-normal;
+  }
+  .p3 {
+    @apply text-sm
+    font-normal
+    leading-tight;
+  }
+  .p4 {
+    @apply text-xs
+    font-normal
+    leading-none;
   }
 }
