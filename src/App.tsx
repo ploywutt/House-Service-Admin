@@ -10,9 +10,13 @@ function App() {
       <Routes>
         {/* ลบตัวอย่างออกแล้วใส่เฉพาะ Route ที่ทำนะคับ เพื่อป้องกัน conflict คับ */}
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Route path="/" element={<Login />} />
 =======
 >>>>>>> f7c16a3 (feat: setting font sizes)
+=======
+        <Route path="/" element={<Login />} />
+>>>>>>> 91ffba9f62b9a46305472b27ea0b29db191c7698
         <Route path="/categories" element={<Category />} />
       </Routes>
     </Router>
