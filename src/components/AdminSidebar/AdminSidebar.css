@@ -1,0 +1,20 @@
+@layer components {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+  .menu {
+    @apply flex flex-row py-4 px-6 gap-4 hover:bg-blue-900 cursor-pointer;
+=======
+  .menu-list {
+    @apply flex flex-row;
+>>>>>>> f7c16a3 (feat: setting font sizes)
+=======
+  .menu {
+    @apply flex flex-row py-4 px-6 gap-4 hover:bg-blue-900 cursor-pointer;
+>>>>>>> e9d7fca (feat: make sidebar component + style)
+=======
+  .menu {
+    @apply flex flex-row py-4 px-6 gap-4 hover:bg-blue-900 cursor-pointer;
+>>>>>>> 91ffba9f62b9a46305472b27ea0b29db191c7698
+  }
+}
