@@ -2,6 +2,7 @@ import "./App.css";
 import Login from "./pages/Login";
 import Category from "./pages/Category";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Category from "./pages/Category";
 
 function App() {
   return (
