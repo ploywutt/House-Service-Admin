@@ -30,7 +30,7 @@ function Login() {
 		if (data.session) {
 			console.log(data)
 			setIsValid(true)
-			navigate('/testing')
+			navigate('/categories')
 		} else {
 			setIsValid(false)
 			console.error(error)
