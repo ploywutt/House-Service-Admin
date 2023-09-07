@@ -50,7 +50,7 @@ function Login() {
             <img
               src={error}
               alt="error"
-              className={`${!isValid ? "absolute right-3 bottom-3" : "hidden"}`}
+              className={`${!isValid ? "absolute right-4 bottom-8" : "hidden"}`}
             />
           </div>
           <div className="relative">
@@ -73,7 +73,7 @@ function Login() {
             <img
               src={error}
               alt="error"
-              className={`${!isValid ? "absolute right-3 bottom-3" : "hidden"}`}
+              className={`${!isValid ? "absolute right-4 bottom-4" : "hidden"}`}
             />
           </div>
           <p
