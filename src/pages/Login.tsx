@@ -29,8 +29,10 @@ function Login() {
         </h1>
         <form className="text-base font-medium" onSubmit={handleSubmit}>
           <div className="relative ">
-            <Label htmlFor="email">
-              Email<span className="text-[#C82438]">*</span>
+            <Label htmlFor="email" className="block">
+              <h5>
+                Email<span className="text-[#C82438]">*</span>
+              </h5>
             </Label>
             <Input
               type="email"
@@ -39,7 +41,7 @@ function Login() {
               required
               className={`mt-2 mb-5 ${
                 !isValid ? "border-[#C82438]" : "focus:border-blue-600"
-              } focus:ring-1 focus-visible:ring-0 focus-visible:ring-offset-0`}
+              } focus:ring-1 focus-visible:ring-0 focus-visible:ring-offset-0 w-full`}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -50,8 +52,10 @@ function Login() {
             />
           </div>
           <div className="relative">
-            <Label htmlFor="password">
-              Password<span className="text-[#C82438]">*</span>
+            <Label htmlFor="password" className="block">
+              <h5>
+                Password<span className="text-[#C82438]">*</span>
+              </h5>
             </Label>
             <Input
               type="password"
@@ -60,7 +64,7 @@ function Login() {
               required
               className={`mt-2 ${
                 !isValid ? "border-[#C82438]" : "focus:border-blue-600"
-              } focus:ring-1 focus-visible:ring-0 focus-visible:ring-offset-0`}
+              } focus:ring-1 focus-visible:ring-0 focus-visible:ring-offset-0 w-full`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -77,10 +81,7 @@ function Login() {
           >
             Wrong password or email!!
           </p>
-          <Button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-500 active:bg-blue-800 w-full mt-11 py-6 space-x-2"
-          >
+          <Button type="submit" className=" w-full mt-11 space-x-2">
             <p>เข้าสู่ระบบ</p>
             {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
           </Button>
