@@ -1,10 +1,12 @@
-import house from "../assets/house.png";
 import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
-import useLogin from "../hooks/useLogin";
 import { Loader2 } from "lucide-react";
+
+import house from "../assets/house.png";
 import error from "../assets/error_icon.png";
+
+import useLogin from "../hooks/useLogin";
 
 function Login() {
   const {
