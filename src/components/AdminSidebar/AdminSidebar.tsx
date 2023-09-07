@@ -4,14 +4,15 @@ import HomeServiceIcon from "../../assets/icon/homeservices.png";
 import LogoutIcon from "../../assets/icon/logout.svg";
 import PromotionIcon from "../../assets/icon/promotion.svg";
 import ServiceIcon from "../../assets/icon/service.svg";
+import { supabase } from '../../lib/supabase.ts'
 
 export default function AdminSidebar() {
   const navigate = useNavigate();
 
-  // async function signOutUser() {
-  //   const { error } = await supabase.auth.signOut();
-  //   navigate("/");
-  // }
+  async function signOutUser() {
+    const { error } = await supabase.auth.signOut();
+    navigate("/");
+  }
 
   return (
     <div id="container" className="w-[240px] h-screen bg-blue-950">
@@ -40,7 +41,7 @@ export default function AdminSidebar() {
           </div>
           <li className="menu">
             <img src={LogoutIcon} alt="Logout Icon" />
-            <h5>ออกจากระบบ</h5>
+            <h5 onClick={signOutUser}>ออกจากระบบ</h5>
           </li>
         </ul>
       </div>
