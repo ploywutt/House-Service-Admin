@@ -50,7 +50,7 @@ function Login() {
               id="email"
               placeholder=""
               required
-              className={`mt-2 ${!isHaveEmail ? "border-[#C82438]" : ""
+              className={`mt-2 ${!isHaveEmail ? "border-[#C82438] focus:border-rose-700" : ""
                 } w-full`}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -78,7 +78,7 @@ function Login() {
               id="password"
               placeholder=""
               required
-              className={`mt-2 ${!isValid ? "border-[#C82438]" : ""
+              className={`mt-2 ${!isValid ? "border-[#C82438] focus:border-rose-700" : null
                 } w-full`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
