@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
+import { useEffect } from 'react'
 
 import house from "../assets/house.png";
 import error from "../assets/error_icon.png";
@@ -17,7 +18,15 @@ function Login() {
     password,
     setPassword,
     loading,
+    setIsValid,
+    setIsHaveEmail,
+    isHaveEmail
   } = useLogin();
+
+  useEffect(() => {
+    setIsHaveEmail(true)
+    setIsValid(true)
+  }, [password, email])
 
   return (
     <div className="mt-24">
@@ -41,18 +50,23 @@ function Login() {
               id="email"
               placeholder=""
               required
-              className={`mt-2 mb-5 ${
-                !isValid ? "border-[#C82438]" : "focus:border-blue-600"
-              } focus:ring-1 focus-visible:ring-0 focus-visible:ring-offset-0 w-full`}
+              className={`mt-2 ${!isHaveEmail ? "border-[#C82438]" : ""
+                } w-full`}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <img
               src={error}
               alt="error"
-              className={`${!isValid ? "absolute right-4 bottom-8" : "hidden"}`}
+              className={`${!isHaveEmail ? "absolute right-4 bottom-4" : "hidden"}`}
             />
           </div>
+          <span
+            className={`${!isHaveEmail ? "text-[#C82438] font-normal text-xs mt-2" : "invisible"
+              }`}
+          >
+            Cannot found this email!!
+          </span>
           <div className="relative">
             <Label htmlFor="password" className="block">
               <h5>
@@ -64,9 +78,8 @@ function Login() {
               id="password"
               placeholder=""
               required
-              className={`mt-2 ${
-                !isValid ? "border-[#C82438]" : "focus:border-blue-600"
-              } focus:ring-1 focus-visible:ring-0 focus-visible:ring-offset-0 w-full`}
+              className={`mt-2 ${!isValid ? "border-[#C82438]" : ""
+                } w-full`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -76,14 +89,13 @@ function Login() {
               className={`${!isValid ? "absolute right-4 bottom-4" : "hidden"}`}
             />
           </div>
-          <p
-            className={`${
-              !isValid ? "text-[#C82438] font-normal text-xs mt-2" : "hidden"
-            }`}
+          <span
+            className={`${!isValid ? "text-[#C82438] font-normal text-xs mt-2" : "invisible"
+              }`}
           >
-            Wrong password or email!!
-          </p>
-          <Button type="submit" className=" w-full mt-11 space-x-2">
+            Wrong password!!
+          </span>
+          <Button type="submit" className=" w-full mt-7 space-x-2">
             <p>เข้าสู่ระบบ</p>
             {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
           </Button>
