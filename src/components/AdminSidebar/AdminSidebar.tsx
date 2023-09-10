@@ -17,7 +17,6 @@ export default function AdminSidebar() {
     { path: '/categories', state: 'categories' },
     { path: '/services', state: 'services' },
     { path: '/promotions', state: 'promotions' },
-    // เพิ่ม path และ state อื่นๆ ตามที่คุณต้องการ
   ];
 
   function handleClick(selectedLi: string) {
@@ -25,7 +24,7 @@ export default function AdminSidebar() {
     // navigate to path that be chosen
     const matchingPair = pathStatePairs.find(pair => pair.state === selectedLi);
     if (matchingPair) {
-      // ฟังก์ชันใน JavaScript ที่ใช้ในการเปลี่ยน URL แท็บโดยไม่ต้องโหลดหน้าเว็บใหม่ (ไม่ต้อง refresh) ซึ่งเป็นสิ่งสำคัญในการสร้างแอปพลิเคชันเว็บแบบเสมือนจริง (SPA - Single Page Application) เนื่องจากคุณสามารถบริหารจัดการการนำทางและสถานะโดยที่ไม่ต้องโหลดหน้าเว็บใหม่ทุกครั้งที่มีการคลิก.
+      // ฟังก์ชันใน JavaScript ที่ใช้ในการเปลี่ยน URL แท็บโดยไม่ต้องโหลดหน้าเว็บใหม่ (ไม่ต้อง refresh) ซึ่งเป็นสิ่งสำคัญในการสร้างแอปพลิเคชันเว็บแบบเสมือนจริง (SPA - Single Page Application) เนื่องจากสามารถบริหารจัดการการนำทางและสถานะโดยที่ไม่ต้องโหลดหน้าเว็บใหม่ทุกครั้งที่มีการคลิก.
       window.history.pushState(null, '', matchingPair.path);
       // window.history.pushState(state, title, url);
       navigate(matchingPair.path);
@@ -33,11 +32,8 @@ export default function AdminSidebar() {
   }
 
   useEffect(() => {
-    // check URL and update state
-    const matchingPair = pathStatePairs.find(pair => pair.path === location.pathname);
-    if (matchingPair) {
-      setActiveLi(matchingPair.state);
-    }
+    const matchingPair = pathStatePairs.find(pair => location.pathname.startsWith(pair.path));
+    setActiveLi(matchingPair ? matchingPair.state : location.pathname.split('/')[1]);
   }, [location.pathname]);
   
 
