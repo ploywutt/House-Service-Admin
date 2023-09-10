@@ -42,7 +42,7 @@ function Login() {
           <div className="relative ">
             <Label htmlFor="email" className="block">
               <h5>
-                Email<span className="text-[#C82438]">*</span>
+                Email<span className="text-rose-700">*</span>
               </h5>
             </Label>
             <Input
@@ -50,10 +50,11 @@ function Login() {
               id="email"
               placeholder=""
               required
-              className={`mt-2 ${!isHaveEmail ? "border-[#C82438]" : ""
+              className={`mt-2 ${!isHaveEmail ? "border-rose-700 focus:border-rose-700" : ""
                 } w-full`}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              style={{ borderColor: !isHaveEmail ? "#C82438" : "" }}
             />
             <img
               src={error}
@@ -62,7 +63,7 @@ function Login() {
             />
           </div>
           <span
-            className={`${!isHaveEmail ? "text-[#C82438] font-normal text-xs mt-2" : "invisible"
+            className={`${!isHaveEmail ? "text-rose-700 font-normal text-xs mt-2" : "invisible"
               }`}
           >
             Cannot found this email!!
@@ -70,7 +71,7 @@ function Login() {
           <div className="relative">
             <Label htmlFor="password" className="block">
               <h5>
-                Password<span className="text-[#C82438]">*</span>
+                Password<span className="text-rose-700">*</span>
               </h5>
             </Label>
             <Input
@@ -78,10 +79,11 @@ function Login() {
               id="password"
               placeholder=""
               required
-              className={`mt-2 ${!isValid ? "border-[#C82438]" : ""
+              className={`mt-2 ${!isValid ? "border-rose-700 focus:border-rose-700" : null
                 } w-full`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              style={{ borderColor: !isValid ? "#C82438" : "" }}
             />
             <img
               src={error}
@@ -90,7 +92,7 @@ function Login() {
             />
           </div>
           <span
-            className={`${!isValid ? "text-[#C82438] font-normal text-xs mt-2" : "invisible"
+            className={`${!isValid ? "text-rose-700 font-normal text-xs mt-2" : "invisible"
               }`}
           >
             Wrong password!!

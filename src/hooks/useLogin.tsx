@@ -6,7 +6,7 @@ import axios from 'axios'
 function useLogin() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isValid, setIsValid] = useState<boolean>(true);
+  const [isValid, setIsValid] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [isHaveEmail, setIsHaveEmail] = useState<boolean>(true)
 
