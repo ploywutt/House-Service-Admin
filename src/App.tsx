@@ -1,7 +1,10 @@
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
 import Login from "./pages/Login";
 import Category from "./pages/Category";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Services from "./pages/Services";
+import Promotion from "./pages/Promotion";
 
 function App() {
   return (
@@ -9,7 +12,12 @@ function App() {
       <Routes>
         {/* ลบตัวอย่างออกแล้วใส่เฉพาะ Route ที่ทำนะคับ เพื่อป้องกัน conflict คับ */}
         <Route path="/" element={<Login />} />
-        <Route path="/categories" element={<Category />} />
+        <Route element={<Layout />}>
+          <Route path="/categories" element={<Category />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/promotions" element={<Promotion />} />
+          <Route path="*" element={<Category />} />
+        </Route>
       </Routes>
     </Router>
   );
