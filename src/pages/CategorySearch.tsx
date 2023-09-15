@@ -1,22 +1,37 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 
-import { Topbar_search } from "@/components/Topbar/Topbar";
-import useCategory from "@/hooks/useCategory";
+import Topbar_search from "@/components/Topbar/TopbarSearch";
 import useDateVal from "@/hooks/useDateVal";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import Alert from "@/components/Alert/Alert";
+import { useProduct } from "@/contexts/productsContext";
+import useCategory from "@/hooks/useCategory";
 
 import dot from "../assets/icon/dot.png"
 import garbage from "../assets/icon/garbage.svg"
 import pen from "../assets/icon/pen.svg"
 
-function CategorySearch() {
 
-  const { getCategory, categories, loading, setCategories } = useCategory()
-  const formatDate = useDateVal()
+function CategorySearch() {
+  const navigate = useNavigate()
+  const { getCategory } = useCategory()
+
+  const {
+    searchCategory,
+    categories, setCategories,
+    loading,
+  }: any = useProduct()
+
+  const { formatDateTime } = useDateVal()
 
   function handleDragEnd(result: any) {
     if (!result.destination) return; // ไม่ได้ลากและวางสิ่งของให้ตรงไหน
-    let tempCategory: [] = [...categories]
+    let tempCategory: any[] = [...categories]
     let [selectedRow] = tempCategory.splice(result.source.index, 1)
     tempCategory.splice(result.destination.index, 0, selectedRow)
     setCategories(tempCategory)
@@ -26,12 +41,13 @@ function CategorySearch() {
   }
 
   useEffect(() => {
-    getCategory()
-  }, [])
+    getCategory(searchCategory)
+  }, [searchCategory])
+
 
   return (
     <div className="w-full">
-      <Topbar_search title='หมวดหมู่' />
+      <Topbar_search title='หมวดหมู่' path="/categories/add" />
       {loading ? <h1>Loading ...</h1> : null}
       <div className="mx-auto w-[90%] max-w-[1440px] mt-10 border rounded-lg">
         <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
@@ -69,12 +85,21 @@ function CategorySearch() {
                               </td>
                               <td className="text-center px-6">{index + 1}</td>
                               <td className="px-6">{category.category_name}</td>
-                              <td className="px-6">{formatDate(category.createAt)}</td>
-                              <td className="px-6">{formatDate(category.updateAt)}</td>
+                              <td className="px-6">{formatDateTime(category.createAt)}</td>
+                              <td className="px-6">{formatDateTime(category.updateAt)}</td>
                               <td className={`text-center px-6 ${index === categories.length - 1 ? "rounded-br-lg" : ""} `}>
                                 <div className="flex justify-center gap-6">
-                                  <img src={garbage} alt='garbage' className="hover:cursor-pointer hover:scale-110" />
-                                  <img src={pen} alt='pen' className="hover:cursor-pointer hover:scale-110" />
+                                  <AlertDialog>
+                                    <AlertDialogTrigger>
+                                      <img
+                                        src={garbage}
+                                        alt='garbage'
+                                        className="hover:cursor-pointer hover:scale-110 min-w-[20px]"
+                                      />
+                                    </AlertDialogTrigger>
+                                    <Alert name={category.category_name} id={category.id} />
+                                  </AlertDialog>
+                                  <img src={pen} alt='pen' className="hover:cursor-pointer hover:scale-110" onClick={() => navigate(`/categories/detail/${category.id}`)} />
                                 </div>
                               </td>
                             </tr>
@@ -95,41 +120,6 @@ function CategorySearch() {
                 </tbody>
               )}
             </Droppable>
-            {/* <tbody className="bg-white">
-              {
-                categories && categories.length !== 0 ?
-                  categories.map((category: any, index: number) => {
-                    return (
-                      <tr key={category.id} className="h-20">
-                        <td className={`text-center ${index === categories.length - 1 ? "rounded-bl-lg" : ""} `}>
-                          <div className="flex justify-center gap-0.5 hover:cursor-move">
-                            <img src={dot} alt='dot' />
-                            <img src={dot} alt='dot' />
-                          </div>
-                        </td>
-                        <td className="text-center px-6">{index + 1}</td>
-                        <td className="px-6">{category.category_name}</td>
-                        <td className="px-6">{formatDate(category.createAt)}</td>
-                        <td className="px-6">{formatDate(category.updateAt)}</td>
-                        <td className={`text-center px-6 ${index === categories.length - 1 ? "rounded-br-lg" : ""} `}>
-                          <div className="flex justify-center gap-6">
-                            <img src={garbage} alt='garbage' className="hover:cursor-pointer hover:scale-110" />
-                            <img src={pen} alt='pen' className="hover:cursor-pointer hover:scale-110" />
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  }) :
-                  <>
-                    <td className="rounded-bl-lg"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td className="rounded-br-lg"></td>
-                  </>
-              }
-            </tbody> */}
           </table>
         </DragDropContext>
       </div>

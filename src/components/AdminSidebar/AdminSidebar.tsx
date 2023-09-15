@@ -43,7 +43,7 @@ export default function AdminSidebar() {
   }
 
   return (
-    <div id="container" className="flex-none w-[240px] h-screen bg-blue-950 pt-6">
+    <div id="container" className="flex-none w-[240px] h-screen bg-blue-950 pt-6 sticky top-0">
       <div
         id="logo-bg"
         className="bg-blue-100 mb-7 rounded-xl flex flex-row items-center py-2 px-2.5 gap-1 mx-6"
