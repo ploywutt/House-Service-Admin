@@ -8,14 +8,22 @@ import {
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 
-
 import alert from "../../assets/icon/alert.png"
 import cancel from "../../assets/icon/close-line.png"
-import { useProduct } from "@/contexts/productsContext"
+import useCategory from "@/hooks/useCategory";
+import useService from "@/hooks/useService";
+import useProcessing from "@/hooks/useProcessing";
 
-function Alert(prop: any) {
+interface AlertType {
+	title: string
+	id: number,
+	name: string
+}
 
-	const { deleteCategory, currentCategory }: any = useProduct()
+function Alert(prop: AlertType) {
+
+	const { processing }: any = useProcessing();
+	const processingObj = processing(prop.title)
 
 	return (
 		<AlertDialogContent className="max-w-[360px] rounded-2xl">
@@ -43,7 +51,7 @@ function Alert(prop: any) {
 				{
 					prop.id !== 0 ?
 						<>
-							<AlertDialogAction className="min-w-[112px]" onClick={() => deleteCategory(prop.id)}>ลบรายการ</AlertDialogAction>
+							<AlertDialogAction className="min-w-[112px]" onClick={() => processingObj.delete(prop.id)}>ลบรายการ</AlertDialogAction>
 							<AlertDialogCancel className="text-blue-600 border border-blue-600 min-w-[112px]">ยกเลิก</AlertDialogCancel>
 						</> :
 						<AlertDialogCancel className="text-blue-600 border border-blue-600 min-w-[112px]">ยกเลิก</AlertDialogCancel>

@@ -97,7 +97,7 @@ function CategorySearch() {
                                         className="hover:cursor-pointer hover:scale-110 min-w-[20px]"
                                       />
                                     </AlertDialogTrigger>
-                                    <Alert name={category.category_name} id={category.id} />
+                                    <Alert name={category.category_name} id={category.id} title='หมวดหมู่' />
                                   </AlertDialog>
                                   <img src={pen} alt='pen' className="hover:cursor-pointer hover:scale-110" onClick={() => navigate(`/categories/detail/${category.id}`)} />
                                 </div>

@@ -61,7 +61,7 @@ function CategoryEdit() {
 					<AlertDialogTrigger>
 						<p className="text-gray-700 font-semibold underline hover:cursor-pointer hover:scale-110">ลบหมวดหมู่</p>
 					</AlertDialogTrigger>
-					<Alert name={currentCategory} id={newCategory ? newCategory.id : 0} />
+					<Alert name={currentCategory} id={newCategory ? newCategory.id : 0} title='หมวดหมู่' />
 				</AlertDialog>
 			</div>
 		</div>
