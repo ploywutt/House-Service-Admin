@@ -14,10 +14,23 @@ function Topbar_add(prop: TopbarType) {
 	const {
 		currentCategory, createCategory,
 		errorMessage, setErrorMessage,
+		submitServiceInput, setSubmitServiceInput,
 	}: any = useProduct()
 
+	function createService() {
+		if (submitServiceInput === false) {
+			setSubmitServiceInput(true)
+			console.log("at top bar 1 ค่าก่อนเปลี่ยน ---", submitServiceInput)
+		}
+	}
+
 	function handleAccept(categoryName: string) {
-		createCategory(categoryName)
+		if (prop.title === "หมวดหมู่") {
+			createCategory(categoryName)
+		} else if (prop.title === "บริการ") {
+			createService()
+		}
+
 	}
 
 	useEffect(() => {
@@ -30,7 +43,11 @@ function Topbar_add(prop: TopbarType) {
 			})
 		}
 		setErrorMessage("");
+    // console.log('Data from ..... in Service :', formData);
+
 	}, [currentCategory, errorMessage])
+
+
 
 	return (
 		<nav className="flex items-center justify-between h-20 bg-white px-10 sticky top-0">
@@ -38,7 +55,7 @@ function Topbar_add(prop: TopbarType) {
 				เพิ่ม{`${prop.title}`}
 			</h3>
 			<div className='flex items-center gap-6'>
-				<Button className='h-11 py-2.5 px-6 gap-2' type="button" variant="secondary" onClick={() => navigate("/categories")}>ยกเลิก</Button>
+				<Button className='h-11 py-2.5 px-6 gap-2' type="button" variant="secondary" onClick={() => navigate("/services")}>ยกเลิก</Button>
 				<Button className='h-11 py-2.5 px-6 gap-2' type="submit" onClick={() => handleAccept(currentCategory)} >สร้าง</Button>
 			</div>
 		</nav>

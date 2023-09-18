@@ -78,7 +78,7 @@ function ServiceSearch() {
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <td className={`text-center ${index === service.length - 1 ? "rounded-bl-lg" : ""} `}>
+                              <td className={`text-center ${index === services.length - 1 ? "rounded-bl-lg" : ""} `}>
                                 <div className="flex justify-center gap-0.5 hover:cursor-move">
                                   <img src={dot} alt='dot' />
                                   <img src={dot} alt='dot' />
@@ -89,7 +89,7 @@ function ServiceSearch() {
                               <td className="px-6"><span className="px-2.5 py-1 bg-sky-100 rounded-lg text-sky-900">{service.category}</span></td>
                               <td className="px-6">{formatDateTime(service.createAt)}</td>
                               <td className="px-6">{formatDateTime(service.updateAt)}</td>
-                              <td className={`text-center px-6 ${index === service.length - 1 ? "rounded-br-lg" : ""} `}>
+                              <td className={`text-center px-6 ${index === services.length - 1 ? "rounded-br-lg" : ""} `}>
                                 <div className="flex justify-center gap-6">
                                   <AlertDialog>
                                     <AlertDialogTrigger>

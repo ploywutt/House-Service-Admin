@@ -1,23 +1,24 @@
 import React, { useState } from "react";
+import { ProductContextType } from "./productsContextType";
 
-const ProductContext = React.createContext(undefined)
+const ProductContext = React.createContext<ProductContextType | undefined>(undefined);
 function ProductProvider({ children }: any) {
 	const [loading, setLoading] = useState<boolean>(false);
+	const [errorMessage, setErrorMessage] = useState<string>('')
 	
 	// Category part
 	const [currentCategory, setCurrentCategory] = useState<string>('');
 	const [searchCategory, setSearchCategory] = useState<string>('')
 	const [categories, setCategories] = useState<any[]>([])
-	const [categoryName, setCategoryName] = useState<string>('')
-	const [categoryId, setCategoryId] = useState<number>()
-	const [errorMessage, setErrorMessage] = useState<string>('')
 	const [newCategory, setNewCategory] = useState<any>([])
 
 	// Service part
 	const [services, setServices] = useState<any[]>([])
 	const [searchService, setSearchService] = useState<string>('')
 	const [newService, setNewService] = useState<string>('')
-
+	const [fileList, setFileList] = useState<File[] | null>(null)
+	const [formData, setFormData] = useState<object | null>(null)
+  const [submitServiceInput, setSubmitServiceInput] = useState<boolean>(false);
 
 	return (
 		<ProductContext.Provider value={{
@@ -28,14 +29,15 @@ function ProductProvider({ children }: any) {
 			currentCategory, setCurrentCategory,
 			searchCategory, setSearchCategory,
 			categories, setCategories,
-			categoryName, setCategoryName,
-			categoryId, setCategoryId,
 			newCategory, setNewCategory,
 
 			//Service part
 			services, setServices,
 			searchService, setSearchService,
-			newService, setNewService
+			newService, setNewService,
+			fileList, setFileList,
+			formData, setFormData,
+			submitServiceInput, setSubmitServiceInput,
 		}}>
 			{children}
 		</ProductContext.Provider>

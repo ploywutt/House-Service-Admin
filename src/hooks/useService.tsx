@@ -53,10 +53,30 @@ function useService() {
 		setLoading(false)
 	}
 
+	async function createService(serviceData: any) {
+		try {
+			const requestData = {
+				service_name: serviceData.serviceName,
+				category_name: serviceData.category,
+				pic_service: serviceData.imagePath
+			}
+			setLoading(true)
+			await axios.post("http://localhost:4000/v1/admin/services/", requestData)
+			navigate("/services/")
+			setLoading(false)
+		} catch (error: any) {
+			console.error(error)
+			setErrorMessage(error.response.data.message)
+		}
+		setLoading(false)
+
+	}
+
 	return {
 		getServices,
 		getServiceById,
 		deleteService,
+		createService
 	}
 
 }
