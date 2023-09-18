@@ -28,18 +28,21 @@ function App() {
             <Route path="add" element={<CategoryAdd />} />
             <Route path="edit/:id" element={<CategoryEdit />} />
             <Route path="detail/:id" element={<CategoryDetail />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
           <Route path="/services/*">
             <Route path="" element={<ServiceSearch />} />
             <Route path="add" element={<ServiceAdd />} />
             <Route path="edit/:id" element={<ServiceEdit />} />
             <Route path="detail/:id" element={<ServiceDetail />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
           <Route path="/promotions/*">
             <Route path="" element={<PromotionSearch />} /> 
             <Route path="add" element={<PromotionAdd />} /> 
             <Route path="edit/:id" element={<PromotionEdit />} /> 
             <Route path="detail/:id" element={<PromotionDetail />} /> 
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
