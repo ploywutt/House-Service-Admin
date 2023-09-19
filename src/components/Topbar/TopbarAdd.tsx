@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
 import { TopbarType } from "./TopbarType"
-import { useToast } from "../ui/use-toast"
 import { useProduct } from "@/contexts/productsContext"
+import { useToast } from "../ui/use-toast"
 import { ToastAction } from "@/components/ui/toast"
 import { Button } from "../ui/button"
 
