@@ -87,7 +87,7 @@ function useService() {
 			}
 			console.log("ข้อมูลย่อยก่อนส่ง .......", requestData)
 			setLoading(true)
-			await axios.post("http://localhost:4000/v1/user/subservices/subservices/", requestData)
+			await axios.post("http://localhost:4000/v1/admin/services/subservices/", requestData)
 			setLoading(false)
 			navigate("/services")
 		} catch (error: any) {
