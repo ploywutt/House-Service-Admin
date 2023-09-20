@@ -2,6 +2,7 @@ import { Input } from '@/components/ui/input';
 import { useProduct } from '@/contexts/productsContext';
 import { useEffect, useState } from 'react';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import ImageInput from './ImageInput';
 
@@ -10,7 +11,7 @@ import { Button } from '../ui/button';
 import useService from '@/hooks/useService';
 
 function ServiceInput() {
-
+  const navigate = useNavigate()
   const {
     categories,
     fileList, setFileList,
@@ -18,9 +19,9 @@ function ServiceInput() {
     submitServiceInput, setSubmitServiceInput
   }: any = useProduct();
 
-  const { createService } = useService()
+  const { createService, createSubService } = useService()
 
-  const [newFormData, setNewFormData] = useState<any>()
+  // const [newFormData, setNewFormData] = useState<any>()
   const [validateServiceName, setValidateServiceName] = useState<string>('')
   const [validateCategory, setValidateCategory] = useState<string>('')
   const [validateItems, setValidateItems] = useState<any>([])
@@ -60,7 +61,7 @@ function ServiceInput() {
     }
 
     if (validateItems && validateItems.length > 0) {
-      const isValid = validateItems.every((item) => {
+      const isValid = validateItems.every((item:any) => {
         return (
           item.itemName && item.itemName.trim() !== '' &&
           !isNaN(item.itemPrice) && item.itemPrice > 0 &&
@@ -90,20 +91,22 @@ function ServiceInput() {
 
   }, [fileList, validateServiceName, validateCategory, validateItems])
 
+  
+
   useEffect(() => {
     
     if (!submitServiceInput) {
-      setSubmitServiceInput(false)
-      
-      
+
     } else {
       validateFormData()
       if (formData?.imagePath !== undefined) {
         console.log("Lastest dataform beform put to database ----", formData)
         createService(formData)
-        setFormData(null)
-        setFileList(null)
+        console.log("เริ่มการโหลดเข้ารายการย่อย ----- ", formData)
+        createSubService(formData)
         setSubmitServiceInput(false)
+        setFileList(null)
+        console.log("Finished")
       }
     }
     

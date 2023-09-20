@@ -26,7 +26,7 @@ function Alert(prop: AlertType) {
 	const processingObj = processing(prop.title)
 
 	return (
-		<AlertDialogContent className="max-w-[360px] rounded-2xl">
+		<AlertDialogContent className="min-w-[360px] rounded-2xl">
 			<AlertDialogHeader className="relative">
 				<AlertDialogTitle className="flex justify-center mt-[2.25rem]">
 					<img

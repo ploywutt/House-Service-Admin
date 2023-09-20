@@ -4,15 +4,17 @@ import { useParams } from "react-router-dom";
 import useDateVal from "@/hooks/useDateVal";
 
 import Topbar_detail from "@/components/Topbar/TopbarDetail"
+import useCategory from "@/hooks/useCategory";
 
 function CategoryDetail() {
-	const params = useParams()
+	const params:any = useParams()
 
 	const {
-		getCategoryById,
 		newCategory
-
+		
 	}: any = useProduct()
+	
+	const { getCategoryById } = useCategory()
 
 	const { formatDateTime } = useDateVal()
 

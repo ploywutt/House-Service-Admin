@@ -13,16 +13,20 @@ import { useProduct } from "@/contexts/productsContext"
 import garbage from '../assets/icon/garbage.svg'
 import Alert from "@/components/Alert/Alert"
 import useDateVal from "@/hooks/useDateVal"
+import useCategory from "@/hooks/useCategory"
 
 function CategoryEdit() {
-	const params = useParams()
+	const params:any = useParams()
 
 	const {
-		getCategoryById,
 		newCategory,
 		currentCategory, setCurrentCategory,
 
 	}: any = useProduct()
+
+	const {
+		getCategoryById
+	} = useCategory()
 
 	const { formatDateTime } = useDateVal()
 

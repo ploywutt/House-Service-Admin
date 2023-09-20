@@ -9,6 +9,9 @@ function useService() {
 		services, setServices,
 		newService, setNewService,
 		setErrorMessage,
+		formData, setFormData,
+		fileList, setFileList,
+		submitServiceInput, setSubmitServiceInput
 	}: any = useProduct();
 
 	async function getServices(search: string) {
@@ -20,6 +23,7 @@ function useService() {
 		} catch (error) {
 			setServices([])
 			console.error(error)
+			navigate("/services")
 		}
 		setLoading(false)
 	}
@@ -58,25 +62,48 @@ function useService() {
 			const requestData = {
 				service_name: serviceData.serviceName,
 				category_name: serviceData.category,
-				pic_service: serviceData.imagePath
+				pic_service: serviceData.imagePath,
 			}
 			setLoading(true)
+			console.log("กำลังอัพโหลดข้อมูล", requestData)
 			await axios.post("http://localhost:4000/v1/admin/services/", requestData)
-			navigate("/services/")
 			setLoading(false)
 		} catch (error: any) {
 			console.error(error)
 			setErrorMessage(error.response.data.message)
+			setFormData(null)
+			setFileList(null)
+			setSubmitServiceInput(false)
 		}
 		setLoading(false)
+		
+	}
 
+	async function createSubService(subserviceData: any) {
+		try {
+			const requestData = {
+				service_name: subserviceData.serviceName,
+				items: subserviceData.items
+			}
+			console.log("ข้อมูลย่อยก่อนส่ง .......", requestData)
+			setLoading(true)
+			await axios.post("http://localhost:4000/v1/user/subservices/subservices/", requestData)
+			setLoading(false)
+			navigate("/services")
+		} catch (error: any) {
+			setFormData(null)
+			setFileList(null)
+			setSubmitServiceInput(false)
+			console.error(error)
+		}
 	}
 
 	return {
 		getServices,
 		getServiceById,
 		deleteService,
-		createService
+		createService,
+		createSubService,
 	}
 
 }

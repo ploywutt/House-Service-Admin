@@ -6,29 +6,26 @@ import { useProduct } from "@/contexts/productsContext"
 import { useToast } from "../ui/use-toast"
 import { ToastAction } from "@/components/ui/toast"
 import { Button } from "../ui/button"
+import useService from "@/hooks/useService"
+import useCategory from "@/hooks/useCategory"
 
 
 function Topbar_add(prop: TopbarType) {
 	const navigate = useNavigate()
 	const { toast } = useToast()
 	const {
-		currentCategory, createCategory,
+		currentCategory,
 		errorMessage, setErrorMessage,
 		submitServiceInput, setSubmitServiceInput,
 	}: any = useProduct()
 
-	function createService() {
-		if (submitServiceInput === false) {
-			setSubmitServiceInput(true)
-			console.log("at top bar 1 ค่าก่อนเปลี่ยน ---", submitServiceInput)
-		}
-	}
+	const { createCategory } = useCategory()
 
 	function handleAccept(categoryName: string) {
 		if (prop.title === "หมวดหมู่") {
 			createCategory(categoryName)
 		} else if (prop.title === "บริการ") {
-			createService()
+			setSubmitServiceInput(true)
 		}
 
 	}
@@ -44,7 +41,6 @@ function Topbar_add(prop: TopbarType) {
 		}
 		setErrorMessage("");
     // console.log('Data from ..... in Service :', formData);
-
 	}, [currentCategory, errorMessage])
 
 

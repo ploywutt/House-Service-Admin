@@ -27,6 +27,7 @@ function CategorySearch() {
     loading,
   }: any = useProduct()
 
+  
   const { formatDateTime } = useDateVal()
 
   function handleDragEnd(result: any) {

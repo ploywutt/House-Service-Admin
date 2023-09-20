@@ -1,8 +1,8 @@
 import { useProduct } from '@/contexts/productsContext'
 import { useEffect, useState } from 'react'
 import { secretKey } from "../../lib/supabase.ts";
-import useService from '@/hooks/useService.tsx';
-import { useNavigate } from 'react-router-dom';
+// import useService from '@/hooks/useService.tsx';
+// import { useNavigate } from 'react-router-dom';
 
 function ImageInput() {
 	// #
@@ -13,8 +13,8 @@ function ImageInput() {
 		formData, setFormData,
 
 	}: any = useProduct()
-	const { createService } = useService()
-	const navigate = useNavigate()
+	// const { createService } = useService()
+	// const navigate = useNavigate()
 
 	const [progress, setProgress] = useState<number>(0)
 	const [isValidate, setIsValidate] = useState<boolean | null>(true)
@@ -24,10 +24,10 @@ function ImageInput() {
 		e.stopPropagation()
 	}
 
-	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const files = Array.from(e.target.files || []);
-		displayPreview(files);
-	};
+	// const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	const files = Array.from(e.target.files || []);
+	// 	displayPreview(files);
+	// };
 
 
 	// const handleUpload = async () => {
@@ -57,7 +57,7 @@ function ImageInput() {
 			console.log("name of image ระหว่างอัพโหลด upload ..... === ", file.name)
 
 			if (error) {
-				console.error(error)
+				console.error("ผิดตรงนี้.....", error)
 				setSubmitServiceInput(false)
 			} else {
 				console.log("Success to up load...", data)
@@ -68,7 +68,7 @@ function ImageInput() {
 				console.log("ข้อมูลรวมที่ต้องส่ง หลังเพิ่ม image path", formData)
 			}
 		} catch (error) {
-			console.error(error)
+			console.error("ผิดตรงสุดท้าย....", error)
 			setSubmitServiceInput(false)
 		}
 

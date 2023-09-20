@@ -5,13 +5,18 @@ import { TopbarType } from "./TopbarType"
 import { Button } from '@/components/ui/button';
 
 import back from '../../assets/icon/back_arrow.png'
+import useCategory from "@/hooks/useCategory";
 
 function Topbar_edit(prop: TopbarType) {
 	const navigate = useNavigate()
 	const {
-		currentCategory, updateCategory,
+		currentCategory,
 		newCategory
 	}: any = useProduct()
+
+	const {
+		updateCategory
+	} = useCategory()
 
 	function handleAccept(id: number, categoryName: string, update: string) {
 		updateCategory(id, categoryName, update)
