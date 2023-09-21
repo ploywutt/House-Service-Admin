@@ -22,12 +22,16 @@ export interface ProductContextType {
   setServices: (services: any[]) => void;
   searchService: string;
   setSearchService: (search: string) => void;
-  newService: string; 
-  setNewService: (newService: string) => void;
+  newService: any; 
+  setNewService: (newService: any) => void;
 	fileList: File[] | null
   setFileList: (File: any[]) => void
   formData: object | null
   setFormData: (formData: any[]) => void
   submitServiceInput: boolean;
   setSubmitServiceInput: (value: boolean) => void
+  imagePath: string | null 
+  setImagePath: (imagePath: string) => void
+  blobImage: any;
+  setBlobImage: (blobImage: any) => void
 };

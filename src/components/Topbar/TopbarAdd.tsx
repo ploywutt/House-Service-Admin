@@ -22,12 +22,12 @@ function Topbar_add(prop: TopbarType) {
 	const { createCategory } = useCategory()
 
 	function handleAccept(categoryName: string) {
-		if (prop.title === "หมวดหมู่") {
-			createCategory(categoryName)
-		} else if (prop.title === "บริการ") {
-			setSubmitServiceInput(true)
+			createCategory(categoryName)	
 		}
 
+	function handleCreate(){
+		setSubmitServiceInput(true)
+		console.log("Trigger create...", submitServiceInput)
 	}
 
 	useEffect(() => {
@@ -52,7 +52,16 @@ function Topbar_add(prop: TopbarType) {
 			</h3>
 			<div className='flex items-center gap-6'>
 				<Button className='h-11 py-2.5 px-6 gap-2' type="button" variant="secondary" onClick={() => navigate("/services")}>ยกเลิก</Button>
-				<Button className='h-11 py-2.5 px-6 gap-2' type="submit" onClick={() => handleAccept(currentCategory)} >สร้าง</Button>
+				{
+					prop.title === "หมวดหมู่" && (
+						<Button className='h-11 py-2.5 px-6 gap-2' type="submit" onClick={() => handleAccept(currentCategory)} >สร้าง</Button>
+					)
+				}
+				{
+					prop.title === "บริการ" && (
+						<Button className='h-11 py-2.5 px-6 gap-2' type="submit" onClick={() => handleCreate()} >สร้าง</Button>
+					)
+				}
 			</div>
 		</nav>
 	)

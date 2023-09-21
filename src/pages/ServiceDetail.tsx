@@ -4,54 +4,45 @@ import useDateVal from '@/hooks/useDateVal';
 import useService from '@/hooks/useService';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { secretKey } from "../lib/supabase.ts";
-
 
 function ServiceDetail() {
   const params: any = useParams()
-  const [imagePath, setImagePath] = useState<string>('')
-  const { loading, setLoading }: any = useProduct()
 
-  async function downloadFile() {
-    console.log("เส้นทาง.....", newService.pic_service)
-    try {
-      setLoading(true)
-      const { data, error } = await secretKey.storage.from('testing').download(newService.pic_service)
-      if (error) {
-        setLoading(false)
-        console.error("ขณะโหลด......", error)
-      } else {
-        console.log("สิ่งที่โฟลดมา...", data)
-        const blob = new Blob([data]);
-        const imageUrl = URL.createObjectURL(blob);
-        setImagePath(imageUrl);
-        setLoading(false)
-      }
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
-    }
-  }
-  const {
+  const { 
+    loading, setLoading,
+    imagePath, setImagePath,
     newService,
+
   }: any = useProduct()
-  useEffect(() => {
-    if (newService.subServices) {
-      // ทำอะไรกับ newService.subServices เช่น map หรือแสดงข้อมูล
-      console.log("แสดงส่วนย่อย", Array.isArray(newService.subServices));
-    }
-    downloadFile()
-  }, [params.id, newService])
+
+  const {
+    downloadFile,
+    getServiceById
+  } = useService()
 
   const { formatDateTime } = useDateVal()
-  const { getServiceById } = useService()
-
+  
+  useEffect(() => {
+    async function fectData() {
+      await getServiceById(params.id)
+    }
+    fectData()
+  }, [])
 
   useEffect(() => {
-    getServiceById(params.id)
-    // downloadFile()
-    console.log("ค่าตั้งต้น", newService)
-  }, [])
+    if (newService?.subServices) {
+      // ทำอะไรกับ newService.subServices เช่น map หรือแสดงข้อมูล
+      console.log("แสดงส่วนย่อย", Array.isArray(newService.subServices));
+      async function fectData() {
+        await downloadFile()
+      }
+      fectData()
+      
+    }
+    console.log("ค่าตั้งต้น ------", newService)
+    console.log("เส่นทาง ----", imagePath)
+  }, [newService])
+
 
   return (
     <div className="w-full">
@@ -61,13 +52,13 @@ function ServiceDetail() {
           <div className="w-52 inline-block mr-6">
             ชื่อบริการ
           </div>
-          <div className='text-black text-base font-normal leading-normal'>{newService.service_name}</div>
+          <div className='text-black text-base font-normal leading-normal'>{newService?.service_name}</div>
         </div>
         <div className="py-6 px-6 text-base text-gray-700 font-medium leading-normal flex">
           <div className="w-52 inline-block mr-6">
             หมวดหมู่
           </div>
-          <div className='text-black text-base font-normal leading-normal'>{newService.category}</div>
+          <div className='text-black text-base font-normal leading-normal'>{newService?.category}</div>
         </div>
         <div className="py-10 px-6 text-base text-gray-700 font-medium leading-normal flex ">
           <div className="w-52 mr-6">
@@ -78,7 +69,7 @@ function ServiceDetail() {
               (<div className='w-96 h-36 rounded-lg border flex justify-center items-center'>
                 <h1>Loading....</h1>
               </div>) :
-              (<img src={imagePath} alt={newService.pic_service} className="w-96 min-h-36 rounded-lg border" />)
+              (<img src={imagePath} alt={newService?.pic_service} className="w-96 min-h-36 rounded-lg border" />)
           }
         </div>
 
@@ -95,17 +86,17 @@ function ServiceDetail() {
                   <div key={index} className='flex gap-6 mb-8'>
                     <div className='w-[50%] space-y-1'>
                       <div className='text-gray-500 text-sm font-normal leading-tight'>ชื่อรายการ</div>
-                      <div className='text-black text-base font-normal leading-normal'>{subService.sub_service_name}</div>
+                      <div className='text-black text-base font-normal leading-normal'>{subService?.sub_service_name}</div>
                     </div>
 
                     <div className='w-[25%] space-y-1'>
                       <div className='text-gray-500 text-sm font-normal leading-tight'>หน่วยบริการ</div>
-                      <div className='text-black text-base font-normal leading-normal'>{subService.unit}</div>
+                      <div className='text-black text-base font-normal leading-normal'>{subService?.unit}</div>
                     </div>
 
                     <div className='w-[25%] space-y-1'>
                       <div className='text-gray-500 text-sm font-normal leading-tight'>ค่าบริการ / 1 หน่วย</div>
-                      <div className='text-black text-base font-normal leading-normal'>{subService.price_per_unit}
+                      <div className='text-black text-base font-normal leading-normal'>{subService?.price_per_unit}
                       </div>
                     </div>
                   </div>
@@ -119,10 +110,10 @@ function ServiceDetail() {
 
         <div className="py-10 px-6 text-gray-700 text-base font-medium leading-normal">
           <div>
-            <span className="w-52 mr-6 py-6 inline-block">สร้างเมื่อ</span><span>{formatDateTime(String(newService.createAt))}</span>
+            <span className="w-52 mr-6 py-6 inline-block">สร้างเมื่อ</span><span>{formatDateTime(String(newService?.createAt))}</span>
           </div>
           <div>
-            <span className="w-52 mr-6 py-6 inline-block">แก้ไขล่าสุด</span><span>{formatDateTime(String(newService.updateAt))}</span>
+            <span className="w-52 mr-6 py-6 inline-block">แก้ไขล่าสุด</span><span>{formatDateTime(String(newService?.updateAt))}</span>
           </div>
         </div>
       </div>

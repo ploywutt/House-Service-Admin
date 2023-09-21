@@ -37,7 +37,7 @@ function CategoryEdit() {
 
 	return (
 		<div className="w-full">
-			<Topbar_edit title='หมวดหมู่' path="" />
+			<Topbar_edit title='หมวดหมู่' path="/categories" />
 			<div className="mx-auto w-[90%] max-w-[1440px] mt-14 border rounded-lg bg-white">
 				<form action="" className="py-10 px-6 text-base font-medium leading-normal">
 					<label htmlFor="" className="text-gray-700 w-52 inline-block mr-6">
@@ -59,7 +59,7 @@ function CategoryEdit() {
 					</div>
 				</div>
 			</div>
-			<div className="w-[90%] max-w-[1440px] mx-auto flex gap-2 justify-end mt-6">
+			<div className="w-[90%] max-w-[1440px] mx-auto flex gap-2 justify-end my-6">
 				<img src={garbage} alt="garbage" className="" />
 				<AlertDialog>
 					<AlertDialogTrigger>

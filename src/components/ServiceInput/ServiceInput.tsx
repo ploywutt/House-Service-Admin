@@ -21,7 +21,6 @@ function ServiceInput() {
 
   const { createService, createSubService } = useService()
 
-  // const [newFormData, setNewFormData] = useState<any>()
   const [validateServiceName, setValidateServiceName] = useState<string>('')
   const [validateCategory, setValidateCategory] = useState<string>('')
   const [validateItems, setValidateItems] = useState<any>([])
@@ -102,11 +101,14 @@ function ServiceInput() {
       if (formData?.imagePath !== undefined) {
         console.log("Lastest dataform beform put to database ----", formData)
         createService(formData)
+
         console.log("เริ่มการโหลดเข้ารายการย่อย ----- ", formData)
-        createSubService(formData)
         setSubmitServiceInput(false)
         setFileList(null)
         console.log("Finished")
+
+			  navigate("/services")
+
       }
     }
     
@@ -130,7 +132,8 @@ function ServiceInput() {
               className={`${!isServiceValidate ? "border-rose-700 focus:border-rose-700" : null}`}
               style={{ borderColor: !isServiceValidate ? "#C82438" : "" }}
               onChange={(e) => setValidateServiceName(e.target.value)}
-            />)}
+            />
+          )}
         />
         {!isServiceValidate ? (
           <span className="ml-4 text-rose-700 text-sm font-medium">กรุณากรอกข้อมูลชื่อบริการ</span>
@@ -173,7 +176,20 @@ function ServiceInput() {
         <label className="text-gray-700 w-52 inline-block mr-6">
           รูปภาพ<span className="text-rose-700">*</span>
         </label>
-        <ImageInput />
+        <Controller
+              name="image"
+              control={control}
+              render={({ field }) => (
+                <ImageInput
+                  {...field}
+                  onChange={(selectedImage) => {
+                    field.onChange(selectedImage)
+                  }}
+                  value={field.value}
+                />
+
+              )}
+            />
       </div>
 
       <div className="w-full h-px border border-gray-300 mb-10"></div>

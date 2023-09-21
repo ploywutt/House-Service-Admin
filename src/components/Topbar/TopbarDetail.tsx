@@ -18,7 +18,7 @@ function Topbar_detail(prop: TopbarType) {
 					<p className=".p4 text-gray-500">{prop.title}</p>
 					<h3 className="text-zinc-800 text-xl font-medium">
 						{prop.title ==="หมวดหมู่" && newCategory.category_name}
-						{prop.title ==="บริการ" && newService.service_name}
+						{prop.title ==="บริการ" && newService?.service_name}
 					</h3>
 				</div>
 			</div>
@@ -27,7 +27,7 @@ function Topbar_detail(prop: TopbarType) {
 					<Button className='h-11 py-2.5 px-6 gap-2' type='submit' onClick={() => navigate(`/categories/edit/${newCategory.id}`)}>แก้ไข</Button>
 				}
 				{prop.title === "บริการ" && 
-					<Button className='h-11 py-2.5 px-6 gap-2' type='submit' onClick={() => navigate(`/services/edit/${newService.id}`)}>แก้ไข</Button>
+					<Button className='h-11 py-2.5 px-6 gap-2' type='submit' onClick={() => navigate(`/services/edit/${newService?.id}`)}>แก้ไข</Button>
 				}
 			</div>
 		</nav>
