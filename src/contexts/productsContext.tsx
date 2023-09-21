@@ -15,10 +15,12 @@ function ProductProvider({ children }: any) {
 	// Service part
 	const [services, setServices] = useState<any[]>([])
 	const [searchService, setSearchService] = useState<string>('')
-	const [newService, setNewService] = useState<string>('')
+	const [newService, setNewService] = useState()
 	const [fileList, setFileList] = useState<File[] | null>(null)
 	const [formData, setFormData] = useState<object | null>(null)
   const [submitServiceInput, setSubmitServiceInput] = useState<boolean>(false);
+  const [imagePath, setImagePath] = useState<string>('')
+	const [blobImage, setBlobImage,] = useState<any>()
 
 	return (
 		<ProductContext.Provider value={{
@@ -38,6 +40,8 @@ function ProductProvider({ children }: any) {
 			fileList, setFileList,
 			formData, setFormData,
 			submitServiceInput, setSubmitServiceInput,
+			imagePath, setImagePath,
+			blobImage, setBlobImage,
 		}}>
 			{children}
 		</ProductContext.Provider>

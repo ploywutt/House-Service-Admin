@@ -1,6 +1,9 @@
 import { useProduct } from '@/contexts/productsContext'
 import { useEffect, useState } from 'react'
 import { secretKey } from "../../lib/supabase.ts";
+import { error } from 'console';
+// import useService from '@/hooks/useService.tsx';
+// import { useNavigate } from 'react-router-dom';
 
 function ImageInput() {
 	// #
@@ -9,21 +12,20 @@ function ImageInput() {
 		fileList, setFileList,
 		submitServiceInput, setSubmitServiceInput,
 		formData, setFormData,
-
+		blobImage, setBlobImage,
+		newService, setNewService,
 	}: any = useProduct()
+	// const { createService } = useService()
+	// const navigate = useNavigate()
 
 	const [progress, setProgress] = useState<number>(0)
+	const [isValidate, setIsValidate] = useState<boolean | null>(true)
+	const [errorImage, setErrorImage] = useState<boolean | null>(false)
 
 	const preventDefaultHandler = (e: React.DragEvent<HTMLElement>) => {
 		e.preventDefault()
 		e.stopPropagation()
 	}
-
-	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const files = Array.from(e.target.files || []);
-		displayPreview(files);
-	};
-
 
 	// const handleUpload = async () => {
 	// 	// const UPLOAD_URL = "YOUR URL HERE";
@@ -47,35 +49,35 @@ function ImageInput() {
 	async function uploadFile(file: File[]) {
 
 		try {
-			const { data, error } = await secretKey.storage.from('testing').upload(`HomeService/${file.name}`, file, {
-				onProgress: (event: any) => {
-					const progress = Math.round((event.loaded / event.total) * 100);
-					setProgress(progress);
-				},
-			})
+			const { data, error } = await secretKey.storage.from('testing').upload(`HomeService/${file.name}`, file)
 
 			console.log("name of image ระหว่างอัพโหลด upload ..... === ", file.name)
 
 			if (error) {
-				console.error(error)
+				console.error("ผิดตรงนี้.....", error)
+				setErrorImage(true)
+				setSubmitServiceInput(false)
 			} else {
 				console.log("Success to up load...", data)
+				setErrorImage(false)
 				setFormData({
 					...formData,
 					imagePath: data.path
 				})
-
+				console.log("ข้อมูลรวมที่ต้องส่ง หลังเพิ่ม image path", formData)
 			}
 		} catch (error) {
-			console.error(error)
+			console.error("ผิดตรงสุดท้าย....", error)
+			setSubmitServiceInput(false)
 		}
 
 	}
 
-	function displayPreview(file: File[] | null) {
+	function displayPreview(file: any | null) {
 		if (!file) {
 			return;
 		}
+		
 		const reader = new FileReader();
 		reader.readAsDataURL(file[0]);
 		reader.onload = () => {
@@ -84,27 +86,33 @@ function ImageInput() {
 			preview.classList.remove('hidden');
 		};
 	}
-	// const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-	//   const file = e.target.files?.[0];
-	//   if (file) {
-	//     const reader = new FileReader();
-	//     reader.onload = (e) => {
-	//       setImagePreview(e.target?.result as string);
-	//     };
-	//     reader.readAsDataURL(file);
-	//   }
-	// };
+
+	const handleUploadNewImage = () => {
+		if (blobImage) {
+			const newImageFile = new File([blobImage], newService.pic_service); // สร้าง File ใหม่จาก blobImage
+			setFileList([newImageFile]); // อัพโหลดรูปภาพใหม่โดยใช้ blobImage
+			displayPreview(fileList)
+		}
+	};
 
 	useEffect(() => {
-		if (formData?.image !== undefined && submitServiceInput === true) {
-			uploadFile(fileList[0])
-			console.log("ข้อมูลชุดสุดท้ายก่อนส่งเข้า Database", formData)
+		handleUploadNewImage();
+	}, [blobImage]);
 
-			setFileList(null)
-			setFormData(null)
+	useEffect(() => {
+		if (formData?.image !== undefined && submitServiceInput && (!newService?.pic_service)) {
+			setIsValidate(true)
+			uploadFile(fileList[0])
+			console.log("ข้อมูลชุดสุดท้ายก่อนส่งเข้า Database หลังอัพโหลดรูป", formData)
+			
+		} else if (submitServiceInput && !formData?.image) {
+
+			setIsValidate(false)
+			console.log("add image .......")
 			setSubmitServiceInput(false)
 		}
-		setSubmitServiceInput(false)
+		
+
 	}, [submitServiceInput])
 	const uploading = (progress > 0) && (progress < 100) && (submitServiceInput === true)
 
@@ -145,13 +153,11 @@ function ImageInput() {
 							</svg>
 							<span className="text-gray-500 text-sm text-center font-normal leading-tight">
 								<input
-									type="file"
 									className="absolute inset-0 w-full h-full opacity-0 hover:cursor-pointer"
+									type="file"
 									accept="image/*"
-									onChange={(e: any) => {
-										displayPreview(e.target.files)
-										handleImageChange(e)
-									}}
+									onChange={(e) => displayPreview(e.target.files)}
+									value={fileList}
 								/>
 								<span className="text-blue-600 text-sm font-normal leading-tight">อัพโหลดรูปภาพ</span> หรือ ลากและวางที่นี่ <br />
 								<span>PNG, JPG ขนาดไม่เกิน 5MB</span>
@@ -191,6 +197,10 @@ function ImageInput() {
 					</button>
 				)}
 			</div>
+			{!isValidate ? (
+				<span className="text-rose-700 text-sm font-medium" >กรุณาใส่รูปภาพ</span>
+			) : null}
+			{errorImage && <span className="text-rose-700 text-sm font-medium" >รูปภาพซ้ำ</span>}
 		</div>
 	)
 }
