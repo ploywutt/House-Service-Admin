@@ -24,7 +24,15 @@ function useService() {
 			const result = await axios.get(`http://localhost:4000/v1/admin/services/?search=${search}`)
 			console.log(result.data.data)
 			setServices(result.data.data)
+
+			setNewService(null)
+			setFormData(null)
+			setSubmitServiceInput(false)
+			setImagePath(null)
+			setBlobImage(null)
+
 		} catch (error) {
+			
 			setServices([])
 			console.error(error)
 			navigate("/services")
@@ -76,6 +84,8 @@ function useService() {
 			console.log("กำลังอัพโหลดข้อมูล", requestData)
 			await axios.post("http://localhost:4000/v1/admin/services/", requestData)
 			setLoading(false)
+			setFormData(null)
+			setFileList(null)
 		} catch (error: any) {
 			console.error(error)
 			setErrorMessage(error.response.data.message)

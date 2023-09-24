@@ -85,7 +85,7 @@ function ServiceInput() {
         items: validateItems,
         image: fileList[0]
       })
-      console.log("เมื่อมี fileList", formData)
+      console.log("เมื่อมี fileList input .....", formData)
     }
 
   }, [fileList, validateServiceName, validateCategory, validateItems])
