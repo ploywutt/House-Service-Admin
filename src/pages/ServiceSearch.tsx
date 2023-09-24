@@ -25,7 +25,7 @@ function ServiceSearch() {
     services, setServices,
     searchService, setSearchService,
 
-  } = useProduct();
+  }: any = useProduct();
 
   const { formatDateTime } = useDateVal()
 

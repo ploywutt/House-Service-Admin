@@ -45,7 +45,6 @@ function useService() {
 			setLoading(true)
 			const result = await axios.get(`http://localhost:4000/v1/admin/services/${serviceId}`)
 			setNewService(result.data.data)
-			console.log(typeof result.data.data)
 		} catch (error) {
 			console.error(error)
 		}

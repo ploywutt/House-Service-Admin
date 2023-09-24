@@ -8,7 +8,7 @@ import { useEffect } from "react"
 function Topbar_detail(prop: TopbarType) {
 	const navigate = useNavigate()
 
-	const { newCategory, newService }: any = useProduct()
+	const { newCategory, newService, currentPromotion }: any = useProduct()
 
 	return (
 		<nav className="flex items-center justify-between h-20 bg-white px-10 sticky top-0">
@@ -19,6 +19,7 @@ function Topbar_detail(prop: TopbarType) {
 					<h3 className="text-zinc-800 text-xl font-medium">
 						{prop.title ==="หมวดหมู่" && newCategory.category_name}
 						{prop.title ==="บริการ" && newService?.service_name}
+						{prop.title ==="Promotion Code" && currentPromotion?.promotion_code}
 					</h3>
 				</div>
 			</div>
@@ -28,6 +29,9 @@ function Topbar_detail(prop: TopbarType) {
 				}
 				{prop.title === "บริการ" && 
 					<Button className='h-11 py-2.5 px-6 gap-2' type='submit' onClick={() => navigate(`/services/edit/${newService?.id}`)}>แก้ไข</Button>
+				}
+				{prop.title === "Promotion Code" && 
+					<Button className='h-11 py-2.5 px-6 gap-2' type='submit' onClick={() => navigate(`/promotions/edit/${currentPromotion?.promotion_id}`)}>แก้ไข</Button>
 				}
 			</div>
 		</nav>

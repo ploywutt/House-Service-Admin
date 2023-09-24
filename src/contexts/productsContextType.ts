@@ -21,7 +21,7 @@ export interface ProductContextType {
   services: any[]; 
   setServices: (services: any[]) => void;
   searchService: string;
-  setSearchService: (search: string) => void;
+  setSearchService: (searchService: string) => void;
   newService: any; 
   setNewService: (newService: any) => void;
 	fileList: File[] | null
@@ -34,4 +34,12 @@ export interface ProductContextType {
   setImagePath: (imagePath: string) => void
   blobImage: any;
   setBlobImage: (blobImage: any) => void
+
+  // Promotion part
+  searchPromotion: string | null
+  setSearchPromotion: (searchPromotion: string) => void
+  promotion: any[]
+  setPromotion: (promotion: any[]) => void;
+  currentPromotion: any
+  setCurrentPromotion: (currentPromotion: any) => void
 };

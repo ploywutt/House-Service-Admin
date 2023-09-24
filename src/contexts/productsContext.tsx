@@ -22,6 +22,11 @@ function ProductProvider({ children }: any) {
   const [imagePath, setImagePath] = useState<string>('')
 	const [blobImage, setBlobImage,] = useState<any>()
 
+	// Promotion part
+	const [searchPromotion, setSearchPromotion] = useState<string>('')
+	const [promotion, setPromotion] = useState<any[]>([])
+	const [currentPromotion, setCurrentPromotion] = useState<any>([])
+	
 	return (
 		<ProductContext.Provider value={{
 			loading, setLoading,
@@ -42,6 +47,11 @@ function ProductProvider({ children }: any) {
 			submitServiceInput, setSubmitServiceInput,
 			imagePath, setImagePath,
 			blobImage, setBlobImage,
+
+			//Promotion part
+			searchPromotion, setSearchPromotion,
+			promotion, setPromotion,
+			currentPromotion, setCurrentPromotion,
 		}}>
 			{children}
 		</ProductContext.Provider>

@@ -48,10 +48,14 @@ function Topbar_add(prop: TopbarType) {
 	return (
 		<nav className="flex items-center justify-between h-20 bg-white px-10 sticky top-0">
 			<h3 className="text-black text-xl font-medium">
-				เพิ่ม{`${prop.title}`}
+				{
+					prop.title === "Promotion Code" ?
+					`เพิ่ม ${prop.title}` :
+					`เพิ่ม${prop.title}`
+				}
 			</h3>
 			<div className='flex items-center gap-6'>
-				<Button className='h-11 py-2.5 px-6 gap-2' type="button" variant="secondary" onClick={() => navigate("/services")}>ยกเลิก</Button>
+				<Button className='h-11 py-2.5 px-6 gap-2' type="button" variant="secondary" onClick={() => navigate(-1)}>ยกเลิก</Button>
 				{
 					prop.title === "หมวดหมู่" && (
 						<Button className='h-11 py-2.5 px-6 gap-2' type="submit" onClick={() => handleAccept(currentCategory)} >สร้าง</Button>
@@ -60,6 +64,11 @@ function Topbar_add(prop: TopbarType) {
 				{
 					prop.title === "บริการ" && (
 						<Button className='h-11 py-2.5 px-6 gap-2' type="submit" onClick={() => handleCreate()} >สร้าง</Button>
+					)
+				}
+				{
+					prop.title === "Promotion Code" && (
+						<Button className='h-11 py-2.5 px-6 gap-2' type="submit" >สร้าง</Button>
 					)
 				}
 			</div>
