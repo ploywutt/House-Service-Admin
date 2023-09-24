@@ -1,16 +1,19 @@
 import { useProduct } from "@/contexts/productsContext"
 import useCategory from "@/hooks/useCategory"
 import useService from "@/hooks/useService" 
+import usePromotion from "@/hooks/usePromotion"
 
 function useProcessing() {
 
 	const {
 		searchCategory, setSearchCategory,
 		searchService, setSearchService,
-	} = useProduct();
+		searchPromotion, setSearchPromotion,
+	}: any = useProduct();
 	
 	const { deleteCategory } = useCategory();
 	const { deleteService } = useService();
+	const { deletePromotion } = usePromotion();
 
 	function processing(title: string) {
 
@@ -26,6 +29,12 @@ function useProcessing() {
 				search: searchService,
 				setSearch: setSearchService,
 				delete: deleteService,
+			},
+			{
+				title: "Promotion Code",
+				search: searchPromotion,
+				setSearch: setSearchPromotion,
+				delete: deletePromotion,
 			},
 		]
 

@@ -14,6 +14,7 @@ function Topbar_edit(prop: TopbarType) {
 		newCategory,
 		newService,
 		submitServiceInput, setSubmitServiceInput,
+		currentPromotion,
 
 	}: any = useProduct()
 
@@ -42,6 +43,7 @@ function Topbar_edit(prop: TopbarType) {
 					<h3 className="text-zinc-800 text-xl font-medium">
 						{newCategory && newCategory?.category_name}
 						{newService && newService?.service_name}
+						{currentPromotion && currentPromotion?.promotion_code}
 					</h3>
 				</div>
 			</div>

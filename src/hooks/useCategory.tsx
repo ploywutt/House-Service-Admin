@@ -93,12 +93,29 @@ function useCategory() {
 		setCurrentCategory('')
 	}
 
+	async function updateRecommend(dataToUpdateServer: any) {
+		try {
+			const requestData = {
+				newPosition: dataToUpdateServer
+			}
+			console.log(requestData)
+			setLoading(true)
+			await axios.put(`http://localhost:4000/v1/admin/categories/`, requestData)
+			setLoading(false)
+			navigate("/categories")
+		} catch (error) {
+			console.error(error)
+		}
+		setLoading(false)
+	}
+
 	return {
 		getCategory,
 		getCategoryById,
 		deleteCategory,
 		createCategory,
 		updateCategory,
+		updateRecommend,
 	}
 
 }

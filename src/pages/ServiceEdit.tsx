@@ -142,6 +142,7 @@ function ServiceEdit() {
       fectData()
       reset(newService)
     }
+    console.log("รับข้อมูลมา ......", newService)
   }, [newService])
 
   useEffect(() => {
@@ -158,11 +159,12 @@ function ServiceEdit() {
       navigate("/services")
 
     }
-  }, [submitServiceInput, , validateServiceName, validateCategory, validateItems])
+  }, [submitServiceInput, , validateServiceName, validateCategory, validateItems, formData])
 
   useEffect(() => {
     if (fileList) {
       setFormData({
+        ...newService,
         ...formData,
         serviceId: params.id,
         serviceName: validateServiceName,
@@ -171,13 +173,20 @@ function ServiceEdit() {
         image: fileList[0],
         createAt: newService?.createAt,
       })
-      console.log("เมื่อมี fileList", formData)
-    }
+      console.log("เมื่อมี fileList edit", formData)
+    } else {
+      setFormData({
+        ...newService,
+        serviceId: params.id,
+        serviceName: validateServiceName,
+        category: validateCategory,
+        items: validateItems,
+        createAt: newService?.createAt,
+      })
+      console.log("เมื่อไม่มี fileList edit", formData)
+    } 
 
   }, [fileList, validateServiceName, validateCategory, validateItems, submitServiceInput])
-
-  console.log("ต้องมี", newService)
-  console.log("show item services", newService?.subServices)
 
   return (
     <div className="w-full">
@@ -403,7 +412,9 @@ function ServiceEdit() {
               <path fillRule="evenodd" clipRule="evenodd" d="M10 5.00012C10.2652 5.00012 10.5196 5.10548 10.7071 5.29302C10.8946 5.48055 11 5.73491 11 6.00012V9.00012H14C14.2652 9.00012 14.5196 9.10548 14.7071 9.29302C14.8946 9.48055 15 9.73491 15 10.0001C15 10.2653 14.8946 10.5197 14.7071 10.7072C14.5196 10.8948 14.2652 11.0001 14 11.0001H11V14.0001C11 14.2653 10.8946 14.5197 10.7071 14.7072C10.5196 14.8948 10.2652 15.0001 10 15.0001C9.73478 15.0001 9.48043 14.8948 9.29289 14.7072C9.10536 14.5197 9 14.2653 9 14.0001V11.0001H6C5.73478 11.0001 5.48043 10.8948 5.29289 10.7072C5.10536 10.5197 5 10.2653 5 10.0001C5 9.73491 5.10536 9.48055 5.29289 9.29302C5.48043 9.10548 5.73478 9.00012 6 9.00012H9V6.00012C9 5.73491 9.10536 5.48055 9.29289 5.29302C9.48043 5.10548 9.73478 5.00012 10 5.00012Z" fill="#336DF2" />
             </svg>
           </Button>
+
           <div className="w-full h-px border border-gray-300 my-10"></div>
+
           <div className="pb-10 px-6 text-gray-700 text-base font-medium leading-normal">
             <div>
               <span className="w-52 mr-6 py-6 inline-block">สร้างเมื่อ</span><span>{formatDateTime(String(newService?.createAt))}</span>
@@ -423,8 +434,6 @@ function ServiceEdit() {
           <Alert name={newService?.service_name} id={newService ? newService?.id : 0} title='บริการ' />
         </AlertDialog>
       </div>
-      <button type='submit'>Testing</button>
-
     </div>
   );
 }
