@@ -141,7 +141,7 @@ function PromotionSearch() {
               promotions.map((promotion: any, index: number) => {
                 return (
                   <tr
-                    key={promotions.id}
+                    key={index}
                     className="h-20"
 
                   >
@@ -167,7 +167,7 @@ function PromotionSearch() {
                               className="hover:cursor-pointer hover:scale-110 min-w-[20px]"
                             />
                           </AlertDialogTrigger>
-                          <Alert name={promotion.promotion_code} id={promotion.promotion_id} title='บริการ' />
+                          <Alert name={promotion.promotion_code} id={promotion.promotion_id} title='Promotion Code' />
                         </AlertDialog>
                         <img src={pen} alt='pen' className="hover:cursor-pointer hover:scale-110" onClick={() => navigate(`/promotions/detail/${promotion.promotion_id}`)} />
                       </div>

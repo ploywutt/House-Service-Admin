@@ -68,7 +68,7 @@ function Topbar_add(prop: TopbarType) {
 				}
 				{
 					prop.title === "Promotion Code" && (
-						<Button className='h-11 py-2.5 px-6 gap-2' type="submit" >สร้าง</Button>
+						<Button className='h-11 py-2.5 px-6 gap-2' type="submit" onClick={() => prop.setTrigger(true)} >สร้าง</Button>
 					)
 				}
 			</div>
