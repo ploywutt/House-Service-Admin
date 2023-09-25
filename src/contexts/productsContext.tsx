@@ -24,7 +24,7 @@ function ProductProvider({ children }: any) {
 
 	// Promotion part
 	const [searchPromotion, setSearchPromotion] = useState<string>('')
-	const [promotion, setPromotion] = useState<any[]>([])
+	const [promotions, setPromotions] = useState<any[]>([])
 	const [currentPromotion, setCurrentPromotion] = useState<any>([])
 	
 	return (
@@ -50,7 +50,7 @@ function ProductProvider({ children }: any) {
 
 			//Promotion part
 			searchPromotion, setSearchPromotion,
-			promotion, setPromotion,
+			promotions, setPromotions,
 			currentPromotion, setCurrentPromotion,
 		}}>
 			{children}

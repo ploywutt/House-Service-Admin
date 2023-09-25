@@ -7,7 +7,7 @@ function usePromotion() {
 	const {
 		setLoading,
 		setErrorMessage,
-		promotion, setPromotion,
+		promotions, setPromotions,
 		currentPromotion, setCurrentPromotion,
 
 	}: any = useProduct();
@@ -17,17 +17,17 @@ function usePromotion() {
 			setLoading(true)
 			const result = await axios.get(`http://localhost:4000/v1/admin/promotions/?search=${search}`)
 			console.log(result)
-			setPromotion(result.data.data)
+			setPromotions(result.data.data)
 			setLoading(false)
 
 		} catch (error) {
 
-			setPromotion([])
+			setPromotions([])
 			console.error(error)
 			navigate("/promotions")
 
 		}
-		console.log("All promotions : --->", promotion)
+		console.log("All promotions : --->", promotions)
 		setLoading(false)
 	}
 
