@@ -1,12 +1,9 @@
-import { useProduct } from "@/contexts/productsContext";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-
+// import { useProduct } from "@/contexts/productsContext";
+// import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+// import { Badge } from "lucide-react";
 import EmployeeTopbar_search from "@/components/Employee/EmployeeTopbarSearch";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { AlertDialog } from "@radix-ui/react-alert-dialog";
-// import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
-// import Alert from "@/components/Alert/Alert";
 
 import {
   Accordion,
@@ -15,294 +12,84 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import dot from "../assets/icon/dot.png";
-// import garbage from "../assets/icon/garbage.svg";
-// import pen from "../assets/icon/pen.svg";
-import useDateVal from "@/hooks/useDateVal";
-import useService from "@/hooks/useService";
-// import EmployeeLogin from "./EmployeeLogin";
+// import useDateVal from "@/hooks/useDateVal";
+// import useService from "@/hooks/useService";
 
 function EmployeeDetail() {
-  const navigate = useNavigate();
-  const { getServices } = useService();
+  // // const navigate = useNavigate();
+  // const { getServices } = useService();
 
-  const {
-    loading,
-    setLoading,
-    services,
-    setServices,
-    searchService,
-    setSearchService,
-  }: any = useProduct();
+  // const {
+  //   loading,
+  //   setLoading,
+  //   services,
+  //   setServices,
+  //   searchService,
+  //   setSearchService,
+  // }: any = useProduct();
 
-  const { formatDateTime } = useDateVal();
+  // const { formatDateTime } = useDateVal();
 
-  function handleDragEnd(result: any) {
-    if (!result.destination) return; // ไม่ได้ลากและวางสิ่งของให้ตรงไหน
-    let tempCategory: any[] = [...services];
-    let [selectedRow] = tempCategory.splice(result.source.index, 1);
-    tempCategory.splice(result.destination.index, 0, selectedRow);
-    setServices(tempCategory);
-    console.log(result);
-    // ทำสิ่งที่คุณต้องการด้วยข้อมูลใหม่ที่จัดเรียงใหม่ในตัวแปร items
-    // เช่นอัปเดตสถานะในฐานข้อมูลหรือส่งคำขอ API
-  }
+  // useEffect(() => {
+  //   getServices(searchService);
+  // }, [searchService]);
+
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    getServices(searchService);
-  }, [searchService]);
+    async function fetchData() {
+      const order = await axios.get("http://localhost:4000/v1/employee");
+      console.log(order.data.data);
+      setData(order.data.data);
+    }
+    fetchData();
+  }, []);
 
-  // export function AccordionEmpolyee() {
   return (
     <div className="w-full">
       <EmployeeTopbar_search title="บริการ" path="/services/add" />
-      {loading ? <h1>Loading ...</h1> : null}
+      {/* {loading ? <h1>Loading ...</h1> : null} */}
       <div className="mx-auto w-[90%] max-w-[1440px] mt-10 border rounded-lg">
-        <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
-          <table className="table-auto w-full">
-            <thead className="h-10 bg-gray-200 border-b">
-              <tr className="text-left text-gray-700 .p3">
-                <th className="w-14 px-6 py-2.5 rounded-tl-lg"></th>
-                <th className="text-center px-6 w-20">ลำดับ</th>
-                <th className="w-60 px-6">ชื่อบริการ</th>
-                <th className="w-60 px-6">หมวดหมู่</th>
-                <th className="w-60 px-6">สร้างเมื่อ</th>
-                <th className="w-60 px-6">แก้ไขล่าสุด</th>
+        <table className="table-auto w-full">
+          <thead className="h-10 bg-gray-200 border-b">
+            <tr className="text-left text-gray-700 .p1">
+              <th className="w-full px-6 py-2.5 rounded-tl-lg flex justify-evenly">
+                <th className="text-center w-60 px-6">รหัส</th>
+                <th className="text-center w-60 px-6">เวลาทำงาน</th>
                 <th className="text-center w-60 rounded-tr-lg">สถานะ</th>
-              </tr>
-            </thead>
+              </th>
+            </tr>
+          </thead>
 
-            <Droppable droppableId="tbody">
-              {(provided) => (
-                <tbody
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className="bg-white"
+          <tbody className="bg-white">
+            {data.map((item, index) => {
+              return (
+                <Accordion
+                  type="single"
+                  collapsible
+                  className="w-full"
+                  key={index}
                 >
-                  {services && services.length !== 0 ? (
-                    services.map((service: any, index: number) => {
-                      return (
-                        <Accordion type="single" collapsible className="w-full">
-                          <AccordionItem value="item-1">
-                            <AccordionTrigger>
-                              <Draggable
-                                key={service.id}
-                                draggableId={service.id.toString()}
-                                index={index}
-                              >
-                                {(provided) => (
-                                  <tr
-                                    key={services.id}
-                                    className="h-20"
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                  >
-                                    <td
-                                      className={`text-center ${
-                                        index === services.length - 1
-                                          ? "rounded-bl-lg"
-                                          : ""
-                                      } `}
-                                    >
-                                      <div className="flex justify-center gap-0.5 hover:cursor-move">
-                                        <img src={dot} alt="dot" />
-                                        <img src={dot} alt="dot" />
-                                      </div>
-                                    </td>
-                                    <td className="text-center px-6">
-                                      {index + 1}
-                                    </td>
-                                    <td className="px-6">
-                                      {service.service_name}
-                                    </td>
-                                    <td className="px-6">
-                                      <span className="px-2.5 py-1 bg-sky-100 rounded-lg text-sky-900">
-                                        {service.category}
-                                      </span>
-                                    </td>
-                                    <td className="px-6">
-                                      {formatDateTime(service.createAt)}
-                                    </td>
-                                    <td className="px-6">
-                                      {formatDateTime(service.updateAt)}
-                                    </td>
-                                    <td
-                                      className={`text-center px-6 ${
-                                        index === services.length - 1
-                                          ? "rounded-br-lg"
-                                          : ""
-                                      } `}
-                                    ></td>
-                                  </tr>
-                                )}
-                              </Draggable>
-                            </AccordionTrigger>
-                            <AccordionContent>สาธุ99999999</AccordionContent>
-                          </AccordionItem>
-                        </Accordion>
-                      );
-                    })
-                  ) : (
-                    <>
-                      <td className="rounded-bl-lg"></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td className="rounded-br-lg"></td>
-                    </>
-                  )}
-                  {provided.placeholder}
-                </tbody>
-              )}
-            </Droppable>
-          </table>
-        </DragDropContext>
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger className=" flex justify-evenly">
+                      <td className="px-6 w-60 text-center">{item.order_id}</td>
+                      <td className="px-6 w-60 text-center">
+                        {item.order_detail.working_time}
+                      </td>
+                      <td className="px-6 w-60 text-center">
+                        {item.status.status}
+                      </td>
+                    </AccordionTrigger>
+                    <AccordionContent className="w-full h-fit bg-slate-600"></AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 }
-
-//   return (
-//     <div className="w-full">
-//       <EmployeeTopbar_search title="บริการ" path="/services/add" />
-//       {loading ? <h1>Loading ...</h1> : null}
-//       <div className="mx-auto w-[90%] max-w-[1440px] mt-10 border rounded-lg">
-//         <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
-//           <table className="table-auto w-full">
-//             <thead className="h-10 bg-gray-200 border-b">
-//               <tr className="text-left text-gray-700 .p3">
-//                 <th className="w-14 px-6 py-2.5 rounded-tl-lg"></th>
-//                 <th className="text-center px-6 w-20">ลำดับ</th>
-//                 <th className="w-60 px-6">ชื่อบริการ</th>
-//                 <th className="w-60 px-6">หมวดหมู่</th>
-//                 <th className="w-60 px-6">สร้างเมื่อ</th>
-//                 <th className="w-60 px-6">แก้ไขล่าสุด</th>
-//                 <th className="text-center w-60 rounded-tr-lg">สถานะ</th>
-
-//                 {/* <div id="status" className="flex flex-row gap-3 items-center">
-//                   <p className="p3">สถานะ:</p>
-//                   <Badge
-//                     variant={
-//                       status === "รอดำเนินการ"
-//                         ? "gray-order"
-//                         : status === "กำลังดำเนินการ"
-//                         ? "yellow-order"
-//                         : status === "ดำเนินการสำเร็จ"
-//                         ? "green-order"
-//                         : null
-//                     }
-//                   >
-//                     {status}
-//                   </Badge>
-//                 </div> */}
-//               </tr>
-//             </thead>
-//             <Droppable droppableId="tbody">
-//               {(provided) => (
-//                 <tbody
-//                   ref={provided.innerRef}
-//                   {...provided.droppableProps}
-//                   className="bg-white"
-//                 >
-//                   {services && services.length !== 0 ? (
-//                     services.map((service: any, index: number) => {
-//                       return (
-//                         <Draggable
-//                           key={service.id}
-//                           draggableId={service.id.toString()}
-//                           index={index}
-//                         >
-//                           {(provided) => (
-//                             <tr
-//                               key={services.id}
-//                               className="h-20"
-//                               ref={provided.innerRef}
-//                               {...provided.draggableProps}
-//                               {...provided.dragHandleProps}
-//                             >
-//                               <td
-//                                 className={`text-center ${
-//                                   index === services.length - 1
-//                                     ? "rounded-bl-lg"
-//                                     : ""
-//                                 } `}
-//                               >
-//                                 <div className="flex justify-center gap-0.5 hover:cursor-move">
-//                                   <img src={dot} alt="dot" />
-//                                   <img src={dot} alt="dot" />
-//                                 </div>
-//                               </td>
-//                               <td className="text-center px-6">{index + 1}</td>
-//                               <td className="px-6">{service.service_name}</td>
-//                               <td className="px-6">
-//                                 <span className="px-2.5 py-1 bg-sky-100 rounded-lg text-sky-900">
-//                                   {service.category}
-//                                 </span>
-//                               </td>
-//                               <td className="px-6">
-//                                 {formatDateTime(service.createAt)}
-//                               </td>
-//                               <td className="px-6">
-//                                 {formatDateTime(service.updateAt)}
-//                               </td>
-//                               <td
-//                                 className={`text-center px-6 ${
-//                                   index === services.length - 1
-//                                     ? "rounded-br-lg"
-//                                     : ""
-//                                 } `}
-//                               >
-//                                 <div className="flex justify-center gap-6">
-//                                   <AlertDialog>
-//                                     {/* <AlertDialogTrigger>
-//                                       <img
-//                                         src={garbage}
-//                                         alt="garbage"
-//                                         className="hover:cursor-pointer hover:scale-110 min-w-[20px]"
-//                                       />
-//                                     </AlertDialogTrigger> */}
-//                                     {/* <Alert
-//                                       name={service.service_name}
-//                                       id={service.id}
-//                                       title="บริการ"
-//                                     /> */}
-//                                   </AlertDialog>
-//                                   {/* <img
-//                                     src={pen}
-//                                     alt="pen"
-//                                     className="hover:cursor-pointer hover:scale-110"
-//                                     onClick={() =>
-//                                       navigate(`/services/detail/${service.id}`)
-//                                     }
-//                                   /> */}
-//                                 </div>
-//                               </td>
-//                             </tr>
-//                           )}
-//                         </Draggable>
-//                       );
-//                     })
-//                   ) : (
-//                     <>
-//                       <td className="rounded-bl-lg"></td>
-//                       <td></td>
-//                       <td></td>
-//                       <td></td>
-//                       <td></td>
-//                       <td className="rounded-br-lg"></td>
-//                     </>
-//                   )}
-//                   {provided.placeholder}
-//                 </tbody>
-//               )}
-//             </Droppable>
-//           </table>
-//         </DragDropContext>
-//       </div>
-//     </div>
-//   );
-// }
 
 export default EmployeeDetail;
