@@ -76,6 +76,20 @@ function ServiceInput() {
     }
   }
 
+  function deleteItems(index: number) {
+    // คัดลอกค่า validateItems มาเพื่ออัปเดต
+    const updatedValidateItems = [...validateItems];
+  
+    // กำหนดค่าใน index ที่ต้องการลบเป็น null
+    updatedValidateItems[index] = null;
+  
+    // อัปเดต state ด้วยค่าใหม่
+    setValidateItems(updatedValidateItems.filter(Boolean)); // กรองออกเพื่อลบค่า null
+    console.log(`new validateItems: ${validateItems}`);
+    remove(index)
+  }
+
+
   useEffect(() => {
     if (fileList) {
       setFormData({
@@ -87,6 +101,7 @@ function ServiceInput() {
       })
       console.log("เมื่อมี fileList input .....", formData)
     }
+    
 
   }, [fileList, validateServiceName, validateCategory, validateItems])
 
@@ -176,20 +191,8 @@ function ServiceInput() {
         <label className="text-gray-700 w-52 inline-block mr-6">
           รูปภาพ<span className="text-rose-700">*</span>
         </label>
-        <Controller
-              name="image"
-              control={control}
-              render={({ field }) => (
-                <ImageInput
-                  {...field}
-                  onChange={(selectedImage) => {
-                    field.onChange(selectedImage)
-                  }}
-                  value={field.value}
-                />
+        <ImageInput />
 
-              )}
-            />
       </div>
 
       <div className="w-full h-px border border-gray-300 mb-10"></div>
@@ -204,10 +207,11 @@ function ServiceInput() {
         ) : null}
         <div className="my-10 text-gray-500 text-sm font-normal leading-tight">
           {fields.map((item, index) => (
-            <div key={item.id} className="flex justify-items-start items-center gap-3 mb-10">
+            <div key={index} className="flex justify-items-start items-center gap-3 mb-10">
               <div className="flex gap-0.5 mr-3">
                 <img src={dot} alt='dot' />
                 <img src={dot} alt='dot' />
+                {index}
               </div>
 
               <div className='flex w-[90%] gap-3'>
@@ -314,7 +318,7 @@ function ServiceInput() {
 
               </div>
               {fields.length > 1 ? (
-                <button type="button" className="duration-300 text-blue-600 text-base font-semibold underline leading-normal" onClick={() => remove(index)}>
+                <button type="button" className="duration-300 text-blue-600 text-base font-semibold underline leading-normal" onClick={() => { deleteItems(index) }}>
                   ลบรายการ
                 </button>
               ) : (

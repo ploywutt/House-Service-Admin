@@ -144,6 +144,7 @@ function useService() {
 		try {
 			setLoading(true)
 			const { data, error } = await secretKey.storage.from('testing').download(newService.pic_service)
+			// const urlSupabase = secretKey.storage.from('testing').getPublicUrl(newService.pic_service)
 			if (error) {
 				setLoading(false)
 				console.error("ขณะโหลด......", error)
@@ -155,6 +156,9 @@ function useService() {
 				setImagePath(imageUrl);
 				setLoading(false)
 			}
+			// console.log(`urlSupabase: ${urlSupabase.data.publicUrl}`)
+			// setImagePath(urlSupabase.data.publicUrl)
+			// setLoading(false)
 		} catch (error) {
 			setLoading(false)
 			console.log(error)

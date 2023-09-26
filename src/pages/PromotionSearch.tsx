@@ -5,7 +5,7 @@ import { useProduct } from "@/contexts/productsContext";
 import useDateVal from "@/hooks/useDateVal";
 import usePromotion from "@/hooks/usePromotion";
 import { useEffect } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+// import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
 
 import garbage from "../assets/icon/garbage.svg"
@@ -26,17 +26,17 @@ function PromotionSearch() {
 
   const { formatDateTime } = useDateVal()
 
-  function handleDragEnd(result: any) {
+  // function handleDragEnd(result: any) {
 
-    if (!result.destination) return; // ไม่ได้ลากและวางสิ่งของให้ตรงไหน
-    let tempCategory: any[] = [...promotions]
-    let [selectedRow] = tempCategory.splice(result.source.index, 1)
-    tempCategory.splice(result.destination.index, 0, selectedRow)
-    setPromotions(tempCategory)
-    console.log(result)
-    // ทำสิ่งที่คุณต้องการด้วยข้อมูลใหม่ที่จัดเรียงใหม่ในตัวแปร items
-    // เช่นอัปเดตสถานะในฐานข้อมูลหรือส่งคำขอ API
-  }
+  //   if (!result.destination) return; // ไม่ได้ลากและวางสิ่งของให้ตรงไหน
+  //   let tempCategory: any[] = [...promotions]
+  //   let [selectedRow] = tempCategory.splice(result.source.index, 1)
+  //   tempCategory.splice(result.destination.index, 0, selectedRow)
+  //   setPromotions(tempCategory)
+  //   console.log(result)
+  //   // ทำสิ่งที่คุณต้องการด้วยข้อมูลใหม่ที่จัดเรียงใหม่ในตัวแปร items
+  //   // เช่นอัปเดตสถานะในฐานข้อมูลหรือส่งคำขอ API
+  // }
 
   useEffect(() => {
     getPromotions(searchPromotion)

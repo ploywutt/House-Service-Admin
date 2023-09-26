@@ -32,15 +32,15 @@ function ServiceDetail() {
   useEffect(() => {
     if (newService?.subServices) {
       // ทำอะไรกับ newService.subServices เช่น map หรือแสดงข้อมูล
-      console.log("แสดงส่วนย่อย", Array.isArray(newService.subServices));
+      // console.log("แสดงส่วนย่อย", Array.isArray(newService.subServices));
       async function fectData() {
         await downloadFile()
       }
       fectData()
       
     }
-    console.log("ค่าตั้งต้น ------", newService)
-    console.log("เส่นทาง ----", imagePath)
+    // console.log("ค่าตั้งต้น ------", newService)
+    // console.log("เส่นทาง ----", imagePath)
   }, [newService])
 
 
