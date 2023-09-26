@@ -1,7 +1,6 @@
 import { useProduct } from '@/contexts/productsContext'
 import { useEffect, useState } from 'react'
 import { secretKey } from "../../lib/supabase.ts";
-import { error } from 'console';
 import useService from '@/hooks/useService.tsx';
 import { useNavigate } from 'react-router-dom';
 // import useService from '@/hooks/useService.tsx';
@@ -16,6 +15,7 @@ function ImageInput() {
 		formData, setFormData,
 		blobImage, setBlobImage,
 		newService, setNewService,
+		imagePath, setImagePath,
 	}: any = useProduct()
 	const { updateService } = useService()
 	const navigate = useNavigate()
@@ -48,7 +48,7 @@ function ImageInput() {
 	// 	})
 	// }
 
-	async function uploadFile(file: File[]) {
+	async function uploadFile(file: any) {
 
 		try {
 			const { data, error } = await secretKey.storage.from('testing').upload(`HomeService/${file.name}`, file)
@@ -89,37 +89,44 @@ function ImageInput() {
 		};
 	}
 
-	// const handleUploadNewImage = () => {
-	// 	if (blobImage) {
-	// 		const newImageFile = new File([blobImage], newService.pic_service); // สร้าง File ใหม่จาก blobImage
-	// 		setFileList([newImageFile]); // อัพโหลดรูปภาพใหม่โดยใช้ blobImage
-	// 		displayPreview(fileList)
-	// 	}
-	// };
-
-	// useEffect(() => {
-	// 	handleUploadNewImage();
-	// }, [blobImage]);
+	const handleUploadNewImage = () => {
+		if (blobImage) {
+			const newImageFile = new File([blobImage], newService.pic_service); // สร้าง File ใหม่จาก blobImage
+			setFileList([newImageFile]); // อัพโหลดรูปภาพใหม่โดยใช้ blobImage
+			displayPreview(fileList) 
+			setBlobImage(null)
+		}
+	};
 
 	useEffect(() => {
+		handleUploadNewImage();
+	}, [blobImage]);
+	
+	useEffect(() => {
 		if (formData?.image !== undefined && submitServiceInput) {
-			if (newService?.pic_service.includes("HomeService") && !formData.image.name.includes(newService.pic_service)) {
+			console.log(`formData for upload image: ${formData}`)
+			if (newService?.pic_service.includes("HomeService") && formData.image.name.includes(newService.pic_service)) {
 				setFormData({
 					...formData,
 					imagePath: formData.pic_service
 				})
 
-				console.log("ข้อมูลรวมที่ต้องส่ง หลังเพิ่ม image path 2 (at ImagePut)...", formData)
+				// console.log("ข้อมูลรวมที่ต้องส่ง หลังเพิ่ม image path 2 (at ImagePut)...", formData)
 				updateService(formData)
-				console.log("เริ่มการโหลดเข้ารายการย่อย ----- ", formData)
+				// console.log("เริ่มการโหลดเข้ารายการย่อย ----- ", formData)
 				setSubmitServiceInput(false)
 				setFileList(null)
 				console.log("Finished")
 				navigate("/services")
 				
+			} else if (formData.image.name.includes(newService?.pic_service)) {
+				uploadFile(fileList[0])
+				setFileList(null)
+				
+				// console.log("ข้อมูลชุดสุดท้ายก่อนส่งเข้า Database หลังอัพโหลดรูป 1", formData)
 			} else {
 				uploadFile(fileList[0])
-				console.log("ข้อมูลชุดสุดท้ายก่อนส่งเข้า Database หลังอัพโหลดรูป 1", formData)
+
 			}
 			
 		} else if (submitServiceInput && !formData?.image && !formData.pic_service) {
@@ -130,7 +137,7 @@ function ImageInput() {
 
 		} 
 
-	}, [submitServiceInput])
+	}, [submitServiceInput, fileList])
 	const uploading = (progress > 0) && (progress < 100) && (submitServiceInput === true)
 
 	return (

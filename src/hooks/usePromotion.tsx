@@ -7,7 +7,7 @@ function usePromotion() {
 	const {
 		setLoading,
 		setErrorMessage,
-		promotion, setPromotion,
+		promotions, setPromotions,
 		currentPromotion, setCurrentPromotion,
 
 	}: any = useProduct();
@@ -17,17 +17,17 @@ function usePromotion() {
 			setLoading(true)
 			const result = await axios.get(`http://localhost:4000/v1/admin/promotions/?search=${search}`)
 			console.log(result)
-			setPromotion(result.data.data)
+			setPromotions(result.data.data)
 			setLoading(false)
 
 		} catch (error) {
 
-			setPromotion([])
+			setPromotions([])
 			console.error(error)
 			navigate("/promotions")
 
 		}
-		console.log("All promotions : --->", promotion)
+		console.log("All promotions : --->", promotions)
 		setLoading(false)
 	}
 
@@ -51,21 +51,55 @@ function usePromotion() {
 			setLoading(true)
 			await axios.delete(`http://localhost:4000/v1/admin/promotions/${promotionId}`)
 			setCurrentPromotion([])
+			const newPromotion = promotions.filter((promotion: { promotion_id: number }) => {
+				return promotion.promotion_id !== promotionId
+			})
+			setPromotions(newPromotion)
 			navigate("/promotions")
 
-		} catch (error) {
+		} catch (error: any) {
 			navigate("/promotions")
 			setCurrentPromotion([])
 			console.error(error)
+			setErrorMessage(error.error.message)
 		}
 		setLoading(false)
 
+	}
+
+	async function createPromotion(promotionCode: any) {
+		if (promotionCode.newFixed !== 0) {
+			promotionCode.discount_amount = promotionCode.newFixed
+		} else {
+			promotionCode.discount_amount = promotionCode.newPercent
+		}
+		const requestData = ({
+			...promotionCode,
+			discount_amount: promotionCode.discount_amount,
+			expired_time: promotionCode.expired_time.toLocaleString()
+		})
+		console.log("Data prepare ----->", requestData)
+		try {
+			setLoading(true)
+			await axios.post(`http://localhost:4000/v1/admin/promotions/`, requestData)
+
+			navigate("/promotions/")
+
+		} catch (error: any) {
+
+			console.error(error)
+			setErrorMessage(error.error.message)
+			navigate("/promotions/")
+
+		}
+		setLoading(false)
 	}
 
 	return {
 		getPromotions,
 		getPromotionById,
 		deletePromotion,
+		createPromotion,
 	}
 
 }

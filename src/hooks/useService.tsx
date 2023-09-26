@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { secretKey } from "../lib/supabase.ts";
 
-
 function useService() {
 	const navigate = useNavigate()
 	const {
@@ -32,12 +31,13 @@ function useService() {
 			setBlobImage(null)
 
 		} catch (error) {
-			
+
 			setServices([])
 			console.error(error)
 			navigate("/services")
 		}
 		setLoading(false)
+
 	}
 
 	async function getServiceById(serviceId: number) {
@@ -55,11 +55,19 @@ function useService() {
 	async function deleteService(serviceId: number) {
 		try {
 			setLoading(true)
+			const deleteImage = services.find((service: { id: number }) => service.id === serviceId)
+			// console.log("deleteImage --->", deleteImage)
+			const { data, error } = await secretKey
+				.storage
+				.from('testing')
+				.remove([deleteImage.pic_service])
+
 			await axios.delete(`http://localhost:4000/v1/admin/services/${serviceId}`)
 			const newServices: any[] = services.filter((service: { id: number; }) => {
 				return service.id != serviceId
 			})
 			setServices(newServices)
+
 			setLoading(false)
 			setFormData(null)
 			setFileList(null)
@@ -94,7 +102,7 @@ function useService() {
 			navigate("/services")
 		}
 		setLoading(false)
-		
+
 	}
 
 	async function createSubService(subserviceData: any) {
@@ -144,6 +152,7 @@ function useService() {
 		try {
 			setLoading(true)
 			const { data, error } = await secretKey.storage.from('testing').download(newService.pic_service)
+			// const urlSupabase = secretKey.storage.from('testing').getPublicUrl(newService.pic_service)
 			if (error) {
 				setLoading(false)
 				console.error("ขณะโหลด......", error)
@@ -155,14 +164,15 @@ function useService() {
 				setImagePath(imageUrl);
 				setLoading(false)
 			}
+			// console.log(`urlSupabase: ${urlSupabase.data.publicUrl}`)
+			// setImagePath(urlSupabase.data.publicUrl)
+			// setLoading(false)
 		} catch (error) {
 			setLoading(false)
 			console.log(error)
 		}
 		console.log("แสดงเส้นทางภาพ -----", imagePath)
 	}
-
-
 
 	return {
 		getServices,

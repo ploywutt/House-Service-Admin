@@ -38,8 +38,8 @@ export interface ProductContextType {
   // Promotion part
   searchPromotion: string | null
   setSearchPromotion: (searchPromotion: string) => void
-  promotion: any[]
-  setPromotion: (promotion: any[]) => void;
+  promotions: any[]
+  setPromotions: (promotion: any[]) => void;
   currentPromotion: any
   setCurrentPromotion: (currentPromotion: any) => void
 };
