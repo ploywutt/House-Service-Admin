@@ -37,6 +37,28 @@ function EmployeeDetail() {
   //   }
   // };
 
+  async function clickToWork(orderId) {
+    try {
+      await axios.put(
+        `http://localhost:4000/v1/employee/status/towork?orderId=${orderId}`
+      );
+      console.log("Working status updated successfully");
+    } catch (error) {
+      console.log("Update Error:", error.message);
+    }
+  }
+
+  async function clickToFinish(orderId) {
+    try {
+      await axios.put(
+        `http://localhost:4000/v1/employee/status/tofinish?orderId=${orderId}`
+      );
+      console.log("Finishing status updated successfully");
+    } catch (error) {
+      console.log("Update Error:", error.message);
+    }
+  }
+
   return (
     <div className="w-full">
       <EmployeeTopbar_search />
@@ -62,8 +84,7 @@ function EmployeeDetail() {
                         {item.order_detail.working_time}
                       </td>
                       <td className="px-6 w-60 text-center ">
-                        {/* {item.status.status} */}
-                        {/* {status} */}
+                        {item.status.status}
                       </td>
                     </AccordionTrigger>
                     <AccordionContent>
@@ -72,23 +93,23 @@ function EmployeeDetail() {
                         className=" h-fit bg-white flex flex-col items-start px-[145px]"
                       >
                         {/* <div id="UpdateStatusBtn">
-                          <Button onClick={() => handleIncrement(index)}>กำลัง</Button>
+                          <Button onClick={() => handleIncrement(index)}>
+                            กำลัง
+                          </Button>
                         </div> */}
 
                         <div className=" bg-white flex flex-row justify-start gap-[180px]">
                           <div id="name" className="p-4">
-                            <div className="p3 text-gray-500">
-                              ชื่อ - นามสกุล
-                            </div>
-                            <div className="p2">{item.user.name}</div>
+                            <p className="p3 text-gray-500">ชื่อ - นามสกุล</p>
+                            <p className="p2">{item.user.name}</p>
                           </div>
                           <div id="Tel" className="p-4">
-                            <div className="p3 text-gray-500">เบอร์โทร</div>
-                            <div className="p2">{item.user.phone}</div>
+                            <p className="p3 text-gray-500">เบอร์โทร</p>
+                            <p className="p2">{item.user.phone}</p>
                           </div>
                           <div id="Email" className="p-4">
-                            <div className="p3 text-gray-500">อีเมล</div>
-                            <div className="p2">{item.user.email}</div>
+                            <p className="p3 text-gray-500">อีเมล</p>
+                            <p className="p2">{item.user.email}</p>
                           </div>
                         </div>
 
@@ -97,36 +118,51 @@ function EmployeeDetail() {
 
                           {item.service_order.map((service, index) => {
                             return (
-                              <div className="p2" key={index}>
-                                <p>
-                                  {service.sub_service.sub_service_name}{" "}
-                                  {service.amount} {service.sub_service.unit}
-                                </p>
-                              </div>
+                              <p className="p2" key={index}>
+                                {service.sub_service.sub_service_name}{" "}
+                                {service.amount} {service.sub_service.unit}
+                              </p>
                             );
                           })}
                         </div>
                         <div
                           id="Container-2"
-                          className="flex flex-row justify-start gap-4"
+                          className="flex flex-row justify-start gap-4 w-full"
                         >
                           {" "}
-                          <div id="Place" className="p-4">
-                            <div className="p3 text-gray-500">สถานที่</div>
-                            <div className="p2">
+                          <div id="Place" className="p-4 flex-1">
+                            <p className="p3 text-gray-500">สถานที่</p>
+                            <p className="p2">
                               {item.order_detail.address}{" "}
                               {item.order_detail.subdistrict}{" "}
                               {item.order_detail.district}{" "}
                               {item.order_detail.province}
-                            </div>
+                            </p>
                           </div>
-                          <div id="Etc" className="p-4">
-                            <div className="p3 text-gray-500">
-                              ข้อมูลเพิ่มเติม
-                            </div>
-                            <div className="p2">
-                              {item.order_detail.details}
-                            </div>
+                          <div id="Etc" className="p-4 flex-1">
+                            <p className="p3 text-gray-500">ข้อมูลเพิ่มเติม</p>
+                            <p className="p2">{item.order_detail.details}</p>
+                          </div>
+                          <div
+                            id="btn-flex"
+                            className="flex justify-end items-end flex-1"
+                          >
+                            {item.status.status === "รอดำเนินการ" ? (
+                              <Button
+                                variant={"secondary"}
+                                onClick={() => clickToWork(item.order_id)}
+                              >
+                                เริ่มทำงาน
+                              </Button>
+                            ) : item.status.status === "กำลังดำเนินการ" ? (
+                              <Button
+                                variant={"secondary"}
+                                onClick={() => clickToFinish(item.order_id)}
+                              >
+                                ทำงานเสร็จสิ้น
+                              </Button>
+                            ) : item.status.status ===
+                              "ดำเนินการสำเร็จ" ? null : null}
                           </div>
                         </div>
                       </div>
