@@ -60,7 +60,7 @@ export default function AdminSidebar() {
         <p className="text-blue-600 text-xl font-medium">HomeServices</p>
       </div>
       <div id="menu-list-container">
-        <ul className="text-gray-100 h-[calc(100vh-109px)] flex flex-col justify-between pb-16">
+        <ul className="text-gray-100 h-[calc(100vh-109px)] flex flex-col justify-between ">
           <div id="menu-list">
             {/* <li
               className={`menu ${
