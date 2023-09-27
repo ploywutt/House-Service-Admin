@@ -1,5 +1,7 @@
 import axios from "axios";
+// import React from "react-dom";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import EmployeeTopbar_search from "@/components/Employee/EmployeeTopbarSearch";
 import { Button } from "@/components/ui/button";
 
@@ -12,7 +14,7 @@ import {
 
 function EmployeeDetail() {
   const [data, setData] = useState([]);
-  // const [isStatus, setIsStatus] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -23,26 +25,14 @@ function EmployeeDetail() {
     fetchData();
   }, []);
 
-  // const handleIncrement = (index: number) => {
-  //   const updatedCounts = [...counts];
-  //   updatedCounts[index].count += 1;
-  //   setCounts(updatedCounts);
-  // };
-
-  // const handleIncrement = (index: number) => {
-  //   (isStatus[index].status > 0) {
-  //     const updatedStatus = [...isStatus];
-  //     updatedStatus[index].status += 1;
-  //     setIsStatus(updatedStatus);
-  //   }
-  // };
-
   async function clickToWork(orderId) {
     try {
       await axios.put(
         `http://localhost:4000/v1/employee/status/towork?orderId=${orderId}`
       );
       console.log("Working status updated successfully");
+      // window.location.reload(); // Refresh the page
+      navigate("/employeedetail");
     } catch (error) {
       console.log("Update Error:", error.message);
     }
@@ -54,6 +44,8 @@ function EmployeeDetail() {
         `http://localhost:4000/v1/employee/status/tofinish?orderId=${orderId}`
       );
       console.log("Finishing status updated successfully");
+      navigate("/employeedetail");
+      // window.location.reload(); // Refresh the page
     } catch (error) {
       console.log("Update Error:", error.message);
     }
