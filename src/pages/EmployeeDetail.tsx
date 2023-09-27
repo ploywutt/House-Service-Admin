@@ -1,9 +1,7 @@
-// import { useProduct } from "@/contexts/productsContext";
-// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-// import { Badge } from "lucide-react";
 import EmployeeTopbar_search from "@/components/Employee/EmployeeTopbarSearch";
+import { Button } from "@/components/ui/button";
 
 import {
   Accordion,
@@ -12,29 +10,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-// import useDateVal from "@/hooks/useDateVal";
-// import useService from "@/hooks/useService";
-
 function EmployeeDetail() {
-  // // const navigate = useNavigate();
-  // const { getServices } = useService();
-
-  // const {
-  //   loading,
-  //   setLoading,
-  //   services,
-  //   setServices,
-  //   searchService,
-  //   setSearchService,
-  // }: any = useProduct();
-
-  // const { formatDateTime } = useDateVal();
-
-  // useEffect(() => {
-  //   getServices(searchService);
-  // }, [searchService]);
-
   const [data, setData] = useState([]);
+  // const [isStatus, setIsStatus] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -45,31 +23,38 @@ function EmployeeDetail() {
     fetchData();
   }, []);
 
+  // const handleIncrement = (index: number) => {
+  //   const updatedCounts = [...counts];
+  //   updatedCounts[index].count += 1;
+  //   setCounts(updatedCounts);
+  // };
+
+  // const handleIncrement = (index: number) => {
+  //   (isStatus[index].status > 0) {
+  //     const updatedStatus = [...isStatus];
+  //     updatedStatus[index].status += 1;
+  //     setIsStatus(updatedStatus);
+  //   }
+  // };
+
   return (
     <div className="w-full">
-      <EmployeeTopbar_search title="บริการ" path="/services/add" />
+      <EmployeeTopbar_search />
       {/* {loading ? <h1>Loading ...</h1> : null} */}
       <div className="mx-auto w-[90%] max-w-[1440px] mt-10 border rounded-lg">
         <table className="table-auto w-full">
-          {/* <thead className=""> */}
           <tr className="text-left text-gray-700 p1 h-10 bg-gray-200 border-b">
-            <th className="w-full px-6 py-2.5 rounded-t-lg">
+            <th className="px-6 py-2.5 rounded-t-lg flex flex-row justify-evenly">
               <td className="text-center w-60 px-6">รหัส</td>
               <td className="text-center w-60 px-6">เวลาทำงาน</td>
               <td className="text-center w-60 ">สถานะ</td>
             </th>
           </tr>
-          {/* </thead> */}
 
           <tbody className="bg-white">
             {data.map((item, index) => {
               return (
-                <Accordion
-                  type="single"
-                  collapsible
-                  className="w-full"
-                  key={index}
-                >
+                <Accordion type="single" collapsible key={index}>
                   <AccordionItem value="item-1">
                     <AccordionTrigger className="flex justify-evenly text-sm">
                       <td className="px-6 w-60 text-center">{item.order_id}</td>
@@ -77,25 +62,36 @@ function EmployeeDetail() {
                         {item.order_detail.working_time}
                       </td>
                       <td className="px-6 w-60 text-center ">
-                        {item.status.status}
+                        {/* {item.status.status} */}
+                        {/* {status} */}
                       </td>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <div className="w-full h-fit bg-white flex flex-row justify-evenly">
-                        <div id="name" className="p-4">
-                          <div className="p3 text-gray-500">ชื่อ - นามสกุล</div>
-                          <div className="p2">{item.user.name}</div>
+                      <div
+                        id="Container-1 "
+                        className=" h-fit bg-white flex flex-col items-start px-[145px]"
+                      >
+                        {/* <div id="UpdateStatusBtn">
+                          <Button onClick={() => handleIncrement(index)}>กำลัง</Button>
+                        </div> */}
+
+                        <div className=" bg-white flex flex-row justify-start gap-[180px]">
+                          <div id="name" className="p-4">
+                            <div className="p3 text-gray-500">
+                              ชื่อ - นามสกุล
+                            </div>
+                            <div className="p2">{item.user.name}</div>
+                          </div>
+                          <div id="Tel" className="p-4">
+                            <div className="p3 text-gray-500">เบอร์โทร</div>
+                            <div className="p2">{item.user.phone}</div>
+                          </div>
+                          <div id="Email" className="p-4">
+                            <div className="p3 text-gray-500">อีเมล</div>
+                            <div className="p2">{item.user.email}</div>
+                          </div>
                         </div>
-                        <div id="Tel" className="p-4">
-                          <div className="p3 text-gray-500">เบอร์โทร</div>
-                          <div className="p2">{item.user.phone}</div>
-                        </div>
-                        <div id="Email" className="p-4">
-                          <div className="p3 text-gray-500">อีเมล</div>
-                          <div className="p2">{item.user.email}</div>
-                        </div>
-                      </div>
-                      <div className="w-full h-fit bg-white flex flex-col items-start px-[125px]">
+
                         <div id="Detail" className="p-4">
                           <div className="p3 text-gray-500">รายการ</div>
 
@@ -110,20 +106,28 @@ function EmployeeDetail() {
                             );
                           })}
                         </div>
-                        <div id="Place" className="p-4">
-                          <div className="p3 text-gray-500">สถานที่</div>
-                          <div className="p2">
-                            {item.order_detail.address}{" "}
-                            {item.order_detail.subdistrict}{" "}
-                            {item.order_detail.district}{" "}
-                            {item.order_detail.province}
+                        <div
+                          id="Container-2"
+                          className="flex flex-row justify-start gap-4"
+                        >
+                          {" "}
+                          <div id="Place" className="p-4">
+                            <div className="p3 text-gray-500">สถานที่</div>
+                            <div className="p2">
+                              {item.order_detail.address}{" "}
+                              {item.order_detail.subdistrict}{" "}
+                              {item.order_detail.district}{" "}
+                              {item.order_detail.province}
+                            </div>
                           </div>
-                        </div>
-                        <div id="Etc" className="p-4">
-                          <div className="p3 text-gray-500">
-                            ข้อมูลเพิ่มเติม
+                          <div id="Etc" className="p-4">
+                            <div className="p3 text-gray-500">
+                              ข้อมูลเพิ่มเติม
+                            </div>
+                            <div className="p2">
+                              {item.order_detail.details}
+                            </div>
                           </div>
-                          <div className="p2">{item.order_detail.details}</div>
                         </div>
                       </div>
                     </AccordionContent>
