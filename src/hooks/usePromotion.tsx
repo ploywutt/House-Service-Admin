@@ -12,6 +12,7 @@ function usePromotion() {
 
 	}: any = useProduct();
 
+
 	async function getPromotions(search: string) {
 		try {
 			setLoading(true)
@@ -82,9 +83,35 @@ function usePromotion() {
 		try {
 			setLoading(true)
 			await axios.post(`http://localhost:4000/v1/admin/promotions/`, requestData)
+			setLoading(false)
+			getPromotions('')
+		} catch (error: any) {
 
+			console.error(error)
+			setErrorMessage(error.error.message)
 			navigate("/promotions/")
 
+		}
+		setLoading(false)
+	}
+
+	async function updatePromotion(promotionId: number, promotionCode: any) {
+		if (promotionCode.fixedEdit) {
+			promotionCode.discount_amount = promotionCode.fixedEdit
+		} else {
+			promotionCode.discount_amount = promotionCode.percentEdit
+		}
+		const requestData = ({
+			...promotionCode,
+			discount_amount: promotionCode.discount_amount,
+			expired_time: promotionCode.expired_time.toLocaleString()
+		})
+		console.log("Data prepare ----->", requestData)
+		try {
+			setLoading(true)
+			await axios.put(`http://localhost:4000/v1/admin/promotions/${promotionId}`, requestData)
+			setLoading(false)
+			getPromotions('')
 		} catch (error: any) {
 
 			console.error(error)
@@ -100,6 +127,7 @@ function usePromotion() {
 		getPromotionById,
 		deletePromotion,
 		createPromotion,
+		updatePromotion,
 	}
 
 }

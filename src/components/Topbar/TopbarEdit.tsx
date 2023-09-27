@@ -34,6 +34,8 @@ function Topbar_edit(prop: TopbarType) {
  
 	}
 
+	
+
 	return (
 		<nav className="flex items-center justify-between h-20 bg-white px-10 sticky top-0">
 			<div className="flex gap-3.5">
@@ -50,20 +52,34 @@ function Topbar_edit(prop: TopbarType) {
 			<div className='flex items-center gap-6'>
 				<Button className='h-11 py-2.5 px-6 gap-2' variant="secondary" type='submit' onClick={() => { navigate(prop.path) }}>ยกเลิก</Button>
 				{
-					prop.title === "บริการ" ? (
+					prop.title === "หมวดหมู่" && (
+					<Button
+						className='h-11 py-2.5 px-6 gap-2' type='submit'
+						onClick={() => { handleAccept(newCategory?.id, currentCategory, Date()) }}
+					>
+						ยืนยัน
+					</Button>)
+				}
+				
+				{
+					prop.title === "บริการ" && (
 						<Button
 							className='h-11 py-2.5 px-6 gap-2' type='submit'
 							onClick={() => { handleUpdate() }}
 						>
 							ยืนยัน
-						</Button>) :
+						</Button>)
+				}
 
-						(<Button
+				{
+					prop.title === "Promotion Code" && (
+						<Button
 							className='h-11 py-2.5 px-6 gap-2' type='submit'
-							onClick={() => { handleAccept(newCategory?.id, currentCategory, Date()) }}
+							onClick={() => prop.setTrigger(true)}
 						>
 							ยืนยัน
-						</Button>)
+						</Button>
+					)
 				}
 			</div>
 		</nav>

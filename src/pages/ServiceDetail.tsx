@@ -47,7 +47,7 @@ function ServiceDetail() {
   return (
     <div className="w-full">
       <Topbar_detail title='บริการ' path="" />
-      <div className="mx-auto w-[90%] max-w-[1440px] mt-14 border rounded-lg bg-white">
+      <div className="mx-auto w-[90%] max-w-[1440px] my-14 border rounded-lg bg-white">
         <div className="py-6 px-6 text-base text-gray-700 font-medium leading-normal flex">
           <div className="w-52 inline-block mr-6">
             ชื่อบริการ

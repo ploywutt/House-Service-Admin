@@ -19,7 +19,7 @@ function DatePicker({ date, setDate }: any) {
 					id="calendar"
 					variant={"outline"}
 					className={cn(
-						"w-96 h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-between items-center inline-flex focus:border focus:border-blue-500 text-base font-normal relative",
+						"w-48 h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-between items-center inline-flex focus:border focus:border-blue-500 text-base font-normal relative",
 						!date &&
 						"text-muted-foreground text-gray-700 text-base font-normal"
 					)}

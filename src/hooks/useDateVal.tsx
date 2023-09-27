@@ -29,20 +29,54 @@ function useDateVal() {
 		return formatDateTime
 	}
 
-	function StringToDate(formattedDateTime: string) {
-		// สมมติว่า formattedDateTime เป็นข้อความที่เก็บวันที่และเวลาในรูปแบบ LocaleString
-		// const formattedDateTime = "10/09/2023, 14:30:00 PM"; // เป็นตัวอย่างเท่านั้น
+	function formatTime(dateTimeString: string): string {
+		let dateTime
+		if (dateTimeString.includes("Z")) {
+			let timeString = dateTimeString.slice(0, dateTimeString.length - 1)
+			dateTime = new Date(timeString);
+		} else {
+			dateTime = new Date(dateTimeString)
+		}
 
-		// แปลง formattedDateTime กลับเป็น Date
-		const parsedDate = new Date(formattedDateTime);
+		const hour = dateTime.getHours().toString().padStart(2, '0')
+		const minute = dateTime.getMinutes().toString().padStart(2, '0')
 
-		// แปลง Date กลับเป็น ISO-8601 DateTime โดยไม่เปลี่ยนเวลา
-		const isoDateTime = new Date(parsedDate.getTime() - parsedDate.getTimezoneOffset() * 60000).toISOString();
-
-		return isoDateTime
+		const formatTime = `${hour}:${minute}`
+		return formatTime
 	}
 
-	return { formatDateTime, StringToDate }
+	function StringToDate(dateString: string) {
+		// Ex. dateString = "30/09/2023, 22:05";
+		const parts = dateString.split(", "); // แยกวันที่และเวลา ---> ["30/09/2023", "22:05"]
+		const dateParts = parts[0].split("/"); // แยกวันที่ออกเป็นส่วนย่อย ["30", "09", "2023"]
+		const timeParts = parts[1].split(":"); // แยกเวลาออกเป็นส่วนย่อย ["22", "05"]
+
+		const year = +(dateParts[2]);
+		const month = +(dateParts[1]) - 1; // เดือนต้องลบ 1 เนื่องจาก JavaScript เริ่มนับเดือนที่ 0
+		const day = +(dateParts[0]);
+		const hour = +(timeParts[0]);
+		const minute = +(timeParts[1]);
+
+		const dateObj = new Date(year, month, day, hour, minute);
+
+		return dateObj;
+	}
+
+	function getDateTime(dateTimeString: Date) {
+		if (!dateTimeString) {
+			return
+		}
+
+		const year = dateTimeString.getFullYear();
+		const month = (dateTimeString.getMonth() + 1).toString().padStart(2, '0'); // เริ่มจาก 0
+		const day = dateTimeString.getDate().toString().padStart(2, '0');
+
+		const formatDateString = `${day}/${month}/${year}`
+
+		return formatDateString
+	}
+
+	return { formatDateTime, StringToDate, getDateTime, formatTime }
 
 }
 

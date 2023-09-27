@@ -5,13 +5,9 @@ import { useEffect } from "react";
 import ServiceInput from "@/components/ServiceInput/ServiceInput";
 
 function ServiceAdd() {
+
   const { getCategory }:any = useCategory();
-
-  // const handleServiceSubmit = () => {
-  //   console.log('Service form submitted testing 5', formData);
-  //   // ทำสิ่งที่คุณต้องการเมื่อ form ใน ServiceInput ถูก submit
-  // };
-
+  
   useEffect(() => {
     getCategory('')
   }, [])
