@@ -101,11 +101,7 @@ function ServiceInput() {
       })
       console.log("เมื่อมี fileList input .....", formData)
     }
-    
-
   }, [fileList, validateServiceName, validateCategory, validateItems])
-
-  
 
   useEffect(() => {
     
@@ -211,7 +207,6 @@ function ServiceInput() {
               <div className="flex gap-0.5 mr-3">
                 <img src={dot} alt='dot' />
                 <img src={dot} alt='dot' />
-                {index}
               </div>
 
               <div className='flex w-[90%] gap-3'>

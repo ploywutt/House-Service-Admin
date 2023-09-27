@@ -55,7 +55,7 @@ function CategorySearch() {
     <div className="w-full">
       <Topbar_search title='หมวดหมู่' path="/categories/add" />
       {loading ? <h1>Loading ...</h1> : null}
-      <div className="mx-auto w-[90%] max-w-[1440px] mt-10 border rounded-lg">
+      <div className="mx-auto w-[90%] max-w-[1440px] my-10 border rounded-lg">
         <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
           <table className="table-auto w-full">
             <thead className="h-10 bg-gray-200 border-b">

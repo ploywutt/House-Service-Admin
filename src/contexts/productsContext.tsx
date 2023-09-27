@@ -25,7 +25,7 @@ function ProductProvider({ children }: any) {
 	// Promotion part
 	const [searchPromotion, setSearchPromotion] = useState<string>('')
 	const [promotions, setPromotions] = useState<any[]>([])
-	const [currentPromotion, setCurrentPromotion] = useState<any>([])
+	const [currentPromotion, setCurrentPromotion] = useState<any>()
 	
 	return (
 		<ProductContext.Provider value={{

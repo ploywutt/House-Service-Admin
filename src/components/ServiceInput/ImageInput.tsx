@@ -49,7 +49,6 @@ function ImageInput() {
 	// }
 
 	async function uploadFile(file: any) {
-
 		try {
 			const { data, error } = await secretKey.storage.from('testing').upload(`HomeService/${file.name}`, file)
 
@@ -224,7 +223,7 @@ function ImageInput() {
 			{!isValidate ? (
 				<span className="text-rose-700 text-sm font-medium" >กรุณาใส่รูปภาพ</span>
 			) : null}
-			{errorImage && <span className="text-rose-700 text-sm font-medium" >รูปภาพซ้ำ</span>}
+			{errorImage && <span className="text-rose-700 text-sm font-medium" >รูปภาพซ้ำ/ชื่อรูปซ้ำ</span>}
 		</div>
 	)
 }

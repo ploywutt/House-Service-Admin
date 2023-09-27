@@ -24,7 +24,7 @@ function PromotionSearch() {
     getPromotions,
   } = usePromotion();
 
-  const { formatDateTime } = useDateVal()
+  const { formatDateTime } = useDateVal();
 
   // function handleDragEnd(result: any) {
 
@@ -45,7 +45,7 @@ function PromotionSearch() {
     <div className="w-full">
       <Topbar_search title='Promotion Code' path="/promotions/add" />
       {loading ? <h1>Loading ...</h1> : null}
-      <div className="mx-auto w-[90%] max-w-[1440px] mt-10 border rounded-lg">
+      <div className="mx-auto w-[90%] max-w-[1440px] my-10 border rounded-lg">
 
         {/* <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
           <table className="table-auto w-full">

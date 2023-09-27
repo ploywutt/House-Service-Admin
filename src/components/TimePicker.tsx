@@ -1,4 +1,4 @@
-import clockicon from "../../assets/icon/clock.svg";
+import clockicon from "../assets/icon/clock.svg";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ function TimePicker(props: {
           variant={"outline"}
           id="time"
           className={cn(
-            "w-full h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-between items-center inline-flex focus:border focus:border-blue-500 text-base font-normal relative",
+            "w-44 h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-between items-center inline-flex focus:border focus:border-blue-500 text-base font-normal relative",
             !props.selectedTime &&
               "text-muted-foreground text-gray-700 text-base font-normal"
           )}
