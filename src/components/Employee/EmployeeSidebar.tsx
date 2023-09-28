@@ -1,13 +1,10 @@
 import { useNavigate, useLocation } from "react-router-dom";
-// import CategoryIcon from "../../assets/icon/category.svg";
 import HomeServiceIcon from "../../assets/icon/homeservices.png";
 import LogoutIcon from "../../assets/icon/logout.svg";
-// import PromotionIcon from "../../assets/icon/promotion.svg";
-import ServiceIcon from "../../assets/icon/service.svg";
 import { supabase } from "../../lib/supabase.ts";
 import { useState, useEffect } from "react";
 
-export default function AdminSidebar() {
+export default function EmployeeSidebar(props) {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeLi, setActiveLi] = useState<string>("");
@@ -20,7 +17,7 @@ export default function AdminSidebar() {
   ];
 
   function handleClick(selectedLi: string) {
-    setActiveLi(selectedLi); // update state when clicked
+    // setActiveLi(selectedLi); // update state when clicked
     // navigate to path that be chosen
     const matchingPair = pathStatePairs.find(
       (pair) => pair.state === selectedLi
@@ -62,33 +59,24 @@ export default function AdminSidebar() {
       <div id="menu-list-container">
         <ul className="text-gray-100 h-[calc(100vh-109px)] flex flex-col justify-between ">
           <div id="menu-list">
-            {/* <li
-              className={`menu ${
-                activeLi === "categories" ? "bg-blue-900" : ""
-              }`}
-              onClick={() => handleClick("categories")}
-            >
-              <img src={CategoryIcon} alt="Category Icon" />
-              <h5>หมวดหมู่</h5>
-            </li> */}
             <li
-              className={`menu ${
-                activeLi === "services" ? "bg-blue-900" : ""
-              } `}
-              // onClick={() => handleClick("services")}
+              className="hover:bg-blue-900 p-4 cursor-pointer"
+              onClick={props.handleComingwork}
             >
-              <img src={ServiceIcon} alt="Service Icon" />
-              <h5>รายการ</h5>
+              รอดำเนินการ
             </li>
-            {/* <li
-              className={`menu ${
-                activeLi === "promotions" ? "bg-blue-900" : ""
-              } `}
-              onClick={() => handleClick("promotions")}
+            <li
+              className="hover:bg-blue-900 p-4 cursor-pointer"
+              onClick={props.handleWorking}
             >
-              <img src={PromotionIcon} alt="Promotion Icon" />
-              <h5>Promotion Code</h5>
-            </li> */}
+              กำลังดำเนินการ
+            </li>
+            <li
+              className="hover:bg-blue-900 p-4 cursor-pointer"
+              onClick={props.handleSuccess}
+            >
+              ดำเนินการสำเร็จ
+            </li>
           </div>
           <li className="menu">
             <img src={LogoutIcon} alt="Logout Icon" />

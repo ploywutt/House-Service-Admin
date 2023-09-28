@@ -18,6 +18,9 @@ import PromotionDetail from "./pages/PromotionDetail";
 import EmployeeLogin from "./pages/EmployeeLogin";
 import EmployeeDetail from "./pages/EmployeeDetail";
 import EmployeeLayout from "./components/Employee/EmployeeLayout";
+import EmployeeComingWork from "./components/Employee/EmployeeComingWork";
+// import EmployeeWorking from "./components/Employee/EmployeeWorking";
+// import EmployeeSuccess from "./components/Employee/EmployeeSuccess";
 
 function App() {
   return (
@@ -50,9 +53,12 @@ function App() {
       </Route>
       <Route path="*" element={<NotFoundPage />} />
 
-      <Route path="/employeelogin" element={<EmployeeLogin />} />
+      <Route path="/employee/login" element={<EmployeeLogin />} />
       <Route element={<EmployeeLayout />}>
-        <Route path="/employeedetail" element={<EmployeeDetail />} />
+        <Route path="/employee/detail" element={<EmployeeDetail />} />
+        <Route path="/employee/comingwork" element={<EmployeeComingWork />} />
+        {/* <Route path="/employee/working" element={<EmployeeWorking />} />
+        <Route path="/employee/success" element={<EmployeeSuccess />} /> */}
       </Route>
     </Routes>
 
