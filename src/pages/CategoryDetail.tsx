@@ -1,13 +1,13 @@
+
 import { useProduct } from "@/contexts/productsContext"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import useDateVal from "@/hooks/useDateVal";
 
-import Topbar_detail from "@/components/Topbar/TopbarDetail"
+import Topbar_detail from "@/components/Topbar/TopbarDetail";
 import useCategory from "@/hooks/useCategory";
 
 function CategoryDetail() {
-
 	const params:any = useParams()
   const [trigger, setTrigger] = useState<boolean | null>(null)
 
@@ -45,7 +45,7 @@ function CategoryDetail() {
 				</div>
 			</div>
     </div>
-	)
+  );
 }
 
-export default CategoryDetail
+export default CategoryDetail;
