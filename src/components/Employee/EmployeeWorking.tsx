@@ -8,47 +8,40 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-function EmployeeWorking() {
+import useDateVal from "../../hooks/useDateVal";
+
+function EmployeeWorking(props: { handleSuccess: () => void }) {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    async function fetchDataComingWork() {
-      try {
-        const order = await axios.get(
-          "http://localhost:4000/v1/employee/working"
-        );
-        console.log(order.data.data);
-        setData(order.data.data);
-      } catch (error) {
-        console.error("Error", error);
-      }
-    }
-    fetchDataComingWork();
-  }, [data]);
+  const { formatDateTime } = useDateVal();
 
-  // async function clickToWork(orderId) {
-  //   try {
-  //     await axios.put(
-  //       `http://localhost:4000/v1/employee/status/towork?orderId=${orderId}`
-  //     );
-  //     console.log("Working status updated successfully");
-  //     // window.location.reload(); // Refresh the page
-  //     // navigate("/employee/");
-  //   } catch (error) {
-  //     console.log("Update Error:", error.message);
-  //   }
-  // }
-
-  async function clickToFinish(orderId) {
+  async function fetchDataComingWork() {
     try {
-      await axios.put(
+      const order = await axios.get(
+        "http://localhost:4000/v1/employee/working"
+      );
+      console.log(order.data.data);
+      setData(order.data.data);
+    } catch (error) {
+      console.error("Error", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchDataComingWork();
+  }, []);
+
+  async function clickToFinish(orderId: number) {
+    try {
+      const putData = await axios.put(
         `http://localhost:4000/v1/employee/status/tofinish?orderId=${orderId}`
       );
-      console.log("Finishing status updated successfully");
-      // navigate("/employee/detail");
-      // window.location.reload(); // Refresh the page
+      console.log("Finishing status updated successfully", putData);
+
+      await fetchDataComingWork();
+      props.handleSuccess();
     } catch (error) {
-      console.log("Update Error:", error.message);
+      console.log("Update Error:", error);
     }
   }
 
@@ -62,7 +55,7 @@ function EmployeeWorking() {
                 <AccordionTrigger className="flex justify-evenly text-sm">
                   <td className="px-6 w-60 text-center">{item.order_id}</td>
                   <td className="px-6 w-60 text-center">
-                    {item.order_detail.working_time}
+                    {formatDateTime(String(item?.order_detail.working_time))}
                   </td>
                   <td className="px-6 w-60 text-center ">
                     {item.status.status}

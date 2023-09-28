@@ -60,19 +60,25 @@ export default function EmployeeSidebar(props) {
         <ul className="text-gray-100 h-[calc(100vh-109px)] flex flex-col justify-between ">
           <div id="menu-list">
             <li
-              className="hover:bg-blue-900 p-4 cursor-pointer"
+              className={`hover:bg-blue-900 p-4 cursor-pointer ${
+                props.comingwork ? "bg-blue-900" : ""
+              }`}
               onClick={props.handleComingwork}
             >
               รอดำเนินการ
             </li>
             <li
-              className="hover:bg-blue-900 p-4 cursor-pointer"
+              className={`hover:bg-blue-900 p-4 cursor-pointer ${
+                props.working ? "bg-blue-900" : ""
+              }`}
               onClick={props.handleWorking}
             >
               กำลังดำเนินการ
             </li>
             <li
-              className="hover:bg-blue-900 p-4 cursor-pointer"
+              className={`hover:bg-blue-900 p-4 cursor-pointer ${
+                props.success ? "bg-blue-900" : ""
+              }`}
               onClick={props.handleSuccess}
             >
               ดำเนินการสำเร็จ
