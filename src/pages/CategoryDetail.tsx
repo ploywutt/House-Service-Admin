@@ -1,5 +1,5 @@
 import { useProduct } from "@/contexts/productsContext"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import useDateVal from "@/hooks/useDateVal";
 
@@ -8,6 +8,7 @@ import useCategory from "@/hooks/useCategory";
 
 function CategoryDetail() {
 	const params:any = useParams()
+  const [trigger, setTrigger] = useState<boolean | null>(null)
 
 	const {
 		newCategory
@@ -26,7 +27,7 @@ function CategoryDetail() {
 
 	return (
 		<div className="w-full">
-			<Topbar_detail title='หมวดหมู่' path="" />
+			<Topbar_detail title='หมวดหมู่' path="" trigger={trigger} setTrigger={setTrigger} />
 			<div className="mx-auto w-[90%] max-w-[1440px] mt-14 border rounded-lg bg-white">
 				<div className="py-10 px-6 text-base text-gray-700 font-medium leading-normal flex">
 					<div className="w-52 inline-block mr-6">

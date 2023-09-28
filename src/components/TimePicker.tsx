@@ -14,19 +14,19 @@ function TimePicker(props: {
   minute: string[];
   handleHour: (e: string) => void;
   handleMinute: (e: string) => void;
-  clickHour: number;
-  clickMinute: number;
-  selectedTime: number;
+  clickHour: string;
+  clickMinute: string;
+  selectedTime: string;
   setSelectedTime: (e: string) => void;
 }) {
   return (
     <Popover>
       <PopoverTrigger>
         <Button
-          variant={"outline"}
+          // variant={"outline"}
           id="time"
           className={cn(
-            "w-44 h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-between items-center inline-flex focus:border focus:border-blue-500 text-base font-normal relative",
+            "w-44 h-11 px-4 py-2.5 text-gray-900 bg-white rounded-lg border border-gray-300 justify-between items-center inline-flex focus:border focus:border-blue-500 text-base font-normal relative",
             !props.selectedTime &&
               "text-muted-foreground text-gray-700 text-base font-normal"
           )}
@@ -45,9 +45,9 @@ function TimePicker(props: {
             {props.hour.map((item, index: number) => {
               return (
                 <Button
-                  variant="picker"
+                  // variant="picker"
                   key={index}
-                  className="bg-transparent text-base font-normal cursor-pointer w-10/12 h-[37px] px-3"
+                  className="bg-transparent text-gray-700 text-base font-normal cursor-pointer w-10/12 h-[37px] px-3"
                   onClick={() => {
                     props.handleHour(item);
                   }}
@@ -62,9 +62,9 @@ function TimePicker(props: {
             {props.minute.map((item, index: number) => {
               return (
                 <Button
-                  variant="picker"
+                  // variant="picker"
                   key={index}
-                  className="bg-transparent text-base font-normal cursor-pointer w-10/12 h-[37px] px-3"
+                  className="bg-transparent text-gray-700 text-base font-normal cursor-pointer w-10/12 h-[37px] px-3"
                   onClick={() => {
                     props.handleMinute(item);
                   }}

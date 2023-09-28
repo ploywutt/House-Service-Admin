@@ -58,7 +58,7 @@ function PromotionEdit() {
     setSelectedTime,
   } = useTimePicker();
 
-  function validatePromotion() {
+  function validatePromotion(promotionEdit: any) {
 
 		if (codeEdit === undefined || codeEdit === '') {
 			setValidateCode(false)
@@ -78,7 +78,7 @@ function PromotionEdit() {
       setValidateData(true)
 		}
 
-		if (typeEdit === "Fixed" && fixedEdit === undefined || fixedEdit === "" || fixedEdit === "0") {
+		if (typeEdit === "Fixed" && (!fixedEdit || fixedEdit == 0)) {
 			setValidateFixed(false)
 			setTrigger(false)
       setValidateData(false)
@@ -87,16 +87,17 @@ function PromotionEdit() {
       setValidateData(true)
 		}
 
-		if (typeEdit === "Percent" && percentEdit === undefined || percentEdit === "" || percentEdit === "0") {
+		if (typeEdit === "Percent" && (!percentEdit || percentEdit == 0)) {
 			setValidatePercent(false)
 			setTrigger(false)
       setValidateData(false)
+      console.log("percenEdit: ", percentEdit)
 		} else {
 			setValidatePercent(true)
       setValidateData(true)
 		}
 
-		if (!quotaEdit) {
+		if (!quotaEdit || String(quotaEdit) === "0") {
 			setValidateQuota(false)
 			setTrigger(false)
       setValidateData(false)
@@ -114,18 +115,17 @@ function PromotionEdit() {
       setValidateData(true)
 		}
 
-		for (const key in promotionEdit) {
-			if (promotionEdit[key] === undefined || promotionEdit[key] === "" || !validateData) {
-				break;
-			} else {
-        console.log("promotionEdit: ", promotionEdit)
-        console.log(trigger)
-        updatePromotion(params.id, promotionEdit)
-        getPromotions("")
-        navigate("/promotions")
-        setTrigger(false)
-			}
-		}
+
+    if (validateData) {
+
+      console.log("promotionEdit: ", promotionEdit)
+      console.log(trigger)
+      updatePromotion(params.id, promotionEdit)
+      getPromotions("")
+      navigate("/promotions")
+      setTrigger(false)
+    }
+		
 	}
 
   function hanndleFixedValue(e: any) {
@@ -177,9 +177,9 @@ function PromotionEdit() {
       expired_time: selectedEditDateTime,
     }))
     if (trigger) {
-      validatePromotion()
+      console.log("promotionEdit", promotionEdit)
+      validatePromotion(promotionEdit)
     }
-    console.log("promotionEdit", promotionEdit)
   }, [
     codeEdit, typeEdit, quotaEdit, selectedEditDateTime, trigger, fixedEdit, percentEdit,
     validateCode, validateType, validateFixed, validatePercent, validateQuota, validateDate,
@@ -266,7 +266,7 @@ function PromotionEdit() {
             </label>
             <div className="relative">
               <Input
-                type="text"
+                type="number"
                 value={quotaEdit}
                 className=""
                 // className={`border-rose-700 focus:border-rose-700`}
@@ -275,7 +275,7 @@ function PromotionEdit() {
               />
               <div className="absolute inset-y-2 right-4 text-gray-700">ครั้ง</div>
             </div>
-						<p className={`${validateQuota ? "hidden" : "text-rose-700"} ml-6`}>กรุณากรอกโควต้าการใช้</p>
+						<p className={`${validateQuota ? "hidden" : "text-rose-700"} ml-6`}>กรุณากรอกโควต้าการใช้โดยจำนวนครั้งต้องมากกว่า 0</p>
           </div>
 
           <div className="mb-10 px-6 flex">

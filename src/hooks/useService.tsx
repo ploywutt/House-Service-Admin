@@ -57,7 +57,7 @@ function useService() {
 			setLoading(true)
 			const deleteImage = services.find((service: { id: number }) => service.id === serviceId)
 			// console.log("deleteImage --->", deleteImage)
-			const { data, error } = await secretKey
+			await secretKey
 				.storage
 				.from('testing')
 				.remove([deleteImage.pic_service])

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 
@@ -20,6 +20,7 @@ import pen from "../assets/icon/pen.svg"
 function CategorySearch() {
   const navigate = useNavigate()
   const { getCategory, updateRecommend } = useCategory()
+  const [trigger, setTrigger] = useState<boolean | null>(null)
 
   const {
     searchCategory,
@@ -53,7 +54,7 @@ function CategorySearch() {
 
   return (
     <div className="w-full">
-      <Topbar_search title='หมวดหมู่' path="/categories/add" />
+      <Topbar_search title='หมวดหมู่' path="/categories/add" trigger={trigger} setTrigger={setTrigger} />
       {loading ? <h1>Loading ...</h1> : null}
       <div className="mx-auto w-[90%] max-w-[1440px] my-10 border rounded-lg">
         <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
