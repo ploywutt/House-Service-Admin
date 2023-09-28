@@ -15,7 +15,11 @@ import PromotionAdd from "../pages/PromotionAdd";
 import PromotionEdit from "../pages/PromotionEdit";
 import PromotionDetail from "../pages/PromotionDetail";
 
+import EmployeeLayout from "@/components/Employee/EmployeeLayout";
+import EmployeeDetail from "./EmployeeDetail";
+
 function AuthenticationApp() {
+  
   return (
     // <Router>
       <Routes>
@@ -43,7 +47,11 @@ function AuthenticationApp() {
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Route>
+        <Route element={<EmployeeLayout />}>
+          <Route path="/employee" element={<EmployeeDetail />} />
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
+
       </Routes>
     // </Router>
   );

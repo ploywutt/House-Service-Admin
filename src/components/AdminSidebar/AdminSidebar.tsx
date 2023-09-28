@@ -12,7 +12,7 @@ export default function AdminSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeLi, setActiveLi] = useState<string>('')
-  const { setIsSession }:any = useProduct();
+  const { setSession }:any = useProduct();
 
   // สร้างอาร์เรย์ของ object ที่มี key = path และ value = state
   const pathStatePairs = [
@@ -41,7 +41,9 @@ export default function AdminSidebar() {
 
   async function signOutUser() {
     await supabase.auth.signOut();
-    setIsSession(false)
+    localStorage.removeItem("session")
+    localStorage.removeItem("refresh")
+    setSession(false)
     navigate('/')
   }
 
@@ -70,6 +72,9 @@ export default function AdminSidebar() {
               <h5>Promotion Code</h5>
             </li>
           </div>
+          <li className="menu">
+            <h3 onClick={() => navigate("/employee")}>Go to Techician Page</h3>
+          </li>
           <li className="menu">
             <img src={LogoutIcon} alt="Logout Icon" />
             <h5 onClick={signOutUser}>ออกจากระบบ</h5>
