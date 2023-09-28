@@ -10,11 +10,11 @@ function useService() {
 		services, setServices,
 		newService, setNewService,
 		setErrorMessage,
-		formData, setFormData,
-		fileList, setFileList,
-		submitServiceInput, setSubmitServiceInput,
+		setFormData,
+		setFileList,
+		setSubmitServiceInput,
 		imagePath, setImagePath,
-		blobImage, setBlobImage,
+		setBlobImage,
 	}: any = useProduct();
 
 	async function getServices(search: string) {

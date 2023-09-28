@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react'
 import { secretKey } from "../../lib/supabase.ts";
 import useService from '@/hooks/useService.tsx';
 import { useNavigate } from 'react-router-dom';
-// import useService from '@/hooks/useService.tsx';
-// import { useNavigate } from 'react-router-dom';
 
 function ImageInput() {
 	// #
@@ -14,8 +12,7 @@ function ImageInput() {
 		submitServiceInput, setSubmitServiceInput,
 		formData, setFormData,
 		blobImage, setBlobImage,
-		newService, setNewService,
-		imagePath, setImagePath,
+		newService, 
 	}: any = useProduct()
 	const { updateService, getServices } = useService()
 	const navigate = useNavigate()

@@ -26,7 +26,7 @@ function TimePicker(props: {
           // variant={"outline"}
           id="time"
           className={cn(
-            "w-44 h-11 px-4 py-2.5 text-gray-900 bg-white rounded-lg border border-gray-300 justify-between items-center inline-flex focus:border focus:border-blue-500 text-base font-normal relative",
+            "w-44 h-11 px-4 py-2.5 text-gray-900 bg-white rounded-lg border border-gray-300 justify-between items-center inline-flex focus:border focus:border-blue-500 text-base font-normal relative hover:bg-gray-100 active:bg-gray-300",
             !props.selectedTime &&
               "text-muted-foreground text-gray-700 text-base font-normal"
           )}
@@ -64,7 +64,7 @@ function TimePicker(props: {
                 <Button
                   // variant="picker"
                   key={index}
-                  className="bg-transparent text-gray-700 text-base font-normal cursor-pointer w-10/12 h-[37px] px-3"
+                  className="bg-transparent text-gray-700 text-base font-normal cursor-pointer w-10/12 h-[37px] px-3 "
                   onClick={() => {
                     props.handleMinute(item);
                   }}
@@ -76,7 +76,7 @@ function TimePicker(props: {
           </ScrollArea>
         </div>
         <div className="w-[164px] h-[52px] flex justify-between items-center border-t bottom-0 absolute">
-          <div className="pl-4 text-gray-800">
+          <div className="pl-4 text-gray-900">
             {props.clickHour}:{props.clickMinute}
           </div>
           <Button
