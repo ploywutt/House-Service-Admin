@@ -7,6 +7,7 @@ import Topbar_detail from "@/components/Topbar/TopbarDetail"
 import useCategory from "@/hooks/useCategory";
 
 function CategoryDetail() {
+
 	const params:any = useParams()
   const [trigger, setTrigger] = useState<boolean | null>(null)
 
@@ -16,14 +17,12 @@ function CategoryDetail() {
 	}: any = useProduct()
 	
 	const { getCategoryById } = useCategory()
-
 	const { formatDateTime } = useDateVal()
 
 	useEffect(() => {
 		getCategoryById(params.id)
 		console.log(newCategory.createAt)
 	}, [])
-
 
 	return (
 		<div className="w-full">

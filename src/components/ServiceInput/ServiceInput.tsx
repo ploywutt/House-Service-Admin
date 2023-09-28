@@ -19,10 +19,9 @@ function ServiceInput() {
     fileList, setFileList,
     formData, setFormData,
     submitServiceInput, setSubmitServiceInput,
-    newService
   }: any = useProduct();
 
-  const { createService, createSubService, getServices } = useService()
+  const { createService, getServices } = useService()
 
   const [validateServiceName, setValidateServiceName] = useState<string>('')
   const [validateCategory, setValidateCategory] = useState<string>('')
@@ -201,7 +200,7 @@ function ServiceInput() {
           <p className="text-rose-700 text-sm font-medium">กรุณาเพิ่มรายการย่อยอย่างน้อยหนึ่งรายการ</p>
         ) : null}
         <div className="my-10 text-gray-500 text-sm font-normal leading-tight">
-          {fields.map((item, index) => (
+          {fields.map((_, index) => (
             <div key={index} className="flex justify-items-start items-center gap-3 mb-10">
               <div className="flex gap-0.5 mr-3">
                 <img src={dot} alt='dot' />
@@ -209,13 +208,6 @@ function ServiceInput() {
               </div>
 
               <div className='flex w-[90%] gap-3'>
-                {/* <Controller
-                  // name={`items[${index}].itemName`}
-                  // control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                  )}
-                /> */}
                     <div className='flex flex-col gap-1 w-[50%]'>
                       <div className='flex justify-between'>
                         <label>ชื่อรายการ</label>
@@ -225,7 +217,6 @@ function ServiceInput() {
 
                       </div>
                       <Input
-                    // {...field}
                         type="text"
                         className={`w-[100%] h-9 px-3 py-2 ${!isItemsValidate ? "border-rose-700 focus:border-rose-700" : null}`}
                         style={{ borderColor: !isItemsValidate ? "#C82438" : "" }}
@@ -241,13 +232,6 @@ function ServiceInput() {
                         }}
                       />
                 </div>
-
-                {/* <Controller
-                  name={`items[${index}].itemPrice`}
-                  control={control}
-                  render={({ field }) => (
-                  )}
-                /> */}
                 <div className='relative flex flex-col gap-1 w-[25%] '>
                       <div className='flex justify-between'>
                         <label>ค่าบริการ / 1 หน่วย</label>
@@ -257,7 +241,6 @@ function ServiceInput() {
 
                       </div>
                       <Input
-                    // {...field}
                         type="number"
                         className={`w-[100%] h-9 px-3 py-2 ${!isItemsValidate ? "border-rose-700 focus:border-rose-700" : null}`}
                         style={{ borderColor: !isItemsValidate ? "#C82438" : "" }}
@@ -274,14 +257,6 @@ function ServiceInput() {
                       />
                   <img src={baht} alt="baht" className='w-[9px] h-[15px] absolute top-8 right-4' />
                 </div>
-
-                {/* <Controller
-                  name={`items[${index}].itemUnit`}
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                  )}
-                /> */}
                     <div className='flex flex-col gap-1 w-[25%]'>
                       <div className='flex justify-between'>
                         <label>หน่วยบริการ</label>
@@ -291,7 +266,6 @@ function ServiceInput() {
 
                       </div>
                       <Input
-                    // {...field}
                         type="text"
                         className={`w-[100%] h-9 px-3 py-2 ${!isItemsValidate ? "border-rose-700 focus:border-rose-700" : null}`}
                         style={{ borderColor: !isItemsValidate ? "#C82438" : "" }}
@@ -337,7 +311,6 @@ function ServiceInput() {
         เพิ่มรายการ
         <img src={plus} alt="plus" />
       </Button>
-      {/* <button type='submit'>Testing</button> */}
     </form>
   );
 

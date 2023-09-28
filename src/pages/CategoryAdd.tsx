@@ -6,11 +6,11 @@ import { Input } from "@/components/ui/input"
 import { useProduct } from "@/contexts/productsContext"
 
 function CategoryAdd() {
+	
   const [trigger, setTrigger] = useState<boolean | null>(null)
 	const {
 		currentCategory, setCurrentCategory
 	}: any = useProduct()
-
 
 	function handleAddCategory(event: any) {
 		event.preventDefault();

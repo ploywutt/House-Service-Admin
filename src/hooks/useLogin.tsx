@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase.ts";
 import axios from 'axios'
+import { useProduct } from "@/contexts/productsContext.tsx";
 
 function useLogin() {
   const [email, setEmail] = useState<string>("");
@@ -9,7 +10,7 @@ function useLogin() {
   const [isValid, setIsValid] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [isHaveEmail, setIsHaveEmail] = useState<boolean>(true)
-
+  const { setIsSession }: any = useProduct(); 
   const navigate = useNavigate();
 
   const handleSubmit = async (event: any) => {
@@ -38,6 +39,7 @@ function useLogin() {
       if (data.session) {
         console.log(data)
         setIsValid(true);
+        setIsSession(true)
         navigate("/categories");
       } else {
         setIsValid(false);

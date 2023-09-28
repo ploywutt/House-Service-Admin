@@ -6,11 +6,13 @@ import PromotionIcon from "../../assets/icon/promotion.svg";
 import ServiceIcon from "../../assets/icon/service.svg";
 import { supabase } from '../../lib/supabase.ts'
 import { useState, useEffect } from "react";
+import { useProduct } from "@/contexts/productsContext.tsx";
 
 export default function AdminSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeLi, setActiveLi] = useState<string>('')
+  const { setIsSession }:any = useProduct();
 
   // สร้างอาร์เรย์ของ object ที่มี key = path และ value = state
   const pathStatePairs = [
@@ -39,6 +41,7 @@ export default function AdminSidebar() {
 
   async function signOutUser() {
     const { error } = await supabase.auth.signOut();
+    setIsSession(false)
     navigate('/')
   }
 

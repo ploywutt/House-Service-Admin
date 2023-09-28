@@ -16,8 +16,8 @@ import dot from "../assets/icon/dot.png"
 import garbage from "../assets/icon/garbage.svg"
 import pen from "../assets/icon/pen.svg"
 
-
 function CategorySearch() {
+
   const navigate = useNavigate()
   const { getCategory, updateRecommend } = useCategory()
   const [trigger, setTrigger] = useState<boolean | null>(null)
@@ -28,7 +28,6 @@ function CategorySearch() {
     loading,
   }: any = useProduct()
 
-  
   const { formatDateTime } = useDateVal()
 
   function handleDragEnd(result: any) {
@@ -37,13 +36,13 @@ function CategorySearch() {
     let [selectedRow] = tempCategory.splice(result.source.index, 1)
     tempCategory.splice(result.destination.index, 0, selectedRow)
     setCategories(tempCategory)
-    console.log(tempCategory)
+    // console.log(tempCategory)
     // สร้างข้อมูลที่ต้องการส่งไปยังเซิร์ฟเวอร์
     const dataToUpdateServer = tempCategory.map((category, index) => ({
       id: category.id,
       position: index + 1, // ตำแหน่งใหม่ของรายการหมวดหมู่
     }));
-    console.log("ตำแหน่งใหม่ของรายการหมวดหมู่ ---->", dataToUpdateServer)
+    // console.log("ตำแหน่งใหม่ของรายการหมวดหมู่ ---->", dataToUpdateServer)
     updateRecommend(dataToUpdateServer)
   }
 

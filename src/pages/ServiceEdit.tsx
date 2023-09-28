@@ -2,9 +2,8 @@ import Topbar_edit from '@/components/Topbar/TopbarEdit';
 import { useProduct } from '@/contexts/productsContext';
 import useDateVal from '@/hooks/useDateVal';
 import useService from '@/hooks/useService';
-import { useForm, Controller, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import type {
-  NestedValue,
   SubmitHandler,
   DefaultValues
 } from "react-hook-form";
@@ -40,11 +39,8 @@ function ServiceEdit() {
   const [isItemsValidate, setIsItemsValidate] = useState<boolean | null>(true)
 
   const {
-    loading, setLoading,
-    imagePath, setImagePath,
-    newService, setNewService,
+    newService,
     fileList, setFileList,
-    blobImage, setBlobImage,
     categories,
     submitServiceInput, setSubmitServiceInput,
     formData, setFormData,
@@ -84,10 +80,7 @@ function ServiceEdit() {
   }
   const {
     handleSubmit,
-    register,
-    reset,
     control,
-    formState: { errors }
   } = useForm<FormValues>({
     defaultValues
   });
