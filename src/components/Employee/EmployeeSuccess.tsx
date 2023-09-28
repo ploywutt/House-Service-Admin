@@ -7,9 +7,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import useDateVal from "../../hooks/useDateVal";
 
 function EmployeeSuccess() {
   const [data, setData] = useState([]);
+
+  const { formatDateTime } = useDateVal();
 
   useEffect(() => {
     async function fetchDataSuccess() {
@@ -36,7 +39,7 @@ function EmployeeSuccess() {
                 <AccordionTrigger className="flex justify-evenly text-sm">
                   <td className="px-6 w-60 text-center">{item.order_id}</td>
                   <td className="px-6 w-60 text-center">
-                    {item.order_detail.working_time}
+                    {formatDateTime(String(item?.order_detail.working_time))}
                   </td>
                   <td className="px-6 w-60 text-center ">
                     {item.status.status}
