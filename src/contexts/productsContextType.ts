@@ -1,6 +1,8 @@
 
 
 export interface ProductContextType {
+  isSession: boolean
+  setIsSession: (value: boolean) => void
   
   loading: boolean;
   setLoading: (value: boolean) => void;

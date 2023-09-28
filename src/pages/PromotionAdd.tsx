@@ -47,7 +47,7 @@ function PromotionAdd() {
 		setSelectedTime,
 	} = useTimePicker();
 
-	function validatePromotion() {
+	function validatePromotion(promotion: any) {
 
 		if (newPromotionCode === undefined || newPromotionCode === '') {
 			setValidateCode(false)
@@ -63,21 +63,21 @@ function PromotionAdd() {
 			setValidateType(true)
 		}
 
-		if (newType === "Fixed" && newFixed === undefined || newFixed === "" || newFixed === "0") {
+		if (newType === "Fixed" && (!newFixed || newFixed == 0)) {
 			setValidateFixed(false)
 			setTrigger(false)
 		} else {
 			setValidateFixed(true)
 		}
 
-		if (newType === "Percent" && newPercent === undefined || newPercent === "" || newPercent === "0") {
+		if (newType === "Percent" && (!newPercent || newPercent == 0)) {
 			setValidatePercent(false)
 			setTrigger(false)
 		} else {
 			setValidatePercent(true)
 		}
 
-		if (quota === undefined || quota === 0 || quota === "") {
+		if (!quota || String(quota) === "0") {
 			setValidateQuota(false)
 			setTrigger(false)
 		} else {
@@ -91,18 +91,17 @@ function PromotionAdd() {
 			setValidateDate(true)
 		}
 
-		for (const key in promotion) {
-			if (promotion[key] === undefined || promotion[key] === "") {
-				break;
-			} else {
-				createPromotion(promotion)
-				setTrigger(false)
-				setPromotion(null)
-				getPromotions("")
-				navigate("/promotions/")
-			}
+
+		if (Object.values(promotion).every(value => value !== null && value !== undefined)) {
+
+			createPromotion(promotion)
+			setTrigger(false)
+			setPromotion(null)
+			getPromotions("")
+			navigate("/promotions/")
 		}
 	}
+
 
 	function hanndleFixedValue(e: any) {
 		setNewFixed(e.target.value)
@@ -137,7 +136,7 @@ function PromotionAdd() {
 		}))
 
 		if (trigger) {
-			validatePromotion()
+			validatePromotion(promotion)
 		}
 		console.log("promotion: ", promotion)
 	}, [
@@ -217,7 +216,7 @@ function PromotionAdd() {
 						</label>
 						<div className="relative">
 							<Input
-								type="text"
+								type="number"
 								value={quota}
 								className=""
 								// className={`border-rose-700 focus:border-rose-700`}
@@ -226,7 +225,7 @@ function PromotionAdd() {
 							/>
 							<div className="absolute inset-y-2 right-4 text-gray-700">ครั้ง</div>
 						</div>
-						<p className={`${validateQuota ? "hidden" : "text-rose-700"} ml-6`}>กรุณากรอกโควต้าการใช้</p>
+						<p className={`${validateQuota ? "hidden" : "text-rose-700"} ml-6`}>กรุณากรอกโควต้าการใช้โดยจำนวนครั้งต้องมากกว่า 0</p>
 					</div>
 
 					<div className="mb-10 flex">

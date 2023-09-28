@@ -4,7 +4,7 @@ import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useProduct } from "@/contexts/productsContext";
 import useDateVal from "@/hooks/useDateVal";
 import usePromotion from "@/hooks/usePromotion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,8 @@ import pen from "../assets/icon/pen.svg"
 
 function PromotionSearch() {
   const navigate = useNavigate();
+  const [trigger, setTrigger] = useState<boolean | null>(null)
+
   const {
     loading,
     promotions, setPromotions,
@@ -43,7 +45,7 @@ function PromotionSearch() {
   }, [searchPromotion])
   return (
     <div className="w-full">
-      <Topbar_search title='Promotion Code' path="/promotions/add" />
+      <Topbar_search title='Promotion Code' path="/promotions/add" trigger={trigger} setTrigger={setTrigger} />
       {loading ? <h1>Loading ...</h1> : null}
       <div className="mx-auto w-[90%] max-w-[1440px] my-10 border rounded-lg">
 

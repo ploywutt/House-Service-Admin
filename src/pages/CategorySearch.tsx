@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 
@@ -16,10 +16,11 @@ import dot from "../assets/icon/dot.png"
 import garbage from "../assets/icon/garbage.svg"
 import pen from "../assets/icon/pen.svg"
 
-
 function CategorySearch() {
+
   const navigate = useNavigate()
   const { getCategory, updateRecommend } = useCategory()
+  const [trigger, setTrigger] = useState<boolean | null>(null)
 
   const {
     searchCategory,
@@ -27,7 +28,6 @@ function CategorySearch() {
     loading,
   }: any = useProduct()
 
-  
   const { formatDateTime } = useDateVal()
 
   function handleDragEnd(result: any) {
@@ -36,13 +36,13 @@ function CategorySearch() {
     let [selectedRow] = tempCategory.splice(result.source.index, 1)
     tempCategory.splice(result.destination.index, 0, selectedRow)
     setCategories(tempCategory)
-    console.log(tempCategory)
+    // console.log(tempCategory)
     // สร้างข้อมูลที่ต้องการส่งไปยังเซิร์ฟเวอร์
     const dataToUpdateServer = tempCategory.map((category, index) => ({
       id: category.id,
       position: index + 1, // ตำแหน่งใหม่ของรายการหมวดหมู่
     }));
-    console.log("ตำแหน่งใหม่ของรายการหมวดหมู่ ---->", dataToUpdateServer)
+    // console.log("ตำแหน่งใหม่ของรายการหมวดหมู่ ---->", dataToUpdateServer)
     updateRecommend(dataToUpdateServer)
   }
 
@@ -53,7 +53,7 @@ function CategorySearch() {
 
   return (
     <div className="w-full">
-      <Topbar_search title='หมวดหมู่' path="/categories/add" />
+      <Topbar_search title='หมวดหมู่' path="/categories/add" trigger={trigger} setTrigger={setTrigger} />
       {loading ? <h1>Loading ...</h1> : null}
       <div className="mx-auto w-[90%] max-w-[1440px] my-10 border rounded-lg">
         <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>

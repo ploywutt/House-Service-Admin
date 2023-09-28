@@ -3,6 +3,8 @@ import { ProductContextType } from "./productsContextType";
 
 const ProductContext = React.createContext<ProductContextType | undefined>(undefined);
 function ProductProvider({ children }: any) {
+	const [isSession, setIsSession] = useState<boolean>(false)
+
 	const [loading, setLoading] = useState<boolean>(false);
 	const [errorMessage, setErrorMessage] = useState<string>('')
 	
@@ -29,6 +31,7 @@ function ProductProvider({ children }: any) {
 	
 	return (
 		<ProductContext.Provider value={{
+			isSession, setIsSession,
 			loading, setLoading,
 			errorMessage, setErrorMessage,
 			

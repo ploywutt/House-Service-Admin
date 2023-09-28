@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom"
 import { Button } from "../ui/button"
 import { TopbarType } from "./TopbarType"
 import back from '../../assets/icon/back_arrow.png'
-import { useEffect } from "react"
 
 function Topbar_detail(prop: TopbarType) {
 	const navigate = useNavigate()

@@ -2,12 +2,13 @@ import Topbar_detail from "@/components/Topbar/TopbarDetail";
 import { useProduct } from "@/contexts/productsContext";
 import useDateVal from "@/hooks/useDateVal";
 import usePromotion from "@/hooks/usePromotion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 
 function PromotionDetail() {
   const params: any = useParams();
+  const [trigger, setTrigger] = useState<boolean | null>(null)
 
   const {
     currentPromotion, setCurrentPromotion
@@ -25,7 +26,7 @@ function PromotionDetail() {
 
 	return (
     <div className="w-full">
-      <Topbar_detail title='Promotion Code' path="" />
+      <Topbar_detail title='Promotion Code' path="" trigger={trigger} setTrigger={setTrigger} />
       <div className="mx-auto w-[90%] max-w-[1440px] mt-14 border rounded-lg bg-white">
         <div className="py-10 px-6 text-base text-gray-700 font-medium leading-normal flex">
           <div className="w-52 inline-block mr-6">

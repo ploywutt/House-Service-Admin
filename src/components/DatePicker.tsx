@@ -1,4 +1,4 @@
-import { useState } from "react"
+
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
@@ -17,9 +17,8 @@ function DatePicker({ date, setDate }: any) {
 			<PopoverTrigger asChild>
 				<Button
 					id="calendar"
-					variant={"outline"}
 					className={cn(
-						"w-48 h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-between items-center inline-flex focus:border focus:border-blue-500 text-base font-normal relative",
+						"w-48 h-11 px-4 py-2.5 text-gray-900 bg-white rounded-lg border border-gray-300 justify-between items-center inline-flex focus:border focus:border-blue-500 text-base font-normal relative hover:bg-gray-100 active:bg-gray-300",
 						!date &&
 						"text-muted-foreground text-gray-700 text-base font-normal"
 					)}

@@ -1,15 +1,16 @@
 
+import { useState } from "react"
 import Topbar_add from "@/components/Topbar/TopbarAdd"
 import { Input } from "@/components/ui/input"
 
 import { useProduct } from "@/contexts/productsContext"
 
 function CategoryAdd() {
-
+	
+  const [trigger, setTrigger] = useState<boolean | null>(null)
 	const {
 		currentCategory, setCurrentCategory
 	}: any = useProduct()
-
 
 	function handleAddCategory(event: any) {
 		event.preventDefault();
@@ -18,7 +19,7 @@ function CategoryAdd() {
 
 	return (
 		<div className="w-full">
-			<Topbar_add title='หมวดหมู่' path="/categories/edit" />
+			<Topbar_add title='หมวดหมู่' path="/categories/edit" trigger={trigger} setTrigger={setTrigger} />
 			<div className="mx-auto w-[90%] max-w-[1440px] mt-14 border rounded-lg bg-white">
 				<form onSubmit={handleAddCategory} className="py-10 px-6 text-base font-medium leading-normal">
 					<label htmlFor="" className="text-gray-700 w-52 inline-block mr-6">
