@@ -3,11 +3,13 @@ import HomeServiceIcon from "../../assets/icon/homeservices.png";
 import LogoutIcon from "../../assets/icon/logout.svg";
 import { supabase } from "../../lib/supabase.ts";
 import { useState, useEffect } from "react";
+import { useProduct } from "@/contexts/productsContext.tsx";
 
 export default function EmployeeSidebar(props) {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeLi, setActiveLi] = useState<string>("");
+  const { setSession }:any = useProduct();
 
   // สร้างอาร์เรย์ของ object ที่มี key = path และ value = state
   const pathStatePairs = [
@@ -41,6 +43,9 @@ export default function EmployeeSidebar(props) {
 
   async function signOutUser() {
     const { error } = await supabase.auth.signOut();
+    localStorage.removeItem("session")
+    localStorage.removeItem("refresh")
+    setSession(false)
     navigate("/");
   }
 
