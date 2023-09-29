@@ -60,7 +60,7 @@ function ServiceEdit() {
   type FormValues = {
     serviceName: string,
     category: string,
-    image: File, // <====== รอเปลี่ยน
+    image: File,
     subService: {
       sub_service_name: string;
       price_per_unit: number;
@@ -125,7 +125,7 @@ function ServiceEdit() {
   function deleteItems(index: number) {
     // คัดลอกค่า validateItems มาเพื่ออัปเดต
     const updatedValidateItems = [...validateItems];
-  
+
     // กำหนดค่าใน index ที่ต้องการลบเป็น null
     // updatedValidateItems[index] = null;
     updatedValidateItems.splice(index, 1); // ลบอ็อบเจ็กต์ใน index ที่ต้องการ
@@ -135,8 +135,7 @@ function ServiceEdit() {
     console.log(`new validateItems: ${validateItems}`);
     remove(index)
   }
-
-
+  
   useEffect(() => {
     async function fectData() {
       await getServiceById(params.id)
@@ -151,7 +150,7 @@ function ServiceEdit() {
         await downloadFile()
       }
       fectData()
-  
+
     }
     console.log("รับข้อมูลมา ......", newService)
   }, [])
@@ -184,7 +183,6 @@ function ServiceEdit() {
         image: fileList[0],
         createAt: newService?.createAt,
       })
-      // console.log("เมื่อมี fileList edit", formData)
     } else {
       setFormData({
         ...newService,
@@ -209,20 +207,13 @@ function ServiceEdit() {
             <label className="text-gray-700 w-52 inline-block mr-6">
               ชื่อบริการ<span className="text-rose-700">*</span>
             </label>
-            {/* <Controller
-              name="serviceName"
-              control={control}
-              render={({ field }) => (
-                )}
-            /> */}
             <Input
-              // {...field}
               type="text"
               defaultValue={newService?.service_name}
-                  value={validateServiceName}
-                  className={`${!isServiceValidate ? "border-rose-700 focus:border-rose-700" : null}`}
-                  style={{ borderColor: !isServiceValidate ? "#C82438" : "" }}
-                  onChange={(e) => setValidateServiceName(e.target.value)}
+              value={validateServiceName}
+              className={`${!isServiceValidate ? "border-rose-700 focus:border-rose-700" : null}`}
+              style={{ borderColor: !isServiceValidate ? "#C82438" : "" }}
+              onChange={(e) => setValidateServiceName(e.target.value)}
             />
             {!isServiceValidate ? (
               <span className="ml-4 text-rose-700 text-sm font-medium">กรุณากรอกข้อมูลชื่อบริการ</span>
@@ -233,26 +224,19 @@ function ServiceEdit() {
             <label className="text-gray-700 w-52 inline-block mr-6">
               หมวดหมู่<span className="text-rose-700">*</span>
             </label>
-            {/* <Controller
-              name="category"
-              control={control}
-              render={({ field }) => (
-              )}
-            /> */}
-                <select
-                  className={`w-96 h-11 px-4 py-2.5 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 ${!isCategoryValidate ? "border-rose-700 focus:border-rose-700" : null}`}
-              // {...field}
-                  value={validateCategory}
-                  onChange={(e) => setValidateCategory(e.target.value)}
-                >
-                  <option value="" disabled>เลือกหมวดหมู่</option>
-                  {
-                    categories.map((category: any, index: number) => {
-                      return (
-                        <option key={index} value={`${category.category_name}`}>{category.category_name}</option>
-                      )
-                    })
-                  }
+            <select
+              className={`w-96 h-11 px-4 py-2.5 text-gray-700 bg-white rounded-lg border border-gray-300 focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 ${!isCategoryValidate ? "border-rose-700 focus:border-rose-700" : null}`}
+              value={validateCategory}
+              onChange={(e) => setValidateCategory(e.target.value)}
+            >
+              <option value="" disabled>เลือกหมวดหมู่</option>
+              {
+                categories.map((category: any, index: number) => {
+                  return (
+                    <option key={index} value={`${category.category_name}`}>{category.category_name}</option>
+                  )
+                })
+              }
             </select>
             {!isCategoryValidate ? (
               <span className="ml-4 text-rose-700 text-sm font-medium">กรุณาเลือกหมวดหมู่</span>
@@ -286,102 +270,80 @@ function ServiceEdit() {
                   </div>
 
                   <div className='flex w-[90%] gap-3'>
-                    {/* <Controller
-                      name={`items[${index}].itemName`}
-                      control={control}
-                      render={({ field }) => (
-                      )}
-                    /> */}
-                        <div className='flex flex-col gap-1 w-[50%]'>
-                          <div className='flex justify-between'>
-                            <label>ชื่อรายการ</label>
-                            {!isItemsValidate ? (
-                              <span className="text-rose-700 text-xs font-normal">{`ชื่อรายการที่ ${index + 1} ต้องไม่ว่าง`}</span>
-                              ) : null}
-                          </div>
-                          <Input
-                            defaultValue={item?.sub_service_name}
-                        // {...field}
-                            type="text"
-                            className={`w-[100%] h-9 px-3 py-2 ${!isItemsValidate ? "border-rose-700 focus:border-rose-700" : null}`}
-                            style={{ borderColor: !isItemsValidate ? "#C82438" : "" }}
-                            value={validateItems[index]?.sub_service_name || ''} // กำหนดค่า value จาก validateItems
-                            onChange={(e) => {
-                              // อัปเดตค่า validateItems โดยคัดลอกค่าเดิมและอัปเดตเฉพาะ item ที่เปลี่ยนแปลง
-                              const updatedValidateItems = [...validateItems];
-                              updatedValidateItems[index] = {
-                                ...updatedValidateItems[index],
-                                sub_service_name: e.target.value,
-                              };
-                              setValidateItems(updatedValidateItems);
-                            }}
-                          />
-                    </div>
+                    <div className='flex flex-col gap-1 w-[50%]'>
+                      <div className='flex justify-between'>
+                        <label>ชื่อรายการ</label>
+                        {!isItemsValidate ? (
+                          <span className="text-rose-700 text-xs font-normal">{`ชื่อรายการที่ ${index + 1} ต้องไม่ว่าง`}</span>
+                        ) : null}
+                      </div>
+                      <Input
+                        defaultValue={item?.sub_service_name}
 
-                    {/* <Controller
-                      name={`items[${index}].itemPrice`}
-                      control={control}
-                      render={({ field }) => (
-                      )}
-                    /> */}
-                        <div className='flex flex-col gap-1 relative w-[25%] '>
-                          <div className='flex justify-between'>
-                            <label>ค่าบริการ / 1 หน่วย</label>
-                            {!isItemsValidate ? (
-                              <span className="text-rose-700 text-xs font-normal">{`ค่าบริการต้องเป็นตัวเลข`}</span>
-                              ) : null}
-                          </div>
-                          <Input
-                            defaultValue={item.price_per_unit}
-                        // {...field}
-                            type="number"
-                            className={`w-[100%] h-9 px-3 py-2 ${!isItemsValidate ? "border-rose-700 focus:border-rose-700" : null}`}
-                            style={{ borderColor: !isItemsValidate ? "#C82438" : "" }}
-                            value={validateItems[index]?.price_per_unit || ''} // กำหนดค่า value จาก validateItems
-                            onChange={(e) => {
-                              // อัปเดตค่า validateItems โดยคัดลอกค่าเดิมและอัปเดตเฉพาะ item ที่เปลี่ยนแปลง
-                              const updatedValidateItems = [...validateItems];
-                              updatedValidateItems[index] = {
-                                ...updatedValidateItems[index],
-                                price_per_unit: +(e.target.value),
-                              };
-                              setValidateItems(updatedValidateItems);
-                            }}
-                          />
+                        type="text"
+                        className={`w-[100%] h-9 px-3 py-2 ${!isItemsValidate ? "border-rose-700 focus:border-rose-700" : null}`}
+                        style={{ borderColor: !isItemsValidate ? "#C82438" : "" }}
+                        value={validateItems[index]?.sub_service_name || ''} // กำหนดค่า value จาก validateItems
+                        onChange={(e) => {
+                          // อัปเดตค่า validateItems โดยคัดลอกค่าเดิมและอัปเดตเฉพาะ item ที่เปลี่ยนแปลง
+                          const updatedValidateItems = [...validateItems];
+                          updatedValidateItems[index] = {
+                            ...updatedValidateItems[index],
+                            sub_service_name: e.target.value,
+                          };
+                          setValidateItems(updatedValidateItems);
+                        }}
+                      />
+                    </div>
+                    <div className='flex flex-col gap-1 relative w-[25%] '>
+                      <div className='flex justify-between'>
+                        <label>ค่าบริการ / 1 หน่วย</label>
+                        {!isItemsValidate ? (
+                          <span className="text-rose-700 text-xs font-normal">{`ค่าบริการต้องเป็นตัวเลข`}</span>
+                        ) : null}
+                      </div>
+                      <Input
+                        defaultValue={item.price_per_unit}
+                        type="number"
+                        className={`w-[100%] h-9 px-3 py-2 ${!isItemsValidate ? "border-rose-700 focus:border-rose-700" : null}`}
+                        style={{ borderColor: !isItemsValidate ? "#C82438" : "" }}
+                        value={validateItems[index]?.price_per_unit || ''} // กำหนดค่า value จาก validateItems
+                        onChange={(e) => {
+                          // อัปเดตค่า validateItems โดยคัดลอกค่าเดิมและอัปเดตเฉพาะ item ที่เปลี่ยนแปลง
+                          const updatedValidateItems = [...validateItems];
+                          updatedValidateItems[index] = {
+                            ...updatedValidateItems[index],
+                            price_per_unit: +(e.target.value),
+                          };
+                          setValidateItems(updatedValidateItems);
+                        }}
+                      />
                       <img src={baht} alt="baht" className='w-[9px] h-[15px] absolute top-8 right-4' />
 
-                        </div>
-                    {/*
-                    <Controller
-                      name={`items[${index}].itemUnit`}
-                      control={control}
-                      render={({ field }) => (
-                      )}
-                    /> */}
-                        <div className='flex flex-col gap-1 w-[25%]'>
-                          <div className='flex justify-between'>
-                            <label>หน่วยบริการ</label>
-                            {!isItemsValidate ? (
-                              <span className="text-rose-700 text-xs font-normal">{`หน่วยบริการที่ ${index + 1} ต้องไม่ว่าง`}</span>
-                              ) : null}
-                          </div>
-                          <Input
-                            defaultValue={item.unit}
-                        // {...field}
-                            type="text"
-                            className={`w-[100%] h-9 px-3 py-2 ${!isItemsValidate ? "border-rose-700 focus:border-rose-700" : null}`}
-                            style={{ borderColor: !isItemsValidate ? "#C82438" : "" }}
-                            value={validateItems[index]?.unit || ''} // กำหนดค่า value จาก validateItems
-                            onChange={(e) => {
-                              // อัปเดตค่า validateItems โดยคัดลอกค่าเดิมและอัปเดตเฉพาะ item ที่เปลี่ยนแปลง
-                              const updatedValidateItems = [...validateItems];
-                              updatedValidateItems[index] = {
-                                ...updatedValidateItems[index],
-                                unit: e.target.value,
-                              };
-                              setValidateItems(updatedValidateItems);
-                            }}
-                          />
+                    </div>
+                    <div className='flex flex-col gap-1 w-[25%]'>
+                      <div className='flex justify-between'>
+                        <label>หน่วยบริการ</label>
+                        {!isItemsValidate ? (
+                          <span className="text-rose-700 text-xs font-normal">{`หน่วยบริการที่ ${index + 1} ต้องไม่ว่าง`}</span>
+                        ) : null}
+                      </div>
+                      <Input
+                        defaultValue={item.unit}
+                        type="text"
+                        className={`w-[100%] h-9 px-3 py-2 ${!isItemsValidate ? "border-rose-700 focus:border-rose-700" : null}`}
+                        style={{ borderColor: !isItemsValidate ? "#C82438" : "" }}
+                        value={validateItems[index]?.unit || ''} // กำหนดค่า value จาก validateItems
+                        onChange={(e) => {
+                          // อัปเดตค่า validateItems โดยคัดลอกค่าเดิมและอัปเดตเฉพาะ item ที่เปลี่ยนแปลง
+                          const updatedValidateItems = [...validateItems];
+                          updatedValidateItems[index] = {
+                            ...updatedValidateItems[index],
+                            unit: e.target.value,
+                          };
+                          setValidateItems(updatedValidateItems);
+                        }}
+                      />
                     </div>
 
                   </div>

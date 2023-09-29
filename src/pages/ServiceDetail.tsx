@@ -10,10 +10,9 @@ function ServiceDetail() {
   const [trigger, setTrigger] = useState<boolean | null>(null)
 
   const { 
-    loading, setLoading,
-    imagePath, setImagePath,
+    loading, 
+    imagePath, 
     newService,
-
   }: any = useProduct()
 
   const {
@@ -32,16 +31,11 @@ function ServiceDetail() {
 
   useEffect(() => {
     if (newService?.subServices) {
-      // ทำอะไรกับ newService.subServices เช่น map หรือแสดงข้อมูล
-      // console.log("แสดงส่วนย่อย", Array.isArray(newService.subServices));
       async function fectData() {
         await downloadFile()
       }
       fectData()
-      
     }
-    // console.log("ค่าตั้งต้น ------", newService)
-    // console.log("เส่นทาง ----", imagePath)
   }, [newService])
 
 
