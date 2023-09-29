@@ -10,27 +10,45 @@ function useLogin() {
   const [isValid, setIsValid] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [isHaveEmail, setIsHaveEmail] = useState<boolean>(true)
+  const [role, SetRole] = useState<string>('Admin')
   const { setSession }: any = useProduct(); 
   const navigate = useNavigate();
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    setLoading(true);
-    try {
-      const result = await axios.get(`http://localhost:4000/v1/admin/login?email=${email}`)
-      if (result) {
-        setIsHaveEmail(true)
-        console.log(result)
-        login();
+    if (role === 'Admin') {
+      setLoading(true);
+      try {
+        const result = await axios.get(`http://localhost:4000/v1/admin/login?email=${email}&role=${role}`)
+        if (result) {
+          setIsHaveEmail(true)
+          console.log(result)
+          login('categories');
+        }
+      } catch (error) {
+        setIsHaveEmail(false)
+        console.error(error)
       }
-    } catch (error) {
-      setIsHaveEmail(false)
-      console.error(error)
+      setLoading(false);
+
+    } else if (role === 'Technician') {
+      setLoading(true);
+      try {
+        const result = await axios.get(`http://localhost:4000/v1/admin/login?email=${email}&role=${role}`)
+        if (result) {
+          setIsHaveEmail(true)
+          console.log(result)
+          login('employee');
+        }
+      } catch (error) {
+        setIsHaveEmail(false)
+        console.error(error)
+      }
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  async function login() {
+  async function login(path: string) {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
@@ -43,7 +61,7 @@ function useLogin() {
         localStorage.setItem('refresh', data.session.refresh_token);
         const isAuthenticated = Boolean(localStorage.getItem("session"));
         setSession(isAuthenticated)
-        navigate("/employee");
+        navigate(`/${path}`);
       } else {
         setIsValid(false);
         console.error(error);
@@ -64,6 +82,7 @@ function useLogin() {
     setIsValid,
     setIsHaveEmail,
     isHaveEmail,
+    role, SetRole,
   };
 }
 

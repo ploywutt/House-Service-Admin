@@ -1,6 +1,6 @@
 import { useProduct } from '@/contexts/productsContext';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Topbar_search from '@/components/Topbar/TopbarSearch';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
@@ -15,16 +15,14 @@ import useDateVal from '@/hooks/useDateVal';
 import useService from '@/hooks/useService';
 
 function ServiceSearch() {
-
-
+  const [trigger, setTrigger] = useState<boolean | null>(null)
   const navigate = useNavigate()
   const { getServices } = useService();
 
   const {
-    loading, setLoading,
+    loading, 
     services, setServices,
-    searchService, setSearchService,
-
+    searchService, 
   }: any = useProduct();
 
   const { formatDateTime } = useDateVal()
@@ -37,7 +35,7 @@ function ServiceSearch() {
     tempCategory.splice(result.destination.index, 0, selectedRow)
     setServices(tempCategory)
     console.log(result)
-    // ทำสิ่งที่คุณต้องการด้วยข้อมูลใหม่ที่จัดเรียงใหม่ในตัวแปร items
+    // ทำสิ่งที่ต้องการด้วยข้อมูลใหม่ที่จัดเรียงใหม่ในตัวแปร items
     // เช่นอัปเดตสถานะในฐานข้อมูลหรือส่งคำขอ API
   }
 
@@ -47,7 +45,7 @@ function ServiceSearch() {
 
 	return (
     <div className="w-full">
-      <Topbar_search title='บริการ' path="/services/add" />
+      <Topbar_search title='บริการ' path="/services/add" trigger={trigger} setTrigger={setTrigger} />
       {loading ? <h1>Loading ...</h1> : null}
       <div className="mx-auto w-[90%] max-w-[1440px] my-10 border rounded-lg">
         <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>

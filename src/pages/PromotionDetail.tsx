@@ -11,7 +11,7 @@ function PromotionDetail() {
   const [trigger, setTrigger] = useState<boolean | null>(null)
 
   const {
-    currentPromotion, setCurrentPromotion
+    currentPromotion
   }: any = useProduct();
 
   const { getPromotionById } = usePromotion();
