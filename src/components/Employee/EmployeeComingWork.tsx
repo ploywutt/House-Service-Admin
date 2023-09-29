@@ -67,9 +67,9 @@ function EmployeeComingWork(props: { handleWorking: () => void }) {
                 <AccordionContent>
                   <div
                     id="Container-1 "
-                    className=" bg-white flex flex-col justify-evenly"
+                    className=" bg-white flex flex-col justify-evenly pl-[170px] pr-[200px] gap-6"
                   >
-                    <div className=" bg-white flex flex-row justify-evenly items-center">
+                    <div className=" bg-white flex flex-row justify-between items-center">
                       <div id="name" className="p-4 w-[240px]">
                         <p className="p3 text-gray-500">ชื่อ - นามสกุล</p>
                         <p className="p2">{item.user.name}</p>
@@ -84,7 +84,7 @@ function EmployeeComingWork(props: { handleWorking: () => void }) {
                       </div>
                     </div>
 
-                    <div id="Detail" className="p-4 w-fit pl-[125px]">
+                    <div id="Detail" className="p-4 w-fit">
                       <div className="p3 text-gray-500">รายการ</div>
 
                       {item.service_order.map((service, index) => {
@@ -98,7 +98,7 @@ function EmployeeComingWork(props: { handleWorking: () => void }) {
                     </div>
                     <div
                       id="Container-2"
-                      className="flex flex-row justify-evenly items-center"
+                      className="flex flex-row justify-between items-center"
                     >
                       <div id="Place" className="p-4 w-[240px]">
                         <p className="p3 text-gray-500">สถานที่</p>
