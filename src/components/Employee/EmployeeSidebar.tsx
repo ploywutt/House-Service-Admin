@@ -3,13 +3,15 @@ import HomeServiceIcon from "../../assets/icon/homeservices.png";
 import LogoutIcon from "../../assets/icon/logout.svg";
 import { supabase } from "../../lib/supabase.ts";
 import { useState, useEffect } from "react";
-import { useProduct } from "@/contexts/productsContext.tsx";
+import ComingIcon from "../../assets/icon/coming.svg";
+import Working from "../../assets/icon/working.svg";
+import Success from "../../assets/icon/success.svg";
 
 export default function EmployeeSidebar(props) {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeLi, setActiveLi] = useState<string>("");
-  const { setSession }:any = useProduct();
+  const { setSession }: any = useProduct();
 
   // สร้างอาร์เรย์ของ object ที่มี key = path และ value = state
   const pathStatePairs = [
@@ -43,9 +45,9 @@ export default function EmployeeSidebar(props) {
 
   async function signOutUser() {
     const { error } = await supabase.auth.signOut();
-    localStorage.removeItem("session")
-    localStorage.removeItem("refresh")
-    setSession(false)
+    localStorage.removeItem("session");
+    localStorage.removeItem("refresh");
+    setSession(false);
     navigate("/");
   }
 
@@ -62,30 +64,34 @@ export default function EmployeeSidebar(props) {
         <p className="text-blue-600 text-xl font-medium">HomeServices</p>
       </div>
       <div id="menu-list-container">
-        <ul className="text-gray-100 h-[calc(100vh-109px)] flex flex-col justify-between ">
+        <ul className="text-gray-100 h-[calc(100vh-109px)] flex flex-col justify-between">
           <div id="menu-list">
             <li
-              className={`hover:bg-blue-900 p-4 cursor-pointer ${
+              className={` p-4 cursor-pointer flex flex-row gap-2 pl-6 ${
                 props.comingwork ? "bg-blue-900" : ""
               }`}
               onClick={props.handleComingwork}
             >
+              <img src={ComingIcon} className="w-[25px]" />
               รอดำเนินการ
             </li>
+
             <li
-              className={`hover:bg-blue-900 p-4 cursor-pointer ${
+              className={` p-4 cursor-pointer flex flex-row gap-2 pl-6 ${
                 props.working ? "bg-blue-900" : ""
               }`}
               onClick={props.handleWorking}
             >
+              <img src={Working} className="w-[25px]" />
               กำลังดำเนินการ
             </li>
             <li
-              className={`hover:bg-blue-900 p-4 cursor-pointer ${
+              className={` p-4 cursor-pointer flex flex-row gap-2 pl-6 ${
                 props.success ? "bg-blue-900" : ""
               }`}
               onClick={props.handleSuccess}
             >
+              <img src={Success} className="w-[25px]" />
               ดำเนินการสำเร็จ
             </li>
           </div>
