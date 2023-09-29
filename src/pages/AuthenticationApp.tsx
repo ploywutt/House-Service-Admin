@@ -17,6 +17,7 @@ import PromotionDetail from "../pages/PromotionDetail";
 
 import EmployeeLayout from "@/components/Employee/EmployeeLayout";
 import EmployeeDetail from "./EmployeeDetail";
+import Login from "./Login";
 
 function AuthenticationApp() {
   
@@ -51,7 +52,7 @@ function AuthenticationApp() {
           <Route path="/employee" element={<EmployeeDetail />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
-
+        <Route path="/" element={<Login />} />
       </Routes>
     // </Router>
   );
