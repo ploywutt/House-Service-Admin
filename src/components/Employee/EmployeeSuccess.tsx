@@ -44,7 +44,7 @@ function EmployeeSuccess() {
                   <div className="w-[240px] text-start">
                     {formatDateTime(String(item?.order_detail.working_time))}
                   </div>
-                  <div className="w-[240px] text-start">
+                  <div className="w-32 text-center text-green-900 bg-green-100 rounded-xl">
                     {item.status.status}
                   </div>
                 </AccordionTrigger>

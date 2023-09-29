@@ -3,7 +3,7 @@ import UserIcon from "../../assets/icon/user_icon.svg";
 
 function EmployeeTopbar_search() {
   return (
-    <nav className="flex items-center justify-between h-20 bg-white px-10 sticky top-0">
+    <nav className="flex items-center justify-between h-20 bg-white px-10 sticky top-0 z-50">
       <div id="Title">
         <h3 className="text-black text-xl font-medium">รายการ</h3>
       </div>
