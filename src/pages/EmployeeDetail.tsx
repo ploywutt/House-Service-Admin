@@ -55,19 +55,19 @@ function EmployeeDetail() {
       <div className="w-full">
         <EmployeeTopbar_search />
         {/* {loading ? <h1>Loading ...</h1> : null} */}
-        <div className="mx-auto w-[90%] max-w-[1440px] mt-10 top-0 z-40">
-          {/* <table className="table-auto w-full"> */}
-          {/* <tr className="text-left  "> */}
-          <div className="text-gray-700 p1 bg-gray-200 h-14 rounded-lg flex flex-row items-center justify-evenly drop-shadow-md">
-            <p className="text-center p-4 w-60 ">รหัส</p>
-            <p className="text-center p-4 w-60 ">เวลาทำงาน</p>
-            <p className="text-center p-4 w-60 ">สถานะ</p>
-          </div>
-          {/* </tr> */}
-          {comingwork && <EmployeeComingWork handleWorking={handleWorking} />}
-          {working && <EmployeeWorking handleSuccess={handleSuccess} />}
-          {success && <EmployeeSuccess />}
-          {/* </table> */}
+        <div className="mx-auto w-[90%] max-w-[1440px] mt-10 border rounded-lg">
+          <table className="table-auto w-full">
+            <tr className="text-left text-gray-700 p1 h-10 bg-gray-200 border-b">
+              <th className="px-6 py-2.5 rounded-t-lg flex flex-row justify-evenly">
+                <td className="text-center w-60 px-6">รหัส</td>
+                <td className="text-center w-60 px-6">เวลาทำงาน</td>
+                <td className="text-center w-60 ">สถานะ</td>
+              </th>
+            </tr>
+            {comingwork && <EmployeeComingWork handleWorking={handleWorking} />}
+            {working && <EmployeeWorking handleSuccess={handleSuccess} />}
+            {success && <EmployeeSuccess />}
+          </table>
         </div>
       </div>
     </>

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import ComingIcon from "../../assets/icon/coming.svg";
 import Working from "../../assets/icon/working.svg";
 import Success from "../../assets/icon/success.svg";
+import { useProduct } from "@/contexts/productsContext.tsx";
 
 export default function EmployeeSidebar(props) {
   const location = useLocation();
