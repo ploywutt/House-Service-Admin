@@ -51,9 +51,9 @@ function EmployeeSuccess() {
                 <AccordionContent>
                   <div
                     id="Container-1 "
-                    className=" bg-white flex flex-col justify-evenly"
+                    className=" bg-white flex flex-col justify-evenly pl-[170px] pr-[200px] gap-6"
                   >
-                    <div className=" bg-white flex flex-row justify-evenly items-center">
+                    <div className=" bg-white flex flex-row justify-between items-center">
                       <div id="name" className="p-4 w-[240px]">
                         <p className="p3 text-gray-500">ชื่อ - นามสกุล</p>
                         <p className="p2">{item.user.name}</p>
@@ -68,7 +68,7 @@ function EmployeeSuccess() {
                       </div>
                     </div>
 
-                    <div id="Detail" className="p-4 w-fit pl-[125px]">
+                    <div id="Detail" className="p-4 w-fit">
                       <div className="p3 text-gray-500">รายการ</div>
 
                       {item.service_order.map((service, index) => {
@@ -82,7 +82,7 @@ function EmployeeSuccess() {
                     </div>
                     <div
                       id="Container-2"
-                      className="flex flex-row  items-center pl-[110px]"
+                      className="flex flex-row justify-between items-center"
                     >
                       <div id="Place" className="p-4 w-[240px]">
                         <p className="p3 text-gray-500">สถานที่</p>
@@ -93,29 +93,9 @@ function EmployeeSuccess() {
                           {item.order_detail.province}
                         </p>
                       </div>
-                      <div id="Etc" className="p-4 w-[240px] pl-[125px]">
+                      <div id="Etc" className="p-4 w-[240px]">
                         <p className="p3 text-gray-500">ข้อมูลเพิ่มเติม</p>
                         <p className="p2">{item.order_detail.details}</p>
-                      </div>
-                      <div id="btn-flex" className="flex justify-end items-end">
-                        {item.status.status === "รอดำเนินการ" ? (
-                          <Button
-                            variant={"secondary"}
-                            className="w-[240px]"
-                            onClick={() => clickToWork(item.order_id)}
-                          >
-                            เริ่มทำงาน
-                          </Button>
-                        ) : item.status.status === "กำลังดำเนินการ" ? (
-                          <Button
-                            variant={"secondary"}
-                            className="w-[240px]"
-                            onClick={() => clickToFinish(item.order_id)}
-                          >
-                            ทำงานเสร็จสิ้น
-                          </Button>
-                        ) : item.status.status ===
-                          "ดำเนินการสำเร็จ" ? null : null}
                       </div>
                     </div>
                   </div>
