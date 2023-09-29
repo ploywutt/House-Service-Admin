@@ -60,7 +60,7 @@ function EmployeeWorking(props: { handleSuccess: () => void }) {
                   <div className="w-[240px] text-start">
                     {formatDateTime(String(item?.order_detail.working_time))}
                   </div>
-                  <div className="w-[240px] text-start">
+                  <div className="w-32 text-center text-yellow-900 bg-yellow-100 rounded-xl">
                     {item.status.status}
                   </div>
                 </AccordionTrigger>
