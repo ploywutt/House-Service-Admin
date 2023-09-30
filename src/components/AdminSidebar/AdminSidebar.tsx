@@ -41,8 +41,8 @@ export default function AdminSidebar() {
 
   async function signOutUser() {
     await supabase.auth.signOut();
-    localStorage.removeItem("session")
-    localStorage.removeItem("refresh")
+    sessionStorage.removeItem("session")
+    sessionStorage.removeItem("refresh")
     setSession(false)
     navigate('/')
   }
@@ -72,9 +72,6 @@ export default function AdminSidebar() {
               <h5>Promotion Code</h5>
             </li>
           </div>
-          <li className="menu">
-            <h3 onClick={() => navigate("/employee")}>Go to Techician Page</h3>
-          </li>
           <li className="menu">
             <img src={LogoutIcon} alt="Logout Icon" />
             <h5 onClick={signOutUser}>ออกจากระบบ</h5>

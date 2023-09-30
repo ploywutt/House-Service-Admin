@@ -36,6 +36,8 @@ export interface ProductContextType {
   setImagePath: (imagePath: string) => void
   blobImage: any;
   setBlobImage: (blobImage: any) => void
+  isFormDataValidate: boolean
+  setIsFormDataValidate: (isFormDataValidate: boolean) => void
 
   // Promotion part
   searchPromotion: string | null

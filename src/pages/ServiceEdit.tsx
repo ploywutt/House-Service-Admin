@@ -44,6 +44,7 @@ function ServiceEdit() {
     categories,
     submitServiceInput, setSubmitServiceInput,
     formData, setFormData,
+    isFormDataValidate, setIsFormDataValidate,
 
   }: any = useProduct()
 
@@ -95,31 +96,52 @@ function ServiceEdit() {
   function validateFormData() {
     if (validateServiceName) {
       setIsServiceValidate(true)
+      setIsFormDataValidate(true)
+      setSubmitServiceInput(true)
     } else {
       setIsServiceValidate(false)
+      setIsFormDataValidate(false)
     }
 
     if (validateCategory) {
       setIsCategoryValidate(true)
+      setIsFormDataValidate(true)
+      setSubmitServiceInput(true)
     } else {
       setIsCategoryValidate(false)
+      setIsFormDataValidate(false)
     }
 
-    if (validateItems && validateItems.length > 0) {
-      const isValid = validateItems.every((item: any) => {
-        return (
-          item.sub_service_name && item.sub_service_name.trim() !== '' &&
-          !isNaN(item.price_per_unit) && item.price_per_unit > 0 &&
-          item.unit && item.unit.trim() !== ''
-        );
+    if (validateItems && validateItems?.length > 0) {
+      const hasNonEmptyValues = Object.values(validateItems).some(value => {
+        return value !== undefined && value !== null && value !== "";
       });
+      if (hasNonEmptyValues) {
+        const isValid = validateItems.every((item: any) => {
+          return (
+            item.sub_service_name && item.sub_service_name.trim() !== '' &&
+            !isNaN(item.price_per_unit) && item.price_per_unit > 0 &&
+            item.unit && item.unit.trim() !== ''
+          );
+        });
+        // console.log("check validate items: ", validateItems)
+        // console.log("check items valid: ", isValid)
+        // ตั้งค่า isItemsValidate ตามค่า isValid หลังจากตรวจสอบข้อมูลทั้งหมด
+        setIsItemsValidate(isValid);
+        setIsFormDataValidate(isValid)
+        setSubmitServiceInput(isValid)
 
-      // ตั้งค่า isItemsValidate ตามค่า isValid หลังจากตรวจสอบข้อมูลทั้งหมด
-      setIsItemsValidate(isValid);
+        // console.log("isFormDataValidate after checked: ", isFormDataValidate)
+      } else {
+        setIsItemsValidate(false);
+        setIsFormDataValidate(false)
+      }
 
     } else {
       setIsItemsValidate(false);
+      setIsFormDataValidate(false)
     }
+
   }
 
   function deleteItems(index: number) {
@@ -132,10 +154,10 @@ function ServiceEdit() {
 
     // อัปเดต state ด้วยค่าใหม่
     setValidateItems(updatedValidateItems.filter(Boolean)); // กรองออกเพื่อลบค่า null
-    console.log(`new validateItems: ${validateItems}`);
+    // console.log(`new validateItems: ${validateItems}`);
     remove(index)
   }
-  
+
   useEffect(() => {
     async function fectData() {
       await getServiceById(params.id)
@@ -152,24 +174,8 @@ function ServiceEdit() {
       fectData()
 
     }
-    console.log("รับข้อมูลมา ......", newService)
+    // console.log("รับข้อมูลมา ......", newService)
   }, [])
-
-  useEffect(() => {
-    if (submitServiceInput) {
-      validateFormData()
-    }
-    if (formData?.imagePath !== undefined && submitServiceInput) {
-      // console.log("Lastest dataform beform put to database ----", formData)
-      updateService(formData)
-      // console.log("เริ่มการโหลดเข้ารายการย่อย ----- ", formData)
-      setSubmitServiceInput(false)
-      setFileList(null)
-      console.log("Finished")
-      navigate("/services")
-
-    }
-  }, [submitServiceInput, , validateServiceName, validateCategory, validateItems, formData])
 
   useEffect(() => {
     if (fileList) {
@@ -183,6 +189,7 @@ function ServiceEdit() {
         image: fileList[0],
         createAt: newService?.createAt,
       })
+      // console.log("เมื่อมี fileList edit", formData)
     } else {
       setFormData({
         ...newService,
@@ -192,10 +199,28 @@ function ServiceEdit() {
         items: validateItems,
         createAt: newService?.createAt,
       })
+      // console.log("เมื่อไม่มี fileList edit", formData)
     }
-    console.log("เมื่อไม่มี fileList edit", formData)
 
-  }, [fileList, validateServiceName, validateCategory, validateItems, submitServiceInput])
+  }, [fileList, validateServiceName, validateCategory, validateItems, submitServiceInput, isFormDataValidate])
+
+  useEffect(() => {
+    if (submitServiceInput) {
+      validateFormData()
+      // console.log("isValid in effect: ", isFormDataValidate)
+      // console.log("imagePath : ", formData?.imagePath)
+      if (formData?.imagePath !== undefined && isFormDataValidate) {
+        // console.log("Lastest dataform beform put to database ----", formData)
+        updateService(formData)
+        // console.log("เริ่มการโหลดเข้ารายการย่อย ----- ", formData)
+        setSubmitServiceInput(false)
+        setFileList(null)
+        console.log("Finished")
+        navigate("/services")
+
+      } 
+    }
+  }, [submitServiceInput, validateServiceName, validateCategory, validateItems, formData, isFormDataValidate])
 
   return (
     <div className="w-full">
@@ -279,7 +304,6 @@ function ServiceEdit() {
                       </div>
                       <Input
                         defaultValue={item?.sub_service_name}
-
                         type="text"
                         className={`w-[100%] h-9 px-3 py-2 ${!isItemsValidate ? "border-rose-700 focus:border-rose-700" : null}`}
                         style={{ borderColor: !isItemsValidate ? "#C82438" : "" }}

@@ -13,9 +13,15 @@ function Topbar_add(prop: TopbarType) {
 	const navigate = useNavigate()
 	const { toast } = useToast()
 	const {
-		currentCategory,
+		currentCategory, setCurrentCategory,
 		errorMessage, setErrorMessage,
 		submitServiceInput, setSubmitServiceInput,
+		newCategory, setNewCategory,
+		newService, setNewService,
+		currentPromotion, setCurrentPromotion,
+		fileList, setFileList,
+		blobImage, setBlobImage,
+		setFormData,
 	}: any = useProduct()
 
 	const { createCategory } = useCategory()
@@ -27,6 +33,17 @@ function Topbar_add(prop: TopbarType) {
 	function handleCreate(){
 		setSubmitServiceInput(true)
 		console.log("Trigger create...", submitServiceInput)
+	}
+
+	function goback() {
+		setCurrentCategory('')
+		setNewCategory('')
+		setNewService('')
+		setCurrentPromotion('')
+		setFormData(null)
+		setFileList(null)
+		setBlobImage(null)
+		navigate(-1)
 	}
 
 	useEffect(() => {
@@ -42,8 +59,6 @@ function Topbar_add(prop: TopbarType) {
     // console.log('Data from ..... in Service :', formData);
 	}, [currentCategory, errorMessage])
 
-
-
 	return (
 		<nav className="flex items-center justify-between h-20 bg-white px-10 sticky top-0">
 			<h3 className="text-black text-xl font-medium">
@@ -54,7 +69,7 @@ function Topbar_add(prop: TopbarType) {
 				}
 			</h3>
 			<div className='flex items-center gap-6'>
-				<Button className='h-11 py-2.5 px-6 gap-2' type="button" variant="secondary" onClick={() => navigate(-1)}>ยกเลิก</Button>
+				<Button className='h-11 py-2.5 px-6 gap-2' type="button" variant="secondary" onClick={() => goback()}>ยกเลิก</Button>
 				{
 					prop.title === "หมวดหมู่" && (
 						<Button className='h-11 py-2.5 px-6 gap-2' type="submit" onClick={() => handleAccept(currentCategory)} >สร้าง</Button>

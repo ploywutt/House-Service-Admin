@@ -23,6 +23,7 @@ function ProductProvider({ children }: any) {
   const [submitServiceInput, setSubmitServiceInput] = useState<boolean>(false);
   const [imagePath, setImagePath] = useState<string>('')
 	const [blobImage, setBlobImage,] = useState<any>()
+	const [isFormDataValidate, setIsFormDataValidate] = useState<boolean>(true)
 
 	// Promotion part
 	const [searchPromotion, setSearchPromotion] = useState<string>('')
@@ -50,6 +51,7 @@ function ProductProvider({ children }: any) {
 			submitServiceInput, setSubmitServiceInput,
 			imagePath, setImagePath,
 			blobImage, setBlobImage,
+			isFormDataValidate, setIsFormDataValidate,
 
 			//Promotion part
 			searchPromotion, setSearchPromotion,

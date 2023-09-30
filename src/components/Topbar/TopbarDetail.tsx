@@ -7,12 +7,28 @@ import back from '../../assets/icon/back_arrow.png'
 function Topbar_detail(prop: TopbarType) {
 	const navigate = useNavigate()
 
-	const { newCategory, newService, currentPromotion }: any = useProduct()
+	const { 
+		currentCategory, setCurrentCategory,
+		newCategory, setNewCategory,
+		newService, setNewService,
+		currentPromotion, setCurrentPromotion,
+		fileList, setFileList,
+		blobImage, setBlobImage,
+	}: any = useProduct()
 
+	function goback() {
+		setCurrentCategory('')
+		setNewCategory('')
+		setNewService('')
+		setCurrentPromotion('')
+		setFileList(null)
+		setBlobImage(null)
+		navigate(-1)
+	}
 	return (
 		<nav className="flex items-center justify-between h-20 bg-white px-10 sticky top-0">
 			<div className="flex gap-3.5">
-				<img src={back} alt="arrow" onClick={() => navigate(-1)} className='hover:cursor-pointer hover:scale-110' />
+				<img src={back} alt="arrow" onClick={() => goback()} className='hover:cursor-pointer hover:scale-110' />
 				<div>
 					<p className=".p4 text-gray-500">{prop.title}</p>
 					<h3 className="text-zinc-800 text-xl font-medium">

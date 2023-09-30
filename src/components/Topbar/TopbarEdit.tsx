@@ -10,12 +10,13 @@ import useCategory from "@/hooks/useCategory";
 function Topbar_edit(prop: TopbarType) {
 	const navigate = useNavigate()
 	const {
-		currentCategory,
-		newCategory,
-		newService,
+		currentCategory, setCurrentCategory,
+		newCategory, setNewCategory,
+		newService, setNewService,
 		submitServiceInput, setSubmitServiceInput,
-		currentPromotion,
-
+		currentPromotion, setCurrentPromotion,
+		fileList, setFileList,
+		blobImage, setBlobImage,
 	}: any = useProduct()
 
 	const {
@@ -33,7 +34,15 @@ function Topbar_edit(prop: TopbarType) {
 		}
  
 	}
-
+	function goback(path: string) {
+		setCurrentCategory('')
+		setNewCategory('')
+		setNewService('')
+		setCurrentPromotion('')
+		setFileList(null)
+		setBlobImage(null)
+		navigate(path)
+	}
 	
 
 	return (
@@ -50,7 +59,7 @@ function Topbar_edit(prop: TopbarType) {
 				</div>
 			</div>
 			<div className='flex items-center gap-6'>
-				<Button className='h-11 py-2.5 px-6 gap-2' variant="secondary" type='submit' onClick={() => { navigate(prop.path) }}>ยกเลิก</Button>
+				<Button className='h-11 py-2.5 px-6 gap-2' variant="secondary" type='submit' onClick={() => { goback(prop.path) }}>ยกเลิก</Button>
 				{
 					prop.title === "หมวดหมู่" && (
 					<Button
