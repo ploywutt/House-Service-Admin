@@ -11,7 +11,7 @@ function useLogin() {
   const [loading, setLoading] = useState<boolean>(false);
   const [isHaveEmail, setIsHaveEmail] = useState<boolean>(true)
   const [role, SetRole] = useState<string>('Admin')
-  const { setSession }: any = useProduct(); 
+  const { session,setSession }: any = useProduct(); 
   const navigate = useNavigate();
 
   const handleSubmit = async (event: any) => {
@@ -57,10 +57,11 @@ function useLogin() {
       if (data.session) {
         console.log(data)
         setIsValid(true);
-        localStorage.setItem('session', data.session.access_token);
-        localStorage.setItem('refresh', data.session.refresh_token);
-        const isAuthenticated = Boolean(localStorage.getItem("session"));
+        sessionStorage.setItem('session', JSON.stringify(data.session.access_token));
+        sessionStorage.setItem('refresh', JSON.stringify(data.session.refresh_token));
+        const isAuthenticated = Boolean(sessionStorage.getItem("session"));
         setSession(isAuthenticated)
+        console.log("session login", session)
         navigate(`/${path}`);
       } else {
         setIsValid(false);

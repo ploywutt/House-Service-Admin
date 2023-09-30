@@ -97,9 +97,6 @@ export default function EmployeeSidebar(props) {
             </li>
           </div>
           <li className="menu">
-            <h3 onClick={() => navigate("/categories")}>Go to Admin Page</h3>
-          </li>
-          <li className="menu">
             <img src={LogoutIcon} alt="Logout Icon" />
             <h5 onClick={signOutUser}>ออกจากระบบ</h5>
           </li>

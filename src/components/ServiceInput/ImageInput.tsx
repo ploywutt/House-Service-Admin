@@ -1,21 +1,19 @@
 import { useProduct } from '@/contexts/productsContext'
 import { useEffect, useState } from 'react'
 import { secretKey } from "../../lib/supabase.ts";
-import useService from '@/hooks/useService.tsx';
-import { useNavigate } from 'react-router-dom';
 
 function ImageInput() {
 	// #
 	const [shouldHighlight, setShouldHighlight] = useState<boolean>(false)
+	// const [isPreviewReady, setIsPreviewReady] = useState(false);
 	const {
 		fileList, setFileList,
 		submitServiceInput, setSubmitServiceInput,
 		formData, setFormData,
 		blobImage, setBlobImage,
-		newService, 
+		newService,
+		isFormDataValidate, 
 	}: any = useProduct()
-	const { updateService, getServices } = useService()
-	const navigate = useNavigate()
 
 	const [progress, setProgress] = useState<number>(0)
 	const [isValidate, setIsValidate] = useState<boolean | null>(true)
@@ -29,22 +27,22 @@ function ImageInput() {
 	async function uploadFile(file: any) {
 		try {
 			const { data, error } = await secretKey.storage.from('testing').upload(`HomeService/${file.name}`, file)
-			console.log("name of image ระหว่างอัพโหลด upload ..... === ", file.name)
+			// console.log("name of image ระหว่างอัพโหลด upload ..... === ", file.name)
 			if (error) {
-				console.error("ผิดตรงนี้.....", error)
+				// console.error("ผิดตรงนี้.....", error)
 				setErrorImage(true)
 				setSubmitServiceInput(false)
 			} else {
-				console.log("Success to up load...", data)
+				// console.log("Success to up load...", data)
 				setErrorImage(false)
 				setFormData({
 					...formData,
 					imagePath: data.path
 				})
-				console.log("ข้อมูลรวมที่ต้องส่ง หลังเพิ่ม image path", formData)
+				// console.log("ข้อมูลรวมที่ต้องส่ง หลังเพิ่ม image path", formData)
 			}
 		} catch (error) {
-			console.error("ผิดตรงสุดท้าย....", error)
+			// console.error("ผิดตรงสุดท้าย....", error)
 			setSubmitServiceInput(false)
 		}
 
@@ -54,12 +52,14 @@ function ImageInput() {
 		if (!file) {
 			return;
 		}
-		
+		const files = Array.from(file);
+		setFileList(files)
+		setIsValidate(true)
 		const reader = new FileReader();
 		reader.readAsDataURL(file[0]);
 		reader.onload = () => {
 			const preview: any = document.getElementById('preview');
-			preview.src = reader.result;
+			preview.src = reader.result as string;
 			preview.classList.remove('hidden');
 		};
 	}
@@ -68,7 +68,7 @@ function ImageInput() {
 		if (blobImage) {
 			const newImageFile = new File([blobImage], newService.pic_service); // สร้าง File ใหม่จาก blobImage
 			setFileList([newImageFile]); // อัพโหลดรูปภาพใหม่โดยใช้ blobImage
-			displayPreview(fileList) 
+			displayPreview(fileList)
 			setBlobImage(null)
 		}
 	};
@@ -76,41 +76,47 @@ function ImageInput() {
 	useEffect(() => {
 		handleUploadNewImage();
 	}, [blobImage]);
-	
+
 	useEffect(() => {
 		if (
-			formData?.image !== undefined && 
-			submitServiceInput && 
-			formData?.items.length > 0  && 
-			(Object.values(formData).every(value => value !== null && value !== undefined && value !== ""))
-			) {
+			formData?.image !== undefined &&
+			submitServiceInput &&
+			formData?.items.length > 0 &&
+			(Object.values(formData).every(value => value !== null && value !== undefined && value !== "")) &&
+			isFormDataValidate
+		) {
 			console.log(`formData for upload image: ${formData}`)
-			if (newService?.pic_service.includes("HomeService") && formData.image.name.includes(newService.pic_service)) {
+			console.log("isFormData", isFormDataValidate)
+			if (newService?.pic_service.includes("HomeService") && formData?.image.name.includes(newService?.pic_service)) {
 				// กรณีแก้ไขข้อมูล และใช้รูปเดิม
+				setIsValidate(true)
 				setFormData({
 					...formData,
-					imagePath: formData.pic_service
+					imagePath: formData?.pic_service
 				})
-				updateService(formData)
-				setSubmitServiceInput(false)
-				setFileList(null)
-				getServices('')
-				console.log("Finished")
-				navigate("/services")
-				
-			} else if (formData.image.name.includes(newService?.pic_service)) {
+				setSubmitServiceInput(true)
+
+			} else if (!formData?.image.name.includes(formData?.pic_service)) {
 				// กรณีแก้ไขข้อมูล และใช้รูปใหม่
-				uploadFile(fileList[0])
-				setFileList(null)
+				console.log("fileList in new pic: ", formData)
+				setIsValidate(true)
+				uploadFile(formData.image)
 
 			} else if (submitServiceInput && !fileList) {
 				setIsValidate(false)
 				console.log("add image .......")
 				setSubmitServiceInput(false)
-			}	else {
+
+			} else if (submitServiceInput && isFormDataValidate && fileList) {
+				// ข้อมูลใหม่
+				setIsValidate(true)
 				uploadFile(fileList[0])
+
+			} else {
+				setIsValidate(false)
+				setSubmitServiceInput(false)
 			}
-			
+
 		} else if (submitServiceInput && !formData?.image && !formData?.pic_service) {
 
 			setIsValidate(false)
@@ -118,10 +124,11 @@ function ImageInput() {
 			setSubmitServiceInput(false)
 
 		} else {
+
 			setSubmitServiceInput(false)
 		}
-	}, [submitServiceInput, fileList])
-	
+	}, [submitServiceInput, fileList, isFormDataValidate, formData])
+
 	const uploading = (progress > 0) && (progress < 100) && (submitServiceInput === true)
 
 	return (
@@ -146,12 +153,13 @@ function ImageInput() {
 					const files = Array.from(e.dataTransfer.files);
 					setFileList(files);
 					setShouldHighlight(false);
+					setIsValidate(true)
 					// Display preview for the first dropped image
 					if (files.length > 0) {
 						displayPreview(files);
+						setIsValidate(true)
 					}
 				}}
-
 			>
 				<div className="flex flex-col items-center gap-1">
 					{!fileList ? (
@@ -172,11 +180,15 @@ function ImageInput() {
 							</span>
 						</>
 					) : (
-						<>
-							<img src="" className="mb-4 mx-4 hidden" id="preview"></img>
+							<>
 							<p>File to Upload</p>
 							{fileList.map((file: any, i: number) => {
-								return <span key={i}>{file.name}</span>
+								return (
+									<>
+										<img src="" className="mb-4 mx-4" id="preview"></img>
+										<span key={i}>{file.name}</span>
+									</>
+								)
 							})}
 							<div className="flex gap-2 mt-2">
 								<button
