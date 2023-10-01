@@ -13,9 +13,15 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  // วันปัจจุบัน
+  const today = new Date();
+  
+  // คำนวณวันแรกที่สามารถเลือกได้ (ไม่สามารถเลือกวันก่อนหน้าวันปัจจุบัน)
+  const fromMonth = new Date(today.getFullYear(), today.getMonth());
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
+      fromMonth={fromMonth} // กำหนดวันแรกที่สามารถเลือกได
       className={cn("p-3", className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
@@ -24,7 +30,7 @@ function Calendar({
         caption_label: "text-sm font-medium",
         nav: "space-x-1 flex items-center",
         nav_button: cn(
-          buttonVariants({ variant: "outline" }),
+          // buttonVariants({ variant: "outline" }),
           "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
         ),
         nav_button_previous: "absolute right-7 border-none",
@@ -36,7 +42,7 @@ function Calendar({
         row: "flex w-full mt-2",
         cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-white first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20 dark:[&:has([aria-selected])]:bg-slate-800",
         day: cn(
-          buttonVariants({ variant: "ghost" }),
+          // buttonVariants({ variant: "ghost" }),
           "h-9 w-9 p-0 font-normal aria-selected:opacity-100 rounded-full"
         ),
         day_selected:

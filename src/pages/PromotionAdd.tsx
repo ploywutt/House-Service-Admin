@@ -91,7 +91,6 @@ function PromotionAdd() {
 			setValidateDate(true)
 		}
 
-
 		if (Object.values(promotion).every(value => value !== null && value !== undefined)) {
 
 			createPromotion(promotion)
@@ -102,8 +101,11 @@ function PromotionAdd() {
 		}
 	}
 
+	const handleRadioChange = (value: string) => {
+		setNewType(value);
+	};
 
-	function hanndleFixedValue(e: any) {
+	function handleFixedValue(e: any) {
 		setNewFixed(e.target.value)
 		setNewPercent(0)
 	}
@@ -168,41 +170,48 @@ function PromotionAdd() {
 						</label>
 						<div>
 							<RadioGroup defaultValue="Fixed">
-								<div className="flex items-center space-x-2">
-									<RadioGroupItem value="Fixed" id="r1" onClick={(e: any) => setNewType(e.target.value)} checked />
-									<div className="relative flex">
-										<Label htmlFor="r1" >
-											Fixed
-											<Input
-												id="r1"
-												type="number"
-												value={newFixed}
-												className={`ml-14 w-36`}
-												onChange={(e) => hanndleFixedValue(e)}
-												disabled={newType !== 'Fixed'} // ปิดการใช้งาน Input ถ้าไม่เลือก Fixed
-											/>
-											<img src={baht} alt="" className="absolute inset-y-3 right-4" />
-										</Label>
-									</div>
+								<div className="relative flex items-center space-x-2">
+									<label>
+										<input
+											type="radio"
+											value="Fixed"
+											checked={newType === 'Fixed'}
+											onClick={() => handleRadioChange('Fixed')}
+											className="h-4 w-4 fill-current text-current text-white mr-2"
+											
+										/>
+										Fixed
+										<Input
+											type="number"
+											value={newFixed}
+											className={`ml-14 w-36`}
+											onChange={(e) => handleFixedValue(e)}
+											disabled={newType !== 'Fixed'}
+										/>
+										<img src={baht} alt="" className="absolute inset-y-3 right-4" />
+									</label>
 									<p className={`${validateFixed ? "hidden" : "text-rose-700"} ml-6`}>กรุณากรอกส่วนลด</p>
 								</div>
 
-								<div className="flex items-center space-x-2">
-									<RadioGroupItem value="Percent" id="r2" onClick={(e: any) => setNewType(e.target.value)} />
-									<div className="relative flex">
-										<Label htmlFor="r2">
-											Percent
-											<Input
-												id="r2"
-												type="number"
-												value={newPercent}
-												className={`ml-10 w-36`}
-												onChange={(e: any) => handlePercentValue(e)}
-												disabled={newType !== 'Percent'} // ปิดการใช้งาน Input ถ้าไม่เลือก Percent
-											/>
-										</Label>
+								<div className="relative flex items-center space-x-2">
+									<label>
+										<input
+											type="radio"
+											value="Percent"
+											checked={newType === 'Percent'}
+											onClick={() => handleRadioChange('Percent')}
+											className="h-4 w-4 fill-current text-current text-white mr-2"
+										/>
+										Percent
+										<Input
+											type="number"
+											value={newPercent}
+											className={`ml-10 w-36`}
+											onChange={(e) => handlePercentValue(e)}
+											disabled={newType !== 'Percent'}
+										/>
 										<img src={percent} alt="" className="absolute inset-y-3 right-4" />
-									</div>
+									</label>
 									<p className={`${validatePercent ? "hidden" : "text-rose-700"} ml-6`}>กรุณากรอกส่วนลด</p>
 								</div>
 							</RadioGroup>

@@ -45,7 +45,6 @@ function ImageInput() {
 			// console.error("ผิดตรงสุดท้าย....", error)
 			setSubmitServiceInput(false)
 		}
-
 	}
 
 	async function deleteFile(file: any) {
@@ -96,6 +95,7 @@ function ImageInput() {
 			console.log("isFormData", isFormDataValidate)
 			if (newService?.pic_service.includes("HomeService") && formData?.image.name.includes(newService?.pic_service)) {
 				// กรณีแก้ไขข้อมูล และใช้รูปเดิม
+				console.log("fileList in old pic: ", formData)
 				setIsValidate(true)
 				setFormData({
 					...formData,
@@ -103,14 +103,29 @@ function ImageInput() {
 				})
 				setSubmitServiceInput(true)
 
-			} else if (!formData?.image.name.includes(newService?.pic_service)) {
+			} else {
+
+				setSubmitServiceInput(false)
+			}
+		}
+	}, [formData, submitServiceInput, fileList, isFormDataValidate])
+
+	useEffect(() => {
+		if (
+			formData?.image !== undefined &&
+			submitServiceInput &&
+			formData?.items.length > 0 &&
+			(Object.values(formData).every(value => value !== null && value !== undefined && value !== "")) &&
+			isFormDataValidate
+		) {
+			console.log(`formData for upload image: ${formData}`)
+			console.log("isFormData", isFormDataValidate)
+			if (!formData?.image.name.includes(newService?.pic_service)) {
 				// กรณีแก้ไขข้อมูล และใช้รูปใหม่
 				console.log("fileList in new pic: ", formData)
 				setIsValidate(true)
-				deleteFile(newService?.pic_service)
 				uploadFile(formData.image)
-				setSubmitServiceInput(true)
-
+				deleteFile(newService.pic_service)
 				
 			} else if (submitServiceInput && !fileList) {
 				setIsValidate(false)
@@ -123,7 +138,6 @@ function ImageInput() {
 				setIsValidate(true)
 				uploadFile(fileList[0])
 				setSubmitServiceInput(true)
-
 
 			} else {
 				setIsValidate(false)
@@ -140,9 +154,7 @@ function ImageInput() {
 
 			setSubmitServiceInput(false)
 		}
-	}, [submitServiceInput, fileList, isFormDataValidate, formData])
-
-	const uploading = (progress > 0) && (progress < 100) && (submitServiceInput === true)
+	}, [submitServiceInput, fileList, isFormDataValidate])
 
 	return (
 		<div>
@@ -203,17 +215,6 @@ function ImageInput() {
 									</>
 								)
 							})}
-							<div className="flex gap-2 mt-2">
-								<button
-									className={`${uploading ? "pointer-events-none opacity-40 w-full" : null}`}
-								>
-									{
-										uploading
-											? `Uploading... (${progress.toFixed(2)}%)`
-											: null
-									}
-								</button>
-							</div>
 						</>
 					)}
 				</div>
