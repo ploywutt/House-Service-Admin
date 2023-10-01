@@ -128,7 +128,7 @@ function PromotionEdit() {
 		
 	}
 
-  function hanndleFixedValue(e: any) {
+  function handleFixedValue(e: any) {
     setFixedEdit(e.target.value)
     setPercentEdit(0)
   }
@@ -137,6 +137,10 @@ function PromotionEdit() {
     setPercentEdit(e.target.value)
     setFixedEdit(0)
   }
+
+  const handleRadioChange = (value: string) => {
+		setTypeEdit(value);
+	};
 
   function setDefaultPromotion(currentPromotion: any) {
     setCodeEdit(currentPromotion?.promotion_code)
@@ -216,48 +220,55 @@ function PromotionEdit() {
             <label className="text-gray-700 w-52 inline-block mr-6">
               ประเภท<span className="text-rose-700">*</span>
             </label>
-            <div>
-              <RadioGroup defaultValue="Fixed">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Fixed" id="r1" onClick={(e: any) => setTypeEdit(e.target.value)} checked />
-                  <div className="relative flex">
-                    <Label htmlFor="r1" >
-                      Fixed
-                      <Input
-                        id="r1"
-                        type="number"
-                        value={fixedEdit}
-                        className={`ml-14 w-36`}
-                        onChange={(e) => hanndleFixedValue(e)}
-                        disabled={typeEdit !== 'Fixed'} // ปิดการใช้งาน Input ถ้าไม่เลือก Fixed
-                      />
-                      <img src={baht} alt="" className="absolute inset-y-3 right-4" />
-                    </Label>
-                  </div>
+						<div>
+							<RadioGroup defaultValue="Fixed">
+								<div className="relative flex items-center space-x-2">
+									<label>
+										<input
+											type="radio"
+											value="Fixed"
+											checked={typeEdit === 'Fixed'}
+											onClick={() => handleRadioChange('Fixed')}
+											className="h-4 w-4 fill-current text-current text-white mr-2"
+											
+										/>
+										Fixed
+										<Input
+											type="number"
+											value={fixedEdit}
+											className={`ml-14 w-36`}
+											onChange={(e) => handleFixedValue(e)}
+											disabled={typeEdit !== 'Fixed'}
+										/>
+										<img src={baht} alt="" className="absolute inset-y-3 right-4" />
+									</label>
 									<p className={`${validateFixed ? "hidden" : "text-rose-700"} ml-6`}>กรุณากรอกส่วนลด</p>
-                </div>
+								</div>
 
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Percent" id="r2" onClick={(e: any) => setTypeEdit(e.target.value)} />
-                  <div className="relative flex">
-                    <Label htmlFor="r2">
-                      Percent
-                      <Input
-                        id="r2"
-                        type="number"
-                        value={percentEdit}
-                        className={`ml-10 w-36`}
-                        onChange={(e: any) => handlePercentValue(e)}
-                        disabled={typeEdit !== 'Percent'} // ปิดการใช้งาน Input ถ้าไม่เลือก Percent
-                      />
-                    </Label>
-                    <img src={percent} alt="" className="absolute inset-y-3 right-4" />
-                  </div>
+								<div className="relative flex items-center space-x-2">
+									<label>
+										<input
+											type="radio"
+											value="Percent"
+											checked={typeEdit === 'Percent'}
+											onClick={() => handleRadioChange('Percent')}
+											className="h-4 w-4 fill-current text-current text-white mr-2"
+										/>
+										Percent
+										<Input
+											type="number"
+											value={percentEdit}
+											className={`ml-10 w-36`}
+											onChange={(e) => handlePercentValue(e)}
+											disabled={typeEdit !== 'Percent'}
+										/>
+										<img src={percent} alt="" className="absolute inset-y-3 right-4" />
+									</label>
 									<p className={`${validatePercent ? "hidden" : "text-rose-700"} ml-6`}>กรุณากรอกส่วนลด</p>
-                </div>
-              </RadioGroup>
+								</div>
+							</RadioGroup>
 							<p className={`${validateType ? "hidden" : "text-rose-700"}`}>กรุณาเลือกประเภทและกรอกส่วนลด</p>
-            </div>
+						</div>
           </div>
 
           <div className="mb-10 px-6 flex">

@@ -85,6 +85,7 @@ function usePromotion() {
 			await axios.post(`http://localhost:4000/v1/admin/promotions/`, requestData)
 			setLoading(false)
 			getPromotions('')
+			navigate("/promotions")
 		} catch (error: any) {
 
 			console.error(error)
