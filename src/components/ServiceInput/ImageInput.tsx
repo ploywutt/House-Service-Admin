@@ -48,6 +48,13 @@ function ImageInput() {
 
 	}
 
+	async function deleteFile(file: any) {
+		await secretKey
+			.storage
+			.from('testing')
+			.remove([file])
+	}
+
 	function displayPreview(file: any | null) {
 		if (!file) {
 			return;
@@ -96,12 +103,15 @@ function ImageInput() {
 				})
 				setSubmitServiceInput(true)
 
-			} else if (!formData?.image.name.includes(formData?.pic_service)) {
+			} else if (!formData?.image.name.includes(newService?.pic_service)) {
 				// กรณีแก้ไขข้อมูล และใช้รูปใหม่
 				console.log("fileList in new pic: ", formData)
 				setIsValidate(true)
+				deleteFile(newService?.pic_service)
 				uploadFile(formData.image)
+				setSubmitServiceInput(true)
 
+				
 			} else if (submitServiceInput && !fileList) {
 				setIsValidate(false)
 				console.log("add image .......")
@@ -109,8 +119,11 @@ function ImageInput() {
 
 			} else if (submitServiceInput && isFormDataValidate && fileList) {
 				// ข้อมูลใหม่
+				console.log("New data: ", formData)
 				setIsValidate(true)
 				uploadFile(fileList[0])
+				setSubmitServiceInput(true)
+
 
 			} else {
 				setIsValidate(false)
