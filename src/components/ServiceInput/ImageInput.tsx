@@ -120,12 +120,12 @@ function ImageInput() {
 		) {
 			console.log(`formData for upload image: ${formData}`)
 			console.log("isFormData", isFormDataValidate)
-			if (!formData?.image.name.includes(newService?.pic_service)) {
+			if (!formData?.image.name.includes(newService?.pic_service) && !(formData?.pic_service)) {
 				// กรณีแก้ไขข้อมูล และใช้รูปใหม่
 				console.log("fileList in new pic: ", formData)
 				setIsValidate(true)
-				uploadFile(formData.image)
-				deleteFile(newService.pic_service)
+				uploadFile(formData?.image)
+				deleteFile(newService?.pic_service)
 				
 			} else if (submitServiceInput && !fileList) {
 				setIsValidate(false)
@@ -134,10 +134,19 @@ function ImageInput() {
 
 			} else if (submitServiceInput && isFormDataValidate && fileList) {
 				// ข้อมูลใหม่
-				console.log("New data: ", formData)
-				setIsValidate(true)
-				uploadFile(fileList[0])
-				setSubmitServiceInput(true)
+				if(formData?.image.name.includes(formData?.pic_service)) {
+					// console.log("New data: ", formData)
+					// deleteFile(formData?.pic_service)
+					uploadFile(fileList[0])
+					setIsValidate(true)
+					setSubmitServiceInput(true)
+				} else {
+					// console.log(formData?.pic_service)
+					deleteFile(formData?.pic_service)
+					uploadFile(fileList[0])
+					setIsValidate(true)
+					setSubmitServiceInput(true)
+				}
 
 			} else {
 				setIsValidate(false)
