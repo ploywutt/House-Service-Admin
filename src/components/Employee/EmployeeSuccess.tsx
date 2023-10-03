@@ -32,6 +32,8 @@ function EmployeeSuccess() {
     fetchDataSuccess();
   }, [currentLoginEmail]);
 
+  console.log(data);
+
   return (
     <div className="bg-gray-100">
       {data.map((item, index) => {
@@ -43,17 +45,20 @@ function EmployeeSuccess() {
           >
             <Accordion type="single" collapsible className="my-4">
               <AccordionItem value="item-1">
-                <AccordionTrigger className="flex justify-evenly p2">
-                  <div className="w-[240px] text-start">
-                    {item.order_detail.order?.order_id}
-                  </div>
-                  <div className="w-[240px] text-start">
-                    {formatDateTime(String(item.order_detail.working_time))}
-                  </div>
-                  <div className="w-32 text-center text-green-900 bg-green-100 rounded-xl">
-                    {item.order_detail.order?.status?.status}
-                  </div>
-                </AccordionTrigger>
+                {item.order_detail.order?.status.status ===
+                  "ดำเนินการสำเร็จ" && (
+                  <AccordionTrigger className="flex justify-evenly p2">
+                    <div className="w-[240px] text-start">
+                      {item.order_detail.order?.order_id}
+                    </div>
+                    <div className="w-[240px] text-start">
+                      {formatDateTime(String(item.order_detail.working_time))}
+                    </div>
+                    <div className="w-32 text-center text-green-900 bg-green-100 rounded-xl">
+                      {item.order_detail.order?.status.status}
+                    </div>
+                  </AccordionTrigger>
+                )}
                 <AccordionContent>
                   <div
                     id="Container-1 "

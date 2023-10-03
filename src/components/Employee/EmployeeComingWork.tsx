@@ -59,17 +59,19 @@ function EmployeeComingWork(props: { handleWorking: () => void }) {
           >
             <Accordion type="single" collapsible className="my-4">
               <AccordionItem value="item-1">
-                <AccordionTrigger className="flex justify-evenly p2">
-                  <div className="w-[240px] text-start">
-                    {item.order_detail.order?.order_id}
-                  </div>
-                  <div className="w-[240px] text-start">
-                    {formatDateTime(String(item.order_detail.working_time))}
-                  </div>
-                  <div className="w-28 text-center text-gray-900 bg-gray-200 rounded-xl">
-                    {item.order_detail.order?.status.status}
-                  </div>
-                </AccordionTrigger>
+                {item.order_detail.order?.status?.status === "รอดำเนินการ" && (
+                  <AccordionTrigger className="flex justify-evenly p2">
+                    <div className="w-[240px] text-start">
+                      {item.order_detail.order?.order_id}
+                    </div>
+                    <div className="w-[240px] text-start">
+                      {formatDateTime(String(item.order_detail.working_time))}
+                    </div>
+                    <div className="w-32 text-center text-gray-900 bg-gray-100 rounded-xl">
+                      {item.order_detail.order?.status.status}
+                    </div>
+                  </AccordionTrigger>
+                )}
                 <AccordionContent>
                   <div
                     id="Container-1 "
