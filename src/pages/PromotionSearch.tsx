@@ -29,6 +29,7 @@ function PromotionSearch() {
 
   useEffect(() => {
     getPromotions(searchPromotion)
+    getPromotions('')
   }, [searchPromotion])
   return (
     <div className="w-full">
