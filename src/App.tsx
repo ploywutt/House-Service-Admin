@@ -1,17 +1,18 @@
 import "./App.css";
-import Login from "./pages/Login";
-import Category from "./pages/Category";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useProduct } from "./contexts/productsContext";
+import UnauthenticationApp from "./pages/UnauthenticationApp";
+import AuthenticationApp from "./pages/AuthenticationApp";
+import { useEffect } from "react";
 
 function App() {
+  const { session, setSession, }: any = useProduct();
+  useEffect(() => {
+    const isAuthenticated = Boolean(sessionStorage.getItem("session"));
+    setSession(isAuthenticated);
+  }, [])
+
   return (
-    <Router>
-      <Routes>
-        {/* ลบตัวอย่างออกแล้วใส่เฉพาะ Route ที่ทำนะคับ เพื่อป้องกัน conflict คับ */}
-        <Route path="/" element={<Login />} />
-        <Route path="/categories" element={<Category />} />
-      </Routes>
-    </Router>
+    session ? <AuthenticationApp /> : <UnauthenticationApp />  
   );
 }
 
