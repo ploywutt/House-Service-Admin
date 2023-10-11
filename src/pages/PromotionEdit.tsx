@@ -317,7 +317,7 @@ function PromotionEdit() {
               <span className="w-52 mr-6 py-6 inline-block">สร้างเมื่อ</span><span>{formatDateTime(String(currentPromotion?.created_at))}</span>
             </div>
             <div>
-              <span className="w-52 mr-6 py-6 inline-block">แก้ไขล่าสุด</span><span>{formatDateTime(Date())}</span>
+              <span className="w-52 mr-6 py-6 inline-block">แก้ไขล่าสุด</span><span>{formatDateTime(String(Date()))}</span>
             </div>
           </div>
         </div>

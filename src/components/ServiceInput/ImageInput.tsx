@@ -15,7 +15,6 @@ function ImageInput() {
 		isFormDataValidate, 
 	}: any = useProduct()
 
-	const [progress, setProgress] = useState<number>(0)
 	const [isValidate, setIsValidate] = useState<boolean | null>(true)
 	const [errorImage, setErrorImage] = useState<boolean | null>(false)
 
