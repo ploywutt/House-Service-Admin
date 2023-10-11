@@ -10,8 +10,6 @@ import {
 
 import alert from "../../assets/icon/alert.png"
 import cancel from "../../assets/icon/close-line.png"
-import useCategory from "@/hooks/useCategory";
-import useService from "@/hooks/useService";
 import useProcessing from "@/hooks/useProcessing";
 
 interface AlertType {

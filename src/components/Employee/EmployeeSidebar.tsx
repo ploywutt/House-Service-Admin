@@ -8,7 +8,7 @@ import Working from "../../assets/icon/working.svg";
 import Success from "../../assets/icon/success.svg";
 import { useProduct } from "@/contexts/productsContext.tsx";
 
-export default function EmployeeSidebar(props) {
+export default function EmployeeSidebar(props: any) {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeLi, setActiveLi] = useState<string>("");
@@ -21,20 +21,6 @@ export default function EmployeeSidebar(props) {
     { path: "/promotions", state: "promotions" },
   ];
 
-  function handleClick(selectedLi: string) {
-    // setActiveLi(selectedLi); // update state when clicked
-    // navigate to path that be chosen
-    const matchingPair = pathStatePairs.find(
-      (pair) => pair.state === selectedLi
-    );
-    if (matchingPair) {
-      // ฟังก์ชันใน JavaScript ที่ใช้ในการเปลี่ยน URL แท็บโดยไม่ต้องโหลดหน้าเว็บใหม่ (ไม่ต้อง refresh) ซึ่งเป็นสิ่งสำคัญในการสร้างแอปพลิเคชันเว็บแบบเสมือนจริง (SPA - Single Page Application) เนื่องจากสามารถบริหารจัดการการนำทางและสถานะโดยที่ไม่ต้องโหลดหน้าเว็บใหม่ทุกครั้งที่มีการคลิก.
-      window.history.pushState(null, "", matchingPair.path);
-      // window.history.pushState(state, title, url);
-      navigate(matchingPair.path);
-    }
-  }
-
   useEffect(() => {
     const matchingPair = pathStatePairs.find((pair) =>
       location.pathname.startsWith(pair.path)
@@ -45,7 +31,7 @@ export default function EmployeeSidebar(props) {
   }, [location.pathname]);
 
   async function signOutUser() {
-    const { error } = await supabase.auth.signOut();
+    await supabase.auth.signOut();
     localStorage.removeItem("session");
     localStorage.removeItem("refresh");
     setSession(false);

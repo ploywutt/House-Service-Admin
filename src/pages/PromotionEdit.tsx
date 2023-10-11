@@ -1,7 +1,6 @@
 import Topbar_edit from "@/components/Topbar/TopbarEdit";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { RadioGroup } from "@/components/ui/radio-group";
 import { useProduct } from "@/contexts/productsContext";
 import usePromotion from "@/hooks/usePromotion";
 import { useEffect, useState } from "react";

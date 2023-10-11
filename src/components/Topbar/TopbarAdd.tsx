@@ -16,11 +16,11 @@ function Topbar_add(prop: TopbarType) {
 		currentCategory, setCurrentCategory,
 		errorMessage, setErrorMessage,
 		submitServiceInput, setSubmitServiceInput,
-		newCategory, setNewCategory,
-		newService, setNewService,
-		currentPromotion, setCurrentPromotion,
-		fileList, setFileList,
-		blobImage, setBlobImage,
+		setNewCategory,
+		setNewService,
+		setCurrentPromotion,
+		setFileList,
+		setBlobImage,
 		setFormData,
 	}: any = useProduct()
 

@@ -5,7 +5,6 @@ import { secretKey } from "../../lib/supabase.ts";
 function ImageInput() {
 	// #
 	const [shouldHighlight, setShouldHighlight] = useState<boolean>(false)
-	// const [isPreviewReady, setIsPreviewReady] = useState(false);
 	const {
 		fileList, setFileList,
 		submitServiceInput, setSubmitServiceInput,

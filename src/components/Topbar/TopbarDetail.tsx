@@ -8,12 +8,12 @@ function Topbar_detail(prop: TopbarType) {
 	const navigate = useNavigate()
 
 	const { 
-		currentCategory, setCurrentCategory,
+		setCurrentCategory,
 		newCategory, setNewCategory,
 		newService, setNewService,
 		currentPromotion, setCurrentPromotion,
-		fileList, setFileList,
-		blobImage, setBlobImage,
+		setFileList,
+		setBlobImage,
 	}: any = useProduct()
 
 	function goback() {

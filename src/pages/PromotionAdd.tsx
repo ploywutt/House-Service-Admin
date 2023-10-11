@@ -1,8 +1,7 @@
 import Topbar_add from "@/components/Topbar/TopbarAdd";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label";
+import { RadioGroup } from "@/components/ui/radio-group"
 
 import baht from "../assets/icon/baht.svg"
 import percent from "../assets/icon/percent.svg"

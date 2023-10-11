@@ -15,8 +15,8 @@ function Topbar_edit(prop: TopbarType) {
 		newService, setNewService,
 		submitServiceInput, setSubmitServiceInput,
 		currentPromotion, setCurrentPromotion,
-		fileList, setFileList,
-		blobImage, setBlobImage,
+		setFileList,
+		setBlobImage,
 	}: any = useProduct()
 
 	const {

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import house from "../assets/house.png";
 import error from "../assets/error_icon.png";

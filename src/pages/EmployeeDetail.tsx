@@ -1,5 +1,4 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import EmployeeTopbar_search from "@/components/Employee/EmployeeTopbarSearch";
 import EmployeeSidebar from "../components/Employee/EmployeeSidebar";
 

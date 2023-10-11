@@ -6,7 +6,7 @@ function Testing() {
 	const navigate = useNavigate()
 
 	async function signOut() {
-		const { error } = await supabase.auth.signOut()
+		await supabase.auth.signOut()
 		navigate('/')
 	}
 	
