@@ -14,7 +14,7 @@ function EmployeeTopbar_search() {
   async function fetchEmployeeName() {
     try {
       const { data } = await axios.get(
-        `http://localhost:4000/v2/employee/name?email=${currentLoginEmail}`
+        `https://home-service-server.onrender.com/v2/employee/name?email=${currentLoginEmail}`
       );
       setEmployeeName(data.name[0].name);
       console.log("fetchname", data.name[0].name);

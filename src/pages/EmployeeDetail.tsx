@@ -1,5 +1,4 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import EmployeeTopbar_search from "@/components/Employee/EmployeeTopbarSearch";
 import EmployeeSidebar from "../components/Employee/EmployeeSidebar";
 
@@ -8,19 +7,9 @@ import EmployeeWorking from "@/components/Employee/EmployeeWorking";
 import EmployeeSuccess from "@/components/Employee/EmployeeSuccess";
 
 function EmployeeDetail() {
-  // const [data, setData] = useState([]);
   const [comingwork, setComingwork] = useState(true);
   const [working, setWorking] = useState(false);
   const [success, setSuccess] = useState(false);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const order = await axios.get("http://localhost:4000/v1/employee/detail");
-  //     console.log(order.data.data);
-  //     setData(order.data.data);
-  //   }
-  //   fetchData();
-  // }, []);
 
   function handleComingwork() {
     setComingwork(true);

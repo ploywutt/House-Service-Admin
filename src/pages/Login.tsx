@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
-import { useEffect, useState } from 'react'
+import { useEffect } from "react";
 
 import house from "../assets/house.png";
 import error from "../assets/error_icon.png";
@@ -21,24 +21,25 @@ function Login() {
     setIsValid,
     setIsHaveEmail,
     isHaveEmail,
-    role, SetRole
+    role,
+    SetRole,
   } = useLogin();
 
-  const selected = "rounded-xl bg-blue-600 py-1.5 px-8 text-white"
+  const selected = "rounded-xl bg-blue-600 py-1.5 px-8 text-white";
 
   function handleClick(role: string) {
-    if (role === 'Admin') {
-      SetRole('Admin')
+    if (role === "Admin") {
+      SetRole("Admin");
     } else {
-      SetRole("Technician")
+      SetRole("Technician");
     }
-    console.log("Role: ", role)
+    console.log("Role: ", role);
   }
 
   useEffect(() => {
-    setIsHaveEmail(true)
-    setIsValid(true)
-  }, [password, email])
+    setIsHaveEmail(true);
+    setIsValid(true);
+  }, [password, email]);
 
   return (
     <div className="mt-24">
@@ -52,14 +53,22 @@ function Login() {
         </h1>
         <div className="flex justify-evenly my-6 text-lg font-semibold">
           <h4
-            className={`duration-300 hover:rounded-xl hover:bg-blue-600 py-1.5 px-8 hover:text-white hover:cursor-pointer ${role === "Admin" && selected}`}
-            onClick={() => { handleClick('Admin') }}
+            className={`duration-300 hover:rounded-xl hover:bg-blue-600 py-1.5 px-8 hover:text-white hover:cursor-pointer ${
+              role === "Admin" && selected
+            }`}
+            onClick={() => {
+              handleClick("Admin");
+            }}
           >
             Admin
           </h4>
           <h4
-            className={`duration-300 hover:rounded-xl hover:bg-blue-600 py-1.5 px-8 hover:text-white hover:cursor-pointer ${role === "Technician" && selected}`}
-            onClick={() => { handleClick('Technician') }}
+            className={`duration-300 hover:rounded-xl hover:bg-blue-600 py-1.5 px-8 hover:text-white hover:cursor-pointer ${
+              role === "Technician" && selected
+            }`}
+            onClick={() => {
+              handleClick("Technician");
+            }}
           >
             Technician
           </h4>
@@ -76,8 +85,9 @@ function Login() {
               id="email"
               placeholder=""
               required
-              className={`mt-2 ${!isHaveEmail ? "border-rose-700 focus:border-rose-700" : ""
-                } w-full`}
+              className={`mt-2 ${
+                !isHaveEmail ? "border-rose-700 focus:border-rose-700" : ""
+              } w-full`}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={{ borderColor: !isHaveEmail ? "#C82438" : "" }}
@@ -85,12 +95,17 @@ function Login() {
             <img
               src={error}
               alt="error"
-              className={`${!isHaveEmail ? "absolute right-4 bottom-4" : "hidden"}`}
+              className={`${
+                !isHaveEmail ? "absolute right-4 bottom-4" : "hidden"
+              }`}
             />
           </div>
           <span
-            className={`${!isHaveEmail ? "text-rose-700 font-normal text-xs mt-2" : "invisible"
-              }`}
+            className={`${
+              !isHaveEmail
+                ? "text-rose-700 font-normal text-xs mt-2"
+                : "invisible"
+            }`}
           >
             Cannot found this email!!
           </span>
@@ -105,8 +120,9 @@ function Login() {
               id="password"
               placeholder=""
               required
-              className={`mt-2 ${!isValid ? "border-rose-700 focus:border-rose-700" : null
-                } w-full`}
+              className={`mt-2 ${
+                !isValid ? "border-rose-700 focus:border-rose-700" : null
+              } w-full`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               style={{ borderColor: !isValid ? "#C82438" : "" }}
@@ -118,8 +134,9 @@ function Login() {
             />
           </div>
           <span
-            className={`${!isValid ? "text-rose-700 font-normal text-xs mt-2" : "invisible"
-              }`}
+            className={`${
+              !isValid ? "text-rose-700 font-normal text-xs mt-2" : "invisible"
+            }`}
           >
             Wrong password!!
           </span>

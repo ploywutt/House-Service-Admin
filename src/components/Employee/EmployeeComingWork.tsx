@@ -11,8 +11,39 @@ import {
 import useDateVal from "../../hooks/useDateVal";
 import useFetchEmail from "../../hooks/useFetchEmail";
 
+interface OrderEmployee {
+  order_detail: {
+    address: string;
+    subdistrict: string;
+    district: string;
+    province: string;
+    details: string;
+    working_time: any;
+    order: {
+      service_order: any[];
+      user: {
+        name: string;
+        phone: string;
+        email: string;
+      };
+      status: {
+        status: string;
+      };
+      order_id: any;
+    };
+  };
+}
+
+interface Service {
+  sub_service: {
+    sub_service_name: string;
+    unit: string;
+  };
+  amount: number;
+}
+
 function EmployeeComingWork(props: { handleWorking: () => void }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<OrderEmployee[]>([]);
 
   const { formatDateTime } = useDateVal();
 
@@ -21,7 +52,7 @@ function EmployeeComingWork(props: { handleWorking: () => void }) {
   async function fetchDataComingWork() {
     try {
       const { data } = await axios.get(
-        `http://localhost:4000/v2/employee/comingwork?email=${currentLoginEmail}`
+        `https://home-service-server.onrender.com/v2/employee/comingwork?email=${currentLoginEmail}`
       );
       console.log(data.name[0].order_employee);
       setData(data.name[0].order_employee);
@@ -37,7 +68,7 @@ function EmployeeComingWork(props: { handleWorking: () => void }) {
   async function clickToWork(orderId: number) {
     try {
       const putData = await axios.put(
-        `http://localhost:4000/v2/employee/status/towork?orderId=${orderId}`
+        `https://home-service-server.onrender.com/v2/employee/status/towork?orderId=${orderId}`
       );
       console.log("Working status updated successfully", putData);
 
@@ -102,7 +133,7 @@ function EmployeeComingWork(props: { handleWorking: () => void }) {
                       <div className="p3 text-gray-500">รายการ</div>
 
                       {item.order_detail.order?.service_order.map(
-                        (service, index) => {
+                        (service: Service, index: number) => {
                           return (
                             <p className="p2" key={index}>
                               {service.sub_service.sub_service_name}{" "}
@@ -130,30 +161,15 @@ function EmployeeComingWork(props: { handleWorking: () => void }) {
                         <p className="p2">{item.order_detail.details}</p>
                       </div>
                       <div id="btn-flex" className="flex justify-end items-end">
-                        {item.order_detail.order?.status.status ===
-                        "รอดำเนินการ" ? (
-                          <Button
-                            variant={"secondary"}
-                            className="w-[240px]"
-                            onClick={() =>
-                              clickToWork(item.order_detail.order.order_id)
-                            }
-                          >
-                            เริ่มทำงาน
-                          </Button>
-                        ) : item.order_detail.order?.status.status ===
-                          "กำลังดำเนินการ" ? (
-                          <Button
-                            variant={"secondary"}
-                            className="w-[240px]"
-                            onClick={() =>
-                              clickToFinish(item.order_detail.order.order_id)
-                            }
-                          >
-                            ทำงานเสร็จสิ้น
-                          </Button>
-                        ) : item.order_detail.order?.status.status ===
-                          "ดำเนินการสำเร็จ" ? null : null}
+                        <Button
+                          variant={"secondary"}
+                          className="w-[240px]"
+                          onClick={() =>
+                            clickToWork(item.order_detail.order.order_id)
+                          }
+                        >
+                          เริ่มทำงาน
+                        </Button>
                       </div>
                     </div>
                   </div>

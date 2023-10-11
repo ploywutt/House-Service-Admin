@@ -7,13 +7,35 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Badge } from "../ui/badge";
 
 import useDateVal from "../../hooks/useDateVal";
 import useFetchEmail from "../../hooks/useFetchEmail";
 
+interface OrderEmployee {
+  order_detail: {
+    address: string;
+    subdistrict: string;
+    district: string;
+    province: string;
+    details: string;
+    working_time: any;
+    order: {
+      service_order: any[];
+      user: {
+        name: string;
+        phone: string;
+        email: string;
+      };
+      status: {
+        status: string;
+      };
+      order_id: any;
+    };
+  };
+}
+
 function EmployeeWorking(props: { handleSuccess: () => void }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<OrderEmployee[]>([]);
 
   const { formatDateTime } = useDateVal();
 
@@ -22,7 +44,7 @@ function EmployeeWorking(props: { handleSuccess: () => void }) {
   async function fetchDataComingWork() {
     try {
       const { data } = await axios.get(
-        `http://localhost:4000/v2/employee/working?email=${currentLoginEmail}`
+        `https://home-service-server.onrender.com/v2/employee/working?email=${currentLoginEmail}`
       );
       console.log(data.name[0].order_employee);
       setData(data.name[0].order_employee);
@@ -38,7 +60,7 @@ function EmployeeWorking(props: { handleSuccess: () => void }) {
   async function clickToFinish(orderId: number) {
     try {
       const putData = await axios.put(
-        `http://localhost:4000/v2/employee/status/tofinish?orderId=${orderId}`
+        `https://home-service-server.onrender.com/v2/employee/status/tofinish?orderId=${orderId}`
       );
       console.log("Finishing status updated successfully", putData);
 
@@ -132,30 +154,15 @@ function EmployeeWorking(props: { handleSuccess: () => void }) {
                         <p className="p2">{item.order_detail.details}</p>
                       </div>
                       <div id="btn-flex" className="flex justify-end items-end">
-                        {item.order_detail.order?.status?.status ===
-                        "รอดำเนินการ" ? (
-                          <Button
-                            variant={"secondary"}
-                            className="w-[240px]"
-                            onClick={() =>
-                              clickToWork(item.order_detail.order.order_id)
-                            }
-                          >
-                            เริ่มทำงาน
-                          </Button>
-                        ) : item.order_detail.order?.status?.status ===
-                          "กำลังดำเนินการ" ? (
-                          <Button
-                            variant={"secondary"}
-                            className="w-[240px]"
-                            onClick={() =>
-                              clickToFinish(item.order_detail.order.order_id)
-                            }
-                          >
-                            ทำงานเสร็จสิ้น
-                          </Button>
-                        ) : item.order_detail.order?.status?.status ===
-                          "ดำเนินการสำเร็จ" ? null : null}
+                        <Button
+                          variant={"secondary"}
+                          className="w-[240px]"
+                          onClick={() =>
+                            clickToFinish(item.order_detail.order.order_id)
+                          }
+                        >
+                          ทำงานเสร็จสิ้น
+                        </Button>
                       </div>
                     </div>
                   </div>
