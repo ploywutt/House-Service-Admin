@@ -10,8 +10,31 @@ import {
 import useDateVal from "../../hooks/useDateVal";
 import useFetchEmail from "../../hooks/useFetchEmail";
 
+interface OrderEmployee {
+  order_detail: {
+    address: string;
+    subdistrict: string;
+    district: string;
+    province: string;
+    details: string;
+    working_time: any;
+    order: {
+      service_order: any[];
+      user: {
+        name: string;
+        phone: string;
+        email: string;
+      };
+      status: {
+        status: string;
+      };
+      order_id: any;
+    };
+  };
+}
+
 function EmployeeSuccess() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<OrderEmployee[]>([]);
 
   const { formatDateTime } = useDateVal();
 
@@ -21,7 +44,7 @@ function EmployeeSuccess() {
     async function fetchDataSuccess() {
       try {
         const { data } = await axios.get(
-          `http://localhost:4000/v2/employee/success?email=${currentLoginEmail}`
+          `https://home-service-server.onrender.com/v2/employee/success?email=${currentLoginEmail}`
         );
         console.log(data.name[0].order_employee);
         setData(data.name[0].order_employee);
@@ -116,32 +139,10 @@ function EmployeeSuccess() {
                         <p className="p3 text-gray-500">ข้อมูลเพิ่มเติม</p>
                         <p className="p2">{item.order_detail.details}</p>
                       </div>
-                      <div id="btn-flex" className="flex justify-end items-end">
-                        {item.order_detail.order?.status?.status ===
-                        "รอดำเนินการ" ? (
-                          <Button
-                            variant={"secondary"}
-                            className="w-[240px]"
-                            onClick={() =>
-                              clickToWork(item.order_detail.order.order_id)
-                            }
-                          >
-                            เริ่มทำงาน
-                          </Button>
-                        ) : item.order_detail.order?.status?.status ===
-                          "กำลังดำเนินการ" ? (
-                          <Button
-                            variant={"secondary"}
-                            className="w-[240px]"
-                            onClick={() =>
-                              clickToFinish(item.order_detail.order.order_id)
-                            }
-                          >
-                            ทำงานเสร็จสิ้น
-                          </Button>
-                        ) : item.order_detail.order?.status?.status ===
-                          "ดำเนินการสำเร็จ" ? null : null}
-                      </div>
+                      <div
+                        id="btn-flex"
+                        className="flex justify-end items- w-[240px]"
+                      ></div>
                     </div>
                   </div>
                 </AccordionContent>
