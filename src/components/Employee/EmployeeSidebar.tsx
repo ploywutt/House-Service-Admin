@@ -1,40 +1,41 @@
-import { useNavigate, useLocation } from "react-router-dom";
+// import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import HomeServiceIcon from "../../assets/icon/homeservices.png";
 import LogoutIcon from "../../assets/icon/logout.svg";
 import { supabase } from "../../lib/supabase.ts";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import ComingIcon from "../../assets/icon/coming.svg";
 import Working from "../../assets/icon/working.svg";
 import Success from "../../assets/icon/success.svg";
-import { useProduct } from "@/contexts/productsContext.tsx";
+// import { useProduct } from "@/contexts/productsContext.tsx";
 
 export default function EmployeeSidebar(props: any) {
-  const location = useLocation();
+  // const location = useLocation();
   const navigate = useNavigate();
-  const [activeLi, setActiveLi] = useState<string>("");
-  const { setSession }: any = useProduct();
+  // const [activeLi, setActiveLi] = useState<string>("");
+  // const { setSession }: any = useProduct();
 
   // สร้างอาร์เรย์ของ object ที่มี key = path และ value = state
-  const pathStatePairs = [
-    { path: "/categories", state: "categories" },
-    { path: "/services", state: "services" },
-    { path: "/promotions", state: "promotions" },
-  ];
+  // const pathStatePairs = [
+  //   { path: "/categories", state: "categories" },
+  //   { path: "/services", state: "services" },
+  //   { path: "/promotions", state: "promotions" },
+  // ];
 
-  useEffect(() => {
-    const matchingPair = pathStatePairs.find((pair) =>
-      location.pathname.startsWith(pair.path)
-    );
-    setActiveLi(
-      matchingPair ? matchingPair.state : location.pathname.split("/")[1]
-    );
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   const matchingPair = pathStatePairs.find((pair) =>
+  //     location.pathname.startsWith(pair.path)
+  //   );
+  //   setActiveLi(
+  //     matchingPair ? matchingPair.state : location.pathname.split("/")[1]
+  //   );
+  // }, [location.pathname]);
 
   async function signOutUser() {
     await supabase.auth.signOut();
     localStorage.removeItem("session");
     localStorage.removeItem("refresh");
-    setSession(false);
+    // setSession(false);
     navigate("/");
   }
 
