@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase.ts";
 import axios from "axios";
 import { useProduct } from "@/contexts/productsContext.tsx";
 
 function useLogin() {
+  const [role, SetRole] = useState<string>("Admin");
+  // console.log(role);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [isHaveEmail, setIsHaveEmail] = useState<boolean>(true);
-  const [role, SetRole] = useState<string>("Admin");
   const { session, setSession }: any = useProduct();
   const navigate = useNavigate();
+
+  // useEffect to give the provided sample accounts only not the main function of the code
+  useEffect(() => {
+    if (role === "Technician") {
+      setEmail("changjai@mail.com");
+      setPassword("1234");
+    } else if (role === "Admin") {
+      setEmail("admin@mail.com");
+      setPassword("87654321");
+    }
+  }, [role]);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
